@@ -9,12 +9,12 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-var version = "v1.0"
+var Version string
 
 func main() {
 	app := cli.NewApp()
 	app.Name = "PingMe"
-	app.Version = version
+	app.Version = Version
 	app.Usage = "Send message to multiple platforms"
 	app.Description = `PingMe is a CLI tool which provides the ability to send messages or alerts to multiple 
 messaging platforms and also email, everything is configurable via environment
