@@ -20,7 +20,7 @@ builds:
   flags:
     - -trimpath
   ldflags:
-    - -s -w -X main.Version={{.Version}} -X main.commit={{.Commit}} -X main.date={{ .CommitDate }}
+    - -s -w -X main.Version={{.Version}}
 checksum:
   name_template: '{{ .ProjectName }}_checksums.txt'
 
@@ -53,7 +53,5 @@ brews:
     license: MIT
     test: |
       system "#{bin}/pingme -v"
-    dependencies:
-    - name: go
     install: |-
       bin.install "pingme"
