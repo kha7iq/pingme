@@ -47,9 +47,9 @@ archives:
 brews:
   - tap:
       owner: kha7iq
-      homepage: https://kha7iq.github.io/docs-pingme
       name: homebrew-tap
     folder: Formula
+    homepage: https://kha7iq.github.io/docs-pingme
     description: PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms.
     license: MIT
     test: |
