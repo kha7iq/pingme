@@ -104,13 +104,14 @@ Check [Documentation Page](https://kha7iq.github.io/docs-pingme/#/) for more det
 ## Configuration
 
 All the flags have corresponding environment variables associated with it. You can either provide the value with flags
+or export to a variable.
 
-or export to a variable. View the [Documentation Page](https://kha7iq.github.io/docs-pingme/#/) for more details.
+View the [Documentation Page](https://kha7iq.github.io/docs-pingme/#/) for more details.
 
 
 ## Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/kha7iq/pingme/issues). You can also take a look at the [contributing guide](https://github.com/kha7iq/pingme/blob/master/CONTRIBUTING.md).
+Contributions, issues and feature requests are welcome!<br/>Feel free to check [issues page](https://github.com/kha7iq/pingme/issues). You can also take a look at the [contributing guide](https://github.com/kha7iq/pingme/blob/master/CONTRIBUTING.md).
 
 
 ## Show your support
