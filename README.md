@@ -102,7 +102,7 @@ pingme  telegram  --token "0125:AAFHvnYf_ABC"  --msg "This is a new message ✈"
 ```
 
 
-* ![Demo](https://github.com/kha7iq/pingme/blob/master/.github/img/pinem.gif)
+* ![Demo](https://github.com/kha7iq/pingme/blob/master/.github/img/pingme.gif)
 
 
 ## Configuration
