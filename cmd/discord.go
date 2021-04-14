@@ -18,6 +18,10 @@ type discordPingMe struct {
 	Title   string
 }
 
+// SendToDiscord parse values from *cli.context and return *cli.Command.
+// Values include discord bot token, userID, channelIDs, Message and Title.
+// If multiple channels are provided then the string is split with "," separator and
+// each channelID is added to receiver.
 func SendToDiscord() *cli.Command {
 	var discordOpts discordPingMe
 	return &cli.Command{

@@ -22,6 +22,11 @@ type email struct {
 	Identity        string
 }
 
+// SendToEmail parse values from *cli.context and return *cli.Command.
+// SendAddress is used for authentication with smtp server, host and port is required
+// the default value for port is set to "587" and host as "smtp.gmail.com"
+// If multiple ReceiverAddress are provided then the string value is split with "," separator and
+// each ReceiverAddress is added to receiver.
 func SendToEmail() *cli.Command {
 	var emailOpts email
 	return &cli.Command{

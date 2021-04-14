@@ -26,6 +26,10 @@ var (
 	TimeValue    = "⏰ " + time.Now().String()
 )
 
+// SendToRocketChat parse values from *cli.context and return *cli.Command.
+// Values include rocketchat token, , UserId, channelIDs, ServerURL, Scheme, Message and Title.
+// If multiple channels are provided then the string is split with "," separator and
+// each channelID is added to receiver.
 func SendToRocketChat() *cli.Command {
 	var rocketChatOpts rocketChat
 	return &cli.Command{

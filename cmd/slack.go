@@ -18,6 +18,10 @@ type slackPingMe struct {
 	Title   string
 }
 
+// SendToSlack parse values from *cli.context and return *cli.Command.
+// Values include slack token, channelIDs, Message and Title.
+// If multiple channels are provided then the string is split with "," separator and
+// each channelID is added to receiver.
 func SendToSlack() *cli.Command {
 	var slackOpts slackPingMe
 	return &cli.Command{

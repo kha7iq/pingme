@@ -17,6 +17,10 @@ type msTeams struct {
 	Title   string
 }
 
+// SendToTeams parse values from *cli.context and return *cli.Command.
+// Values include Ms Teams Webhook, Message and Title.
+// If multiple webhooks are provided then the string is split with "," separator and
+// each webhook is added to receiver.
 func SendToTeams() *cli.Command {
 	var msTeamOpt msTeams
 	return &cli.Command{

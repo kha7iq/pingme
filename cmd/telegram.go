@@ -19,6 +19,10 @@ type teleGram struct {
 	Title   string
 }
 
+// SendToTelegram parse values from *cli.context and return *cli.Command.
+// Values include telegram token, channelIDs, Message and Title.
+// If multiple channels are provided they the string is split with "," separator and
+// each channelID is added to receiver.
 func SendToTelegram() *cli.Command {
 	var telegramOpts teleGram
 	return &cli.Command{
