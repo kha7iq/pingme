@@ -56,3 +56,14 @@ brews:
       system "#{bin}/pingme -v"
     install: |-
       bin.install "pingme"
+
+nfpms:
+  - file_name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    homepage:  https://kha7iq.github.io/docs-pingme
+    description: PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms.
+    license: MIT
+    formats:
+    - deb
+    - rpm
+    dependencies:
+    - git
