@@ -76,7 +76,7 @@ snap install pingme*.snap --devmode --dangerous
 pingme help
 
 ```
-Don't forget to clear build the virtual environment
+Don't forget to clean a virtual environment.
 
 ``` bash
 multipass stop snapcraft-pingme && multipass delete  snapcraft-pingme && multipass purge
