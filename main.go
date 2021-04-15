@@ -20,7 +20,7 @@ func main() {
 	app.Description = `PingMe is a CLI tool which provides the ability to send messages or alerts to multiple 
 messaging platforms and also email, everything is configurable via environment
 variables and command line switches.Currently supported platforms include Slack, Telegram,
-RocketChat, Discord, Pushover, Microsoft Teams and email address.`
+RocketChat, Discord, Pushover, Pushbullet ,Microsoft Teams and email address.`
 	// app.Commands contains the subcommands as functions which return []*cli.Command.
 	app.Commands = []*cli.Command{
 		cmd.SendToTelegram(),
@@ -29,6 +29,7 @@ RocketChat, Discord, Pushover, Microsoft Teams and email address.`
 		cmd.SendToDiscord(),
 		cmd.SendToTeams(),
 		cmd.SendToPushOver(),
+		cmd.SendToPushBullet(),
 		cmd.SendToEmail(),
 	}
 
