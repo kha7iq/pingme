@@ -55,6 +55,7 @@ as message. And most of all this serves as a swiss army knife sort of tool which
 - *RocketChat*
 - *Slack*
 - *Telegram*
+- *Pushover*
 
 
 ## Install
@@ -95,7 +96,9 @@ COMMANDS:
    slack       Send message to slack
    discord     Send message to discord
    teams       Send message to microsoft teams
+   pushover    Send message to pushover
    email       Send an email
+   
    help, h     Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
