@@ -11,6 +11,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// email struct holds data parsed via flags for email service.
 type email struct {
 	SenderAddress   string
 	Password        string

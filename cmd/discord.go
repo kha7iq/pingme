@@ -11,6 +11,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// discordPingMe struct holds data parsed via flags for discord service.
 type discordPingMe struct {
 	Token   string
 	Message string

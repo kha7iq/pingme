@@ -11,6 +11,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// msTeams struct holds data parsed via flags for microsoft teams service.
 type msTeams struct {
 	Webhook string
 	Message string

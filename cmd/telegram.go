@@ -12,6 +12,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// teleGram struct holds data parsed via flags for telegram service.
 type teleGram struct {
 	Token   string
 	Message string

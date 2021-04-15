@@ -9,6 +9,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// Version variable is used for semVer
 var Version string
 
 func main() {
@@ -20,7 +21,7 @@ func main() {
 messaging platforms and also email, everything is configurable via environment
 variables and command line switches.Currently supported platforms include Slack, Telegram,
 RocketChat, Discord, Microsoft Teams and email address.`
-
+	// app.Commands contains the subcommands as functions which return []*cli.Command.
 	app.Commands = []*cli.Command{
 		cmd.SendToTelegram(),
 		cmd.SendToRocketChat(),

@@ -11,6 +11,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// slackPingMe struct holds data parsed via flags for slack service.
 type slackPingMe struct {
 	Token   string
 	Message string
