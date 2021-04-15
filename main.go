@@ -29,6 +29,7 @@ RocketChat, Discord, Microsoft Teams and email address.`
 		cmd.SendToDiscord(),
 		cmd.SendToTeams(),
 		cmd.SendToPushover(),
+		cmd.SendToPushBullet(),
 		cmd.SendToEmail(),
 	}
 
