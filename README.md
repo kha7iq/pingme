@@ -56,6 +56,7 @@ as message. And most of all this serves as a swiss army knife sort of tool which
 - *Slack*
 - *Telegram*
 - *Pushover*
+- *Pushbullet*
 
 
 ## Install
@@ -97,6 +98,7 @@ COMMANDS:
    discord     Send message to discord
    teams       Send message to microsoft teams
    pushover    Send message to pushover
+   pushbullet  Send message to pushbullet
    email       Send an email
    help, h     Shows a list of commands or help for one command
 
