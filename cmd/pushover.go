@@ -9,7 +9,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// slackPingMe struct holds data parsed via flags for slack service.
+// pushOver struct holds data parsed via flags for pushover service
 type pushOver struct {
 	Token     string
 	Recipient string
