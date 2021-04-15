@@ -49,7 +49,7 @@ brews:
       owner: kha7iq
       name: homebrew-tap
     folder: Formula
-    homepage: https://kha7iq.github.io/docs-pingme
+    homepage: pingme.lmno.pk
     description: PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms.
     license: MIT
     test: |
@@ -59,7 +59,7 @@ brews:
 
 nfpms:
   - file_name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
-    homepage:  https://kha7iq.github.io/docs-pingme
+    homepage:  pingme.lmno.pk
     description: PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms.
     license: MIT
     formats:
