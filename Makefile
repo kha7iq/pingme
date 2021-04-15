@@ -38,3 +38,7 @@ lint:
 
 ci: test lint
 .PHONY: ci
+
+snap:
+	snapcraft 
+.PHONY: snap
