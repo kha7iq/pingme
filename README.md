@@ -64,6 +64,26 @@ as message. And most of all this serves as a swiss army knife sort of tool which
 brew install kha7iq/tap/pingme
 ```
 
+### Build and install SNAP package for Linux
+
+```bash
+snap install snapcraft --classic
+snap install multipass
+
+make snap
+snap install pingme*.snap --devmode --dangerous
+
+pingme help
+
+```
+Don't forget to clear build the virtual environment
+
+``` bash
+multipass stop snapcraft-pingme && multipass delete  snapcraft-pingme && multipass purge
+
+```
+
+
 ### Go Get
 ```bash
 go get -u github.com/kha7iq/pingme
