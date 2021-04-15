@@ -73,6 +73,16 @@ go get -u github.com/kha7iq/pingme
 ### Windows
 Alternatively you can head over to [release pages](https://github.com/kha7iq/pingme/releases) and download the binary for windows & all other supported platforms.
 
+
+### Docker
+Also, you can build a docker container (size 19MB) and use it everywhere. 
+
+```bash
+docker build  -f Dockerfile  -t  kha7iq/pingme  .
+
+docker run --rm kha7iq/pingme:latest help
+```
+
 ## Usage
 
 ```bash
