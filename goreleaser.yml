@@ -92,6 +92,7 @@ dockers:
   - 'khaliq/pingme:{{ .Tag }}-amd64'
   - 'ghcr.io/kha7iq/pingme:{{ .Tag }}-amd64'
   dockerfile: Dockerfile
+  skip_push: false
   use_buildx: true
   build_flag_templates:
   - "--pull"
