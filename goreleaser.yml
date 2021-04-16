@@ -67,3 +67,72 @@ nfpms:
     - rpm
     dependencies:
     - git
+
+# snapcrafts:
+#   - name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+#     summary: PingMe is a CLI tool which provides the ability to send messages
+#     description: |
+#       PingMe is a CLI tool which provides the ability to send messages
+#       or alerts to multiple messaging platforms.
+#     grade: stable
+#     confinement: classic
+#     publish: false
+
+scoop:
+  bucket:
+    owner: kha7iq
+    name: scoop-bucket
+  homepage:  https://pingme.lmno.pk
+  description: Deliver Go binaries as fast and easily as possible
+  license: MIT
+
+
+dockers:
+- image_templates:
+  - 'khaliq/pingme:{{ .Tag }}-amd64'
+  - 'ghcr.io/kha7iq/pingme:{{ .Tag }}-amd64'
+  dockerfile: Dockerfile
+  use_buildx: true
+  build_flag_templates:
+  - "--pull"
+  - "--label=org.opencontainers.image.created={{.Date}}"
+  - "--label=org.opencontainers.image.name={{.ProjectName}}"
+  - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+  - "--label=org.opencontainers.image.version={{.Version}}"
+  - "--label=org.opencontainers.image.source={{.GitURL}}"
+  - "--platform=linux/amd64"
+  extra_files:
+  - scripts/entrypoint.sh
+- image_templates:
+  - 'khaliq/pingme:{{ .Tag }}-arm64'
+  - 'ghcr.io/kha7iq/pingme:{{ .Tag }}-arm64'
+  dockerfile: Dockerfile
+  use_buildx: true
+  build_flag_templates:
+  - "--pull"
+  - "--label=org.opencontainers.image.created={{.Date}}"
+  - "--label=org.opencontainers.image.name={{.ProjectName}}"
+  - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+  - "--label=org.opencontainers.image.version={{.Version}}"
+  - "--label=org.opencontainers.image.source={{.GitURL}}"
+  - "--platform=linux/arm64"
+  goarch: arm64
+  extra_files:
+  - scripts/entrypoint.sh
+docker_manifests:
+- name_template: 'khaliq/pingme:{{ .Tag }}'
+  image_templates:
+  - 'khaliq/pingme:{{ .Tag }}-amd64'
+  - 'khaliq/pingme:{{ .Tag }}-arm64'
+- name_template: 'ghcr.io/kha7iq/pingme:{{ .Tag }}'
+  image_templates:
+  - 'ghcr.io/kha7iq/pingme:{{ .Tag }}-amd64'
+  - 'ghcr.io/kha7iq/pingme:{{ .Tag }}-arm64'
+- name_template: 'khaliq/pingme:latest'
+  image_templates:
+  - 'khaliq/pingme:{{ .Tag }}-amd64'
+  - 'khaliq/pingme:{{ .Tag }}-arm64'
+- name_template: 'ghcr.io/kha7iq/pingme:latest'
+  image_templates:
+  - 'ghcr.io/kha7iq/pingme:{{ .Tag }}-amd64'
+  - 'ghcr.io/kha7iq/:{{ .Tag }}-arm64'
