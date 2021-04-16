@@ -4,7 +4,6 @@ on:
   push:
     tags:
       - 'v*'
-  pull_request:
 
 jobs:
   release-pingme:
@@ -36,10 +35,6 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      -
-        name: Check
-        run: |
-          ./goreleaser check
       -
         name: Diff
         run: git diff
