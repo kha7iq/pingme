@@ -1,6 +1,3 @@
-FROM alpine:latest  
-
-ENTRYPOINT ["entrypoint.sh"]
-COPY scripts/entrypoint.sh /usr/bin/entrypoint.sh
-RUN chmod +x /usr/bin/entrypoint.sh
+FROM alpine:latest
+ENTRYPOINT ["/usr/bin/pingme"]
 COPY pingme /usr/bin/pingme
