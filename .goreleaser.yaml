@@ -1,4 +1,3 @@
-
 env:
   - GO111MODULE=on
 before:
@@ -90,10 +89,11 @@ scoop:
 
 dockers:
 - image_templates:
-  - 'ghcr.io/kha7iq/pingme:{{ .Tag }}-amd64'
+  - 'khaliq/pingme:{{ .Tag }}'
+  - 'khaliq/pingme:latest'
+  - 'ghcr.io/kha7iq/pingme:{{ .Tag }}'
+  - 'ghcr.io/kha7iq/pingme:latest'
   dockerfile: Dockerfile
-  skip_push: false
-  use_buildx: true
   build_flag_templates:
   - "--pull"
   - "--label=org.opencontainers.image.created={{.Date}}"
@@ -104,27 +104,3 @@ dockers:
   - "--platform=linux/amd64"
   extra_files:
   - scripts/entrypoint.sh
-- image_templates:
-  - 'ghcr.io/kha7iq/pingme:{{ .Tag }}-arm64'
-  dockerfile: Dockerfile
-  use_buildx: true
-  build_flag_templates:
-  - "--pull"
-  - "--label=org.opencontainers.image.created={{.Date}}"
-  - "--label=org.opencontainers.image.name={{.ProjectName}}"
-  - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-  - "--label=org.opencontainers.image.version={{.Version}}"
-  - "--label=org.opencontainers.image.source={{.GitURL}}"
-  - "--platform=linux/arm64"
-  goarch: arm64
-  extra_files:
-  - scripts/entrypoint.sh
-docker_manifests:
-- name_template: 'ghcr.io/kha7iq/pingme:{{ .Tag }}'
-  image_templates:
-  - 'ghcr.io/kha7iq/pingme:{{ .Tag }}-amd64'
-  - 'ghcr.io/kha7iq/pingme:{{ .Tag }}-arm64'
-- name_template: 'ghcr.io/kha7iq/pingme:latest'
-  image_templates:
-  - 'ghcr.io/kha7iq/pingme:{{ .Tag }}-amd64'
-  - 'ghcr.io/kha7iq/:{{ .Tag }}-arm64'
