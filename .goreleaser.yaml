@@ -79,11 +79,12 @@ nfpms:
 # #     publish: false
 
 scoop:
+  url_template: "http://github.mycompany.com/foo/bar/releases/{{ .Tag }}/{{ .ArtifactName }}"
   bucket:
     owner: kha7iq
     name: scoop-bucket
   homepage:  https://pingme.lmno.pk
-  description: Deliver Go binaries as fast and easily as possible
+  description: PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms.
   license: MIT
 
 
