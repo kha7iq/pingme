@@ -28,6 +28,7 @@
   <a href="https://kha7iq.github.io/docs-pingme/#/">Documentation</a> •
   <a href="#supported-services">Supported Services</a> •
   <a href="#install">Install</a> •
+  <a href="#github-action">Github Action</a> •
   <a href="#configuration">Configuration</a> •
   <a href="#contributing">Contributing</a> •
   <a href="#show-your-support">Show Your Support</a> •
@@ -97,6 +98,12 @@ Run
 ```bash
 docker run ghcr.io/kha7iq/pingme:latest
 ```
+## Github Action
+
+A github action is also available now for this app, you can find it on [Github Market Place](https://github.com/marketplace/actions/pingme-action) or from this [repository](https://github.com/kha7iq/pingme-action) on github.
+
+Usage examples for workflow are available in the repo.
+
 
 ## Usage
 
