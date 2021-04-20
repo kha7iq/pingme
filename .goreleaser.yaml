@@ -79,7 +79,7 @@ nfpms:
 # #     publish: false
 
 scoop:
-  url_template: "http://github.mycompany.com/foo/bar/releases/{{ .Tag }}/{{ .ArtifactName }}"
+  url_template: "https://github.com/kha7iq/pingme/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
   bucket:
     owner: kha7iq
     name: scoop-bucket
