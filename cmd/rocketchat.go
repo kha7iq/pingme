@@ -24,7 +24,7 @@ type rocketChat struct {
 var (
 	// EmptyChannel variable holds default error message if no channel is provided.
 	EmptyChannel = "channel name or id can not be empty"
-	TimeValue    = "⏰ " + time.Now().String()
+	TimeValue    = "⏰ " + time.Now().Format(time.UnixDate)
 )
 
 // SendToRocketChat parse values from *cli.context and return *cli.Command.
