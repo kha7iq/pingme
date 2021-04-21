@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"log"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/urfave/cli/v2"
 )
@@ -22,6 +23,30 @@ type matterMost struct {
 	ChanIDs   string
 }
 
+// matterMostResponse struct holds the server responses
+type matterMostResponse struct {
+	ID         string `json:"id"`
+	CreateAt   int64  `json:"create_at"`
+	UpdateAt   int64  `json:"update_at"`
+	EditAt     int    `json:"edit_at"`
+	DeleteAt   int    `json:"delete_at"`
+	IsPinned   bool   `json:"is_pinned"`
+	UserID     string `json:"user_id"`
+	ChannelID  string `json:"channel_id"`
+	RootID     string `json:"root_id"`
+	ParentID   string `json:"parent_id"`
+	OriginalID string `json:"original_id"`
+	Message    string `json:"message"`
+	Type       string `json:"type"`
+	Props      struct {
+		FromBot string `json:"from_bot"`
+	} `json:"props"`
+	Hashtags      string   `json:"hashtags"`
+	PendingPostID string   `json:"pending_post_id"`
+	ReplyCount    int      `json:"reply_count"`
+	Metadata      struct{} `json:"metadata"`
+}
+
 // SendToMattermost parse values from *cli.context and return *cli.Command
 // and send messages to target channels.
 // If multiple channel ids are provided then the string is split with "," separator and
@@ -31,7 +56,7 @@ func SendToMattermost() *cli.Command {
 	return &cli.Command{
 		Name:  "mattermost",
 		Usage: "Send message to mattermost",
-		UsageText: "pingme mattermost --token '123' --channel '12345,567' --url 'localhost' --scheme http " +
+		UsageText: "pingme mattermost --token '123' --channel '12345567' --url 'localhost' --scheme http " +
 			"--message 'some message'",
 		Description: `Mattermost uses token to authenticate and channel ids for targets.
 You can specify multiple channels by separating the value with ','.`,
@@ -121,9 +146,7 @@ You can specify multiple channels by separating the value with ','.`,
 
 // toJson takes strings and convert them to json byte array
 func toJson(channel string, msg string) ([]byte, error) {
-	if len(msg) == 0 {
-		return nil, fmt.Errorf("Empty message")
-	}
+
 	m := make(map[string]string, 2)
 	m["channel_id"] = channel
 	m["message"] = msg
@@ -135,30 +158,35 @@ func toJson(channel string, msg string) ([]byte, error) {
 }
 
 // sendMattermost function take the server url , authentication token
-// message and channel id in the for of json byte array and sends
-// message to mattermost vi http client.
+// message and channel id in the form of json byte array and sends
+// message to mattermost.
 func sendMattermost(url string, token string, jsonPayload []byte) error {
+	var response matterMostResponse
+
 	// Create a new request using http
-	r, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonPayload))
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonPayload))
 	if err != nil {
 		return err
 	}
 
 	// add authorization header to the request
-	r.Header.Set("Authorization", token)
-	r.Header.Set("Content-Type", "application/json; charset=UTF-8")
+	req.Header.Set("Authorization", token)
+	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	// Send request using http Client
-	c := &http.Client{}
-	resp, err := c.Do(r)
+	// create a new http client and send request to server
+	c := &http.Client{Timeout: 10 * time.Second}
+	resp, err := c.Do(req)
 	if err != nil {
 		return err
 	}
-	body, err := ioutil.ReadAll(resp.Body)
+	defer resp.Body.Close()
+
+	// decode response sent from server
+	err = json.NewDecoder(resp.Body).Decode(&response)
 	if err != nil {
-		print(err)
+		return err
 	}
-	fmt.Println(string(body))
-	resp.Body.Close()
+	log.Printf("Server Reply: %v\nMessage: %v\n", response.ID, response.Message)
+
 	return nil
 }
