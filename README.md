@@ -25,7 +25,7 @@
 
 <p align="center">
   <a href="#about">About</a> •
-  <a href="https://kha7iq.github.io/docs-pingme/#/">Documentation</a> •
+  <a href="https://kha7iq.github.io/pingme">Documentation</a> •
   <a href="#supported-services">Supported Services</a> •
   <a href="#install">Install</a> •
   <a href="#github-action">Github Action</a> •
@@ -138,14 +138,14 @@ GLOBAL OPTIONS:
    --help, -h  show help (default: false)
 ```
 
-Check [Documentation Page](https://kha7iq.github.io/docs-pingme/#/) for more details.
+Check [Documentation Page](https://kha7iq.github.io/pingme/#/) for more details.
 
 ## Configuration
 
 All the flags have corresponding environment variables associated with it. You can either provide the value with flags
 or export to a variable.
 
-View the [Documentation Page](https://kha7iq.github.io/docs-pingme/#/) for more details.
+View the [Documentation Page](https://kha7iq.github.io/pingme/#/) for more details.
 
 
 ## Contributing

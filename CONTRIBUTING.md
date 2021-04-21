@@ -11,6 +11,26 @@ possible.
   - `cmd/rocketchat` - RocketChat notification service.
   - `cmd/slack` - Slack notification service.
   - `cmd/telegram` - Telegram notification service
+  
+- Documentation
+  `docs` - Contains the documentation in markdown format.
+  - `services.md` If you are adding a new service please add documentaiton to `services.md`.
+  - `home.md` Is the main page rendered when docs website is loaded.
+  - `install.md` Contains the install instructions for different packages.
+
+  - Checking Locally
+    - Docsify is used for documentation rendering from markdown, you can download
+    the cli and test locally before opening a pull request.
+    Install
+    ```bash
+    npm i docsify-cli -g
+    # yarn global add docsify-cli
+    ```
+    Serve locally
+    ```bash
+    docsify serve docs
+    ```
+
 
 ## Commits
 
