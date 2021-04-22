@@ -21,6 +21,7 @@ possible.
   - Checking Locally
     - Docsify is used for documentation rendering from markdown, you can download
     the cli and test locally before opening a pull request.
+
     Install
     ```bash
     npm i docsify-cli -g
@@ -36,6 +37,18 @@ possible.
 
 Commit messages should be well formatted, and to make that "standardized", we
 are using Conventional Commits.
+
+```shell
+
+  <type>[<scope>]: <short summary>
+     │      │             │
+     │      │             └─> Summary in present tense. Not capitalized. No period at the end. 
+     │      │
+     │      └─> Scope (optional): eg. common, compiler, authentication, core
+     │                                                                                          
+     └─> Type: chore, docs, feat, fix, refactor, style, or test.
+     
+```
 
 You can follow the documentation on
 [their website](https://www.conventionalcommits.org).
