@@ -146,7 +146,6 @@ You can specify multiple channels by separating the value with ','.`,
 
 // toJson takes strings and convert them to json byte array
 func toJson(channel string, msg string) ([]byte, error) {
-
 	m := make(map[string]string, 2)
 	m["channel_id"] = channel
 	m["message"] = msg
