@@ -31,7 +31,7 @@ func SendToDiscord() *cli.Command {
 		Description: `Discord uses bot token to authenticate & send messages to defined channels.
 Multiple channel ids can be used separated by comma ','.
 All configuration options are also available via environment variables.`,
-		UsageText: "pingme discord --token '123' --channel '12345,67890' --message 'some message'",
+		UsageText: "pingme discord --token '123' --channel '12345,67890' --msg 'some message'",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Destination: &discordOpts.Token,

@@ -28,7 +28,7 @@ func SendToSlack() *cli.Command {
 	return &cli.Command{
 		Name:      "slack",
 		Usage:     "Send message to slack",
-		UsageText: "pingme slack --token '123' --channel '12345,67890' --message 'some message'",
+		UsageText: "pingme slack --token '123' --channel '12345,67890' --msg 'some message'",
 		Description: `Slack uses token to authenticate and send messages to defined channels.
 Multiple channel ids can be used separated by comma ','.
 All configuration options are also available via environment variables.`,
