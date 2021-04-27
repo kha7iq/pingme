@@ -57,7 +57,7 @@ func SendToMattermost() *cli.Command {
 		Name:  "mattermost",
 		Usage: "Send message to mattermost",
 		UsageText: "pingme mattermost --token '123' --channel '12345567' --url 'localhost' --scheme http " +
-			"--message 'some message'",
+			"--msg 'some message'",
 		Description: `Mattermost uses token to authenticate and channel ids for targets.
 You can specify multiple channels by separating the value with ','.`,
 		Flags: []cli.Flag{

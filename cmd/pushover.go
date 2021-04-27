@@ -26,7 +26,7 @@ func SendToPushOver() *cli.Command {
 	return &cli.Command{
 		Name:      "pushover",
 		Usage:     "Send message to pushover",
-		UsageText: "pingme pushover --token '123' --user '12345,567' --message 'some message'",
+		UsageText: "pingme pushover --token '123' --user '12345,567' --msg 'some message'",
 		Description: `Pushover uses token to authenticate application and user token to  send messages to the user.
 All configuration options are also available via environment variables.`,
 		Flags: []cli.Flag{
