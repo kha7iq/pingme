@@ -111,7 +111,7 @@ jobs:
 ## Pushover
 
 ```bash
-pingme pushover --token '123' --user '12345567' --title 'some title' --message 'some message'
+pingme pushover --token '123' --user '12345567' --title 'some title' --msg 'some message'
 ```
 
 - Github Action
@@ -158,7 +158,7 @@ Latest api  version 4 is used for interacting with server, this can also be chan
 You can specify multiple channels by separating the value with ','.
 
 ```bash
-pingme mattermost --token '123' --channel '12345,567' --url 'localhost' --scheme 'http' --message 'some message'
+pingme mattermost --token '123' --channel '12345,567' --url 'localhost' --scheme 'http' --msg 'some message'
 ```
 
 - Github Action
@@ -207,7 +207,7 @@ Slack uses token to authenticate and send messages to defined channels.
 Multiple channel ids can be used separated by comma ','.
 
 ```bash
-pingme slack --token '123' --channel '1234567890' --message 'some message'
+pingme slack --token '123' --channel '1234567890' --msg 'some message'
 ```
 
 - Github Action
@@ -251,7 +251,7 @@ Discord uses bot token to authenticate & send messages to defined channels.
 Multiple channel ids can be used separated by comma ','.
 
 ```bash
- pingme discord --token '123' --channel '1234567890' --message 'some message'
+ pingme discord --token '123' --channel '1234567890' --msg 'some message'
 ```
 
 - Github Action
@@ -295,7 +295,7 @@ Teams uses webhooks to send messages, you can add multiple webhooks separated by
 you can add permissions for multiple channels to single webhook.
 
 ```bash
-pingme teams --webhook 'https://example.webhook.office.com/xx' --message 'some message'
+pingme teams --webhook 'https://example.webhook.office.com/xx' --msg 'some message'
 ```
 
 - Github Action

@@ -29,7 +29,7 @@ func SendToTeams() *cli.Command {
 		Usage: "Send message to microsoft teams",
 		Description: `Teams uses webhooks to send messages, you can add multiple webhooks separated by comma ',' or 
 you can add permissions for multiple channels to single webhook.`,
-		UsageText: "pingme teams --webhook 'https://example.webhook.office.com/xx' --message 'some message'",
+		UsageText: "pingme teams --webhook 'https://example.webhook.office.com/xx' --msg 'some message'",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Destination: &msTeamOpt.Webhook,
