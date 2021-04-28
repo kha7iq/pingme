@@ -77,9 +77,9 @@ All configuration options are also available via environment variables.`,
 				if len(v) <= 0 {
 					return fmt.Errorf(EmptyChannel)
 				}
-				k, err := strconv.Atoi(v)
-				if err != nil {
-					log.Println(err)
+				k, errStr := strconv.Atoi(v)
+				if errStr != nil {
+					return errStr
 				}
 				telegramSvc.AddReceivers(int64(k))
 			}

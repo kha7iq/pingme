@@ -66,7 +66,7 @@ All configuration options are also available via environment variables.`,
 			discordSvc := discord.New()
 
 			if err := discordSvc.AuthenticateWithBotToken(discordOpts.Token); err != nil {
-				return fmt.Errorf("unable to authenticate %v\n", err)
+				return fmt.Errorf("unable to authenticate %v", err)
 			}
 
 			chn := strings.Split(discordOpts.Channel, ",")

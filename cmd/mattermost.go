@@ -18,7 +18,7 @@ type matterMost struct {
 	Token     string
 	ServerURL string
 	Scheme    string
-	ApiURL    string
+	APIURL    string
 	Message   string
 	ChanIDs   string
 }
@@ -108,7 +108,7 @@ You can specify multiple channels by separating the value with ','.`,
 				EnvVars:     []string{"MATTERMOST_SCHEME"},
 			},
 			&cli.StringFlag{
-				Destination: &mattermostOpts.ApiURL,
+				Destination: &mattermostOpts.APIURL,
 				Name:        "api",
 				Value:       "/api/v4/posts",
 				Usage:       "Unless using older version of api default is fine.",
@@ -116,7 +116,7 @@ You can specify multiple channels by separating the value with ','.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			endPointURL := mattermostOpts.Scheme + "://" + mattermostOpts.ServerURL + mattermostOpts.ApiURL
+			endPointURL := mattermostOpts.Scheme + "://" + mattermostOpts.ServerURL + mattermostOpts.APIURL
 
 			// Create a Bearer string by appending string access token
 			bearer := "Bearer " + mattermostOpts.Token
@@ -129,7 +129,7 @@ You can specify multiple channels by separating the value with ','.`,
 					return fmt.Errorf(EmptyChannel)
 				}
 
-				jsonData, err := toJson(v, fullMessage)
+				jsonData, err := toJSON(v, fullMessage)
 				if err != nil {
 					return fmt.Errorf("error parsing json\n[ERROR] - %v", err)
 				}
@@ -137,7 +137,6 @@ You can specify multiple channels by separating the value with ','.`,
 				if err := sendMattermost(endPointURL, bearer, jsonData); err != nil {
 					return fmt.Errorf("failed to send message\n[ERROR] - %v", err)
 				}
-
 			}
 			return nil
 		},
@@ -145,7 +144,7 @@ You can specify multiple channels by separating the value with ','.`,
 }
 
 // toJson takes strings and convert them to json byte array
-func toJson(channel string, msg string) ([]byte, error) {
+func toJSON(channel string, msg string) ([]byte, error) {
 	m := make(map[string]string, 2)
 	m["channel_id"] = channel
 	m["message"] = msg

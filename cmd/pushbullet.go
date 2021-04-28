@@ -105,7 +105,6 @@ Multiple device nicknames or numbers can be used separated by comma.`,
 					); err != nil {
 						return err
 					}
-
 				}
 			default:
 				pushBulletSvc := pushbullet.New(pushBulletOpts.Token)
@@ -127,7 +126,6 @@ Multiple device nicknames or numbers can be used separated by comma.`,
 				); err != nil {
 					return err
 				}
-
 			}
 
 			log.Println("Successfully sent!")

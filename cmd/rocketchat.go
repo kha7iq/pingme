@@ -13,7 +13,7 @@ import (
 
 type rocketChat struct {
 	Token     string
-	UserId    string
+	UserID    string
 	Message   string
 	Channel   string
 	Title     string
@@ -43,7 +43,7 @@ All configuration options are also available via environment variables.`,
 			" --channel 'alert' --msg 'some message'",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Destination: &rocketChatOpts.UserId,
+				Destination: &rocketChatOpts.UserID,
 				Name:        "userid",
 				Aliases:     []string{"id"},
 				Required:    true,
@@ -99,7 +99,7 @@ All configuration options are also available via environment variables.`,
 			notifier := notify.New()
 
 			rocketChatSvc, err := rocketchat.New(rocketChatOpts.ServerURL, rocketChatOpts.Scheme,
-				rocketChatOpts.UserId, rocketChatOpts.Token)
+				rocketChatOpts.UserID, rocketChatOpts.Token)
 			if err != nil {
 				return err
 			}

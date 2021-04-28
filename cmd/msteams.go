@@ -63,7 +63,6 @@ you can add permissions for multiple channels to single webhook.`,
 					return fmt.Errorf(EmptyChannel)
 				}
 				teamsSvc.AddReceivers(v)
-
 			}
 
 			notifier.UseServices(teamsSvc)
