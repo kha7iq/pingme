@@ -9,29 +9,12 @@ linters-settings:
   goconst:
     min-len: 2
     min-occurrences: 2
-  gocritic:
-    enabled-tags:
-      - diagnostic
-      - experimental
-      - opinionated
-      - performance
-      - style
-    disabled-checks:
-      - ifElseChain
-      - octalLiteral
-      - whyNoLint
-      - wrapperFunc
   gocyclo:
     min-complexity: 15
   goimports:
     local-prefixes: github.com/golangci/golangci-lint
   golint:
     min-confidence: 0
-  gomnd:
-    settings:
-      mnd:
-        # don't include the "operation" and "assign"
-        checks: argument,case,condition,return
   govet:
     check-shadowing: true
     settings:
@@ -86,11 +69,3 @@ linters:
     - unused
     - varcheck
     - whitespace
-
-
-# issues:
-#   # Excluding configuration per-path, per-linter, per-text and per-source
-#   exclude-rules:
-#     - path: _test\.go
-#       linters:
-#         - gomnd
