@@ -6,7 +6,7 @@ env:
 
 jobs:
   lint-code:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     name: PingMe
     steps:
       - name: Checkout
