@@ -4,19 +4,20 @@ possible.
 
 ## Project structure
 
-- `main` - Contains definitions for the underlying notification services.
-  - `cmd/discord` - Discord notification service.
-  - `cmd/email` - Email notification service.
-  - `cmd/msteams` - Microsoft Teams notification service.
-  - `cmd/rocketchat` - RocketChat notification service.
-  - `cmd/slack` - Slack notification service.
-  - `cmd/telegram` - Telegram notification service
+- `service` - Contains definitions for the underlying notification services.
+  - `service/discord` - Discord notification service.
+  - `service/email` - Email notification service.
+  - `service/msteams` - Microsoft Teams notification service.
+  - `service/rocketchat` - RocketChat notification service.
+  - `service/slack` - Slack notification service.
+  - `service/telegram` - Telegram notification service.
+  - `service/pushover` - Pushover Notification service.
   
 - Documentation
-  `docs` - Contains the documentation in markdown format.
-  - `services.md` If you are adding a new service please add documentaiton to `services.md`.
+  `docs` - Contains the documentation in Markdown format.
+  - `services.md` If you are adding a new service please add documentation to `services.md`.
   - `home.md` Is the main page rendered when docs website is loaded.
-  - `install.md` Contains the install instructions for different packages.
+  - `install.md` Contains the installation instructions for different packages.
 
   - Checking Locally
     - Docsify is used for documentation rendering from markdown, you can download
