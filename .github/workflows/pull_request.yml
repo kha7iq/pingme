@@ -7,7 +7,7 @@ env:
 jobs:
   lint-code:
     runs-on: ubuntu-latest
-    name: PingMe
+    name: Perform Checks
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
         with:
           version: v1.29
 
-      - name: Notification for checks failure
+      - name: Notify on failure
         uses: kha7iq/pingme-action@v1
         if: failure()
         env:
@@ -26,7 +26,7 @@ jobs:
         with:
           service: pushover
 
-      - name: Notification for checks passing
+      - name: Notify on success
         uses: kha7iq/pingme-action@v1
         if: success()
         env:
