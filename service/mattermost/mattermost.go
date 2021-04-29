@@ -1,4 +1,4 @@
-package cmd
+package mattermost
 
 import (
 	"bytes"
@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/kha7iq/pingme/service/helpers"
 
 	"github.com/urfave/cli/v2"
 )
@@ -47,11 +49,11 @@ type matterMostResponse struct {
 	Metadata      struct{} `json:"metadata"`
 }
 
-// SendToMattermost parse values from *cli.context and return *cli.Command
+// Send parse values from *cli.context and return *cli.Command
 // and send messages to target channels.
 // If multiple channel ids are provided then the string is split with "," separator and
 // message is sent to each channel.
-func SendToMattermost() *cli.Command {
+func Send() *cli.Command {
 	var mattermostOpts matterMost
 	return &cli.Command{
 		Name:  "mattermost",
@@ -87,7 +89,7 @@ You can specify multiple channels by separating the value with ','.`,
 			&cli.StringFlag{
 				Destination: &mattermostOpts.Title,
 				Name:        "title",
-				Value:       TimeValue,
+				Value:       helpers.TimeValue,
 				Usage:       "Title of the message.",
 				EnvVars:     []string{"MATTERMOST_TITLE"},
 			},
@@ -126,7 +128,7 @@ You can specify multiple channels by separating the value with ','.`,
 			ids := strings.Split(mattermostOpts.ChanIDs, ",")
 			for _, v := range ids {
 				if len(v) == 0 {
-					return fmt.Errorf(EmptyChannel)
+					return helpers.ErrChannel
 				}
 
 				jsonData, err := toJSON(v, fullMessage)
