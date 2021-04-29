@@ -1,10 +1,12 @@
-package cmd
+package discord
 
 import (
 	"context"
 	"fmt"
 	"log"
 	"strings"
+
+	"github.com/kha7iq/pingme/service/helpers"
 
 	"github.com/nikoksr/notify"
 	"github.com/nikoksr/notify/service/discord"
@@ -19,11 +21,11 @@ type discordPingMe struct {
 	Title   string
 }
 
-// SendToDiscord parse values from *cli.context and return *cli.Command.
+// Send parse values from *cli.context and return *cli.Command.
 // Values include discord bot token, userID, channelIDs, Message and Title.
 // If multiple channels are provided then the string is split with "," separator and
 // each channelID is added to receiver.
-func SendToDiscord() *cli.Command {
+func Send() *cli.Command {
 	var discordOpts discordPingMe
 	return &cli.Command{
 		Name:  "discord",
@@ -56,7 +58,7 @@ All configuration options are also available via environment variables.`,
 			&cli.StringFlag{
 				Destination: &discordOpts.Title,
 				Name:        "title",
-				Value:       TimeValue,
+				Value:       helpers.TimeValue,
 				Usage:       "Title of the message.",
 				EnvVars:     []string{"DISCORD_MSG_TITLE"},
 			},
@@ -72,7 +74,7 @@ All configuration options are also available via environment variables.`,
 			chn := strings.Split(discordOpts.Channel, ",")
 			for _, v := range chn {
 				if len(v) <= 0 {
-					return fmt.Errorf(EmptyChannel)
+					return helpers.ErrChannel
 				}
 
 				discordSvc.AddReceivers(v)

@@ -1,10 +1,11 @@
-package cmd
+package msteams
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"strings"
+
+	"github.com/kha7iq/pingme/service/helpers"
 
 	"github.com/nikoksr/notify"
 	msteams2 "github.com/nikoksr/notify/service/msteams"
@@ -18,11 +19,11 @@ type msTeams struct {
 	Title   string
 }
 
-// SendToTeams parse values from *cli.context and return *cli.Command.
+// Send parse values from *cli.context and return *cli.Command.
 // Values include Ms Teams Webhook, Message and Title.
 // If multiple webhooks are provided then the string is split with "," separator and
 // each webhook is added to receiver.
-func SendToTeams() *cli.Command {
+func Send() *cli.Command {
 	var msTeamOpt msTeams
 	return &cli.Command{
 		Name:  "teams",
@@ -48,7 +49,7 @@ you can add permissions for multiple channels to single webhook.`,
 			&cli.StringFlag{
 				Destination: &msTeamOpt.Title,
 				Name:        "title",
-				Value:       TimeValue,
+				Value:       helpers.TimeValue,
 				Usage:       "Title of the message.",
 				EnvVars:     []string{"TEAMS_MSG_TITLE"},
 			},
@@ -60,7 +61,7 @@ you can add permissions for multiple channels to single webhook.`,
 			chn := strings.Split(msTeamOpt.Webhook, ",")
 			for _, v := range chn {
 				if len(v) <= 0 {
-					return fmt.Errorf(EmptyChannel)
+					return helpers.ErrChannel
 				}
 				teamsSvc.AddReceivers(v)
 			}

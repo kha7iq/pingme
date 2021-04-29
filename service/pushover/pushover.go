@@ -1,9 +1,10 @@
-package cmd
+package pushover
 
 import (
-	"fmt"
 	"log"
 	"strings"
+
+	"github.com/kha7iq/pingme/service/helpers"
 
 	"github.com/gregdel/pushover"
 	"github.com/urfave/cli/v2"
@@ -17,11 +18,11 @@ type pushOver struct {
 	Title     string
 }
 
-// SendToPushOver parse values from *cli.context and return *cli.Command.
+// Send parse values from *cli.context and return *cli.Command.
 // Values include  token, users, Message and Title.
 // If multiple users are provided then the string is split with "," separator and
 // each user is added to receiver.
-func SendToPushOver() *cli.Command {
+func Send() *cli.Command {
 	var pushOverOpts pushOver
 	return &cli.Command{
 		Name:      "pushover",
@@ -56,7 +57,7 @@ All configuration options are also available via environment variables.`,
 			&cli.StringFlag{
 				Destination: &pushOverOpts.Title,
 				Name:        "title",
-				Value:       TimeValue,
+				Value:       helpers.TimeValue,
 				Usage:       "Title of the message.",
 				EnvVars:     []string{"PUSHOVER_TITLE"},
 			},
@@ -68,7 +69,7 @@ All configuration options are also available via environment variables.`,
 
 			for _, v := range users {
 				if len(v) == 0 {
-					return fmt.Errorf(EmptyChannel)
+					return helpers.ErrChannel
 				}
 				recipient := pushover.NewRecipient(v)
 				responsePushOver, err := app.SendMessage(message, recipient)

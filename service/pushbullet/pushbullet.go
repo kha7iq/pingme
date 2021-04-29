@@ -1,10 +1,11 @@
-package cmd
+package pushbullet
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"strings"
+
+	"github.com/kha7iq/pingme/service/helpers"
 
 	"github.com/nikoksr/notify"
 	"github.com/nikoksr/notify/service/pushbullet"
@@ -21,11 +22,11 @@ type pushBullet struct {
 	SMS         bool
 }
 
-// SendToPushBullet parse values from *cli.context and return *cli.Command.
+// Send parse values from *cli.context and return *cli.Command.
 // Values include pushbullet token, Device, phone number, Message and Title.
 // If multiple devices are provided they the string is split with "," separator and
 // each device is added to receiver.
-func SendToPushBullet() *cli.Command {
+func Send() *cli.Command {
 	var pushBulletOpts pushBullet
 	return &cli.Command{
 		Name:  "pushbullet",
@@ -68,7 +69,7 @@ Multiple device nicknames or numbers can be used separated by comma.`,
 			&cli.StringFlag{
 				Destination: &pushBulletOpts.Title,
 				Name:        "title",
-				Value:       TimeValue,
+				Value:       helpers.TimeValue,
 				Usage:       "Title of the message.",
 				EnvVars:     []string{"PUSHBULLET_TITLE"},
 			},
@@ -92,7 +93,7 @@ Multiple device nicknames or numbers can be used separated by comma.`,
 				devices := strings.Split(pushBulletOpts.PhoneNumber, ",")
 				for _, v := range devices {
 					if len(v) <= 0 {
-						return fmt.Errorf(EmptyChannel)
+						return helpers.ErrChannel
 					}
 					pushBulletSmsSvc.AddReceivers(v)
 
@@ -112,7 +113,7 @@ Multiple device nicknames or numbers can be used separated by comma.`,
 				devices := strings.Split(pushBulletOpts.Device, ",")
 				for _, v := range devices {
 					if len(v) <= 0 {
-						return fmt.Errorf(EmptyChannel)
+						return helpers.ErrChannel
 					}
 					pushBulletSvc.AddReceivers(v)
 				}

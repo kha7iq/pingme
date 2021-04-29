@@ -61,7 +61,7 @@ as message, and most of all this serves as a swiss army knife sort of tool which
 
 ## Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/kha7iq/pingme/issues). You can also take a look at the [contributing guide](https://github.com/kha7iq/pingme/blob/master/CONTRIBUTING.md).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/kha7iq/pingme/issues). You can also take a look at the [contribution guide](contribution.md).
 
 
 
@@ -73,6 +73,6 @@ Give a ⭐️  if you like this project!
 
 ## Disclaimer
 
-Any misuse of this utilify is your own liability and responsibility and cannot be attributed to the authors of this library.  See [license](LICENSE) for more.
+Any misuse of this utility is your own liability and responsibility and cannot be attributed to the authors of this library.  See [license](https://github.com/kha7iq/pingme/blob/master/LICENSE.md) for more.
 
 Spamming through the use of this library **may get you permanently banned** on most supported platforms.

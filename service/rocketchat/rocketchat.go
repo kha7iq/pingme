@@ -1,11 +1,10 @@
-package cmd
+package rocketchat
 
 import (
 	"context"
-	"fmt"
 	"strings"
-	"time"
 
+	"github.com/kha7iq/pingme/service/helpers"
 	"github.com/nikoksr/notify"
 	"github.com/nikoksr/notify/service/rocketchat"
 	"github.com/urfave/cli/v2"
@@ -21,17 +20,11 @@ type rocketChat struct {
 	Scheme    string
 }
 
-var (
-	// EmptyChannel variable holds default error message if no channel is provided.
-	EmptyChannel = "channel name or id can not be empty"
-	TimeValue    = "⏰ " + time.Now().Format(time.UnixDate)
-)
-
-// SendToRocketChat parse values from *cli.context and return *cli.Command.
+// Send parse values from *cli.context and return *cli.Command.
 // Values include rocketchat token, , UserId, channelIDs, ServerURL, Scheme, Message and Title.
 // If multiple channels are provided then the string is split with "," separator and
 // each channelID is added to receiver.
-func SendToRocketChat() *cli.Command {
+func Send() *cli.Command {
 	var rocketChatOpts rocketChat
 	return &cli.Command{
 		Name:  "rocketchat",
@@ -90,7 +83,7 @@ All configuration options are also available via environment variables.`,
 			&cli.StringFlag{
 				Destination: &rocketChatOpts.Title,
 				Name:        "title",
-				Value:       TimeValue,
+				Value:       helpers.TimeValue,
 				Usage:       "Title of the message",
 				EnvVars:     []string{"ROCKETCHAT_TITLE"},
 			},
@@ -106,7 +99,7 @@ All configuration options are also available via environment variables.`,
 			chn := strings.Split(rocketChatOpts.Channel, ",")
 			for _, v := range chn {
 				if len(v) <= 0 {
-					return fmt.Errorf(EmptyChannel)
+					return helpers.ErrChannel
 				}
 
 				rocketChatSvc.AddReceivers(v)
