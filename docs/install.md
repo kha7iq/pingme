@@ -9,7 +9,7 @@ brew install kha7iq/tap/pingme
 wget -q https://github.com/kha7iq/pingme/releases/download/v0.1.6/pingme_Linux_x86_64.tar.gz
 tar -xf pingme_Linux_x86_64.tar.gz
 chmod +x pingme
-sudo mv
+sudo mv pingme /usr/local/bin/pingme
 ```
 
 ## Go Get
