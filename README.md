@@ -58,6 +58,7 @@ as message, and most of all this serves as a swiss army knife sort of tool which
 - *RocketChat*
 - *Slack*
 - *Telegram*
+- *Twillio*
 
 ## Install
 
