@@ -382,6 +382,52 @@ jobs:
 | PUSHBULLET_TITLE            |         ""         | 
 
 
+
+## Twillio SMS
+SMS can be sent via twillio to multiple numbers, you can add multiple receivers separated by a comma.
+
+```bash
+ pingme twillio --token 'tokenabc' --account 'sid123' --sender '+140001442' --receiver '+140001442'' --msg 'some message'
+```
+
+- GitHub Action
+
+```yaml
+on: [push]
+
+jobs:
+  pingme-job:
+    runs-on: ubuntu-latest
+    name: PingMe
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ping me On
+        uses: kha7iq/pingme-action@v1
+        env:
+          TWILLIO_TOKEN: ${{ secrets.TWILLIO_TOKEN }}
+          TWILLIO_ACCOUNT_SID: ${{ secrets.TWILLIO_ACCOUNT_SID }}
+          TWILLIO_SENDER: ${{ secrets.TWILLIO_SENDER }}
+          TWILLIO_RECEIVER: ${{ secrets.TWILLIO_RECEIVER }}
+          TWILLIO_TITLE: 'Reference: ${{ github.ref }}'
+          TWILLIO_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
+        with:
+          # Chose the messaging platform. 
+          # slack / telegram / rocketchat / teams / pushover / discord / email / mattermost / twillio
+          service: twillio
+```
+- **Variables**
+
+|          Variables         | Default Value  | 
+| -------------------------- | :----------------: |
+| TWILLIO_TOKEN           |         ""        |
+| TWILLIO_ACCOUNT_SID            |         ""         | 
+| TWILLIO_SENDER        |         ""         |  
+| TWILLIO_RECEIVER            |         ""         | 
+| TWILLIO_TITLE        |         ""         |
+| TWILLIO_MESSAGE        |         ""         |
+
 ## Email
 Email uses username  & password to authenticate for sending emails.
 SMTP hostname i.e smtp.gmail.com and port i.e (587) should be provided as well for the server.
