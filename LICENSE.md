@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD041 -->
 MIT License
 
-Copyright (c) 2021 Khaliq
+Copyright (c) 2021 Abdul Khaliq <a.khaliq@outlook.my>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
