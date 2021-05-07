@@ -67,9 +67,8 @@ We actively welcome your pull requests.
 1. Fork the repo and create your branch from `master`.
 2. If you've added code that should be tested, add tests.
 3. If you've changed APIs, update the documentation.
-4. Ensure the test suite passes (`make test`).
-5. Make sure your code lints (`make lint`).
-6. Make sure your code is well formatted (`make fmt`).
+4. Make sure your code lints (`make lint`).
+5. Make sure your code is well formatted (`make fmt`).
 
 ## Issues
 

@@ -127,6 +127,10 @@ docker run ghcr.io/kha7iq/pingme:latest
 A github action is also available now for this app, you can find it on
 [Github Market Place](https://github.com/marketplace/actions/pingme-action) or
 from this [repository](https://github.com/kha7iq/pingme-action) on github.
+```yaml
+- name: PingMe-Action
+  uses: kha7iq/pingme-action@v1
+```
 
 Usage examples for workflow are available in the repo.
 
