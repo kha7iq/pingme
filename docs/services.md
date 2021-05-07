@@ -1,17 +1,15 @@
+# Configuration
 
-
-### Configuration 
-
-All the flags have crosponding enviornment variables assosiated with it. You can either provide the value with flags
-
-or export to a variable. You can view the crosponding variable to each with --help flag. 
+All the flags have crosponding enviornment variables assosiated with it. You
+can either provide the value with flags or export to a variable. You can view
+the crosponding variable to each with --help flag.
 
 *Flags* take presedance over *variables*
 
 *Default* value for message title is current *time*
 
-
 ## Telegram
+
 Telegram uses bot token to authenticate & send messages to defined channels.
 Multiple channel ids can be used separated by comma ','.
 
@@ -45,25 +43,30 @@ jobs:
           # slack / telegram / rocketchat / teams / pushover / discord / email
           service: telegram
 ```
+
 - **Variables**
 
-
-|          Variables         | Default Value  | 
+|          Variables         | Default Value      |
 | -------------------------- | :----------------: |
-| TELEGRAM_MSG_TITLE        |         ""         |  
-| TELEGRAM_TOKEN           |         ""        |
-| TELEGRAM_CHANNELS   |         ""         | 
-| TELEGRAM_MESSAGE            |         ""         | 
-| TELEGRAM_MSG_TITLE        |         ""         |  
-
+| TELEGRAM_MSG_TITLE         | ""                 |  
+| TELEGRAM_TOKEN             | ""                 |
+| TELEGRAM_CHANNELS          | ""                 |
+| TELEGRAM_MESSAGE           | ""                 |
+| TELEGRAM_MSG_TITLE         | ""                 |  
 
 ## RocketChat
-RocketChat uses token & userID to authenticate and send messages to defined channels.
-Multiple channel ids can be used separated by comma ','.
+
+RocketChat uses token & userID to authenticate and send messages to defined
+channels. Multiple channel ids can be used separated by comma ','.
 
 ```bash
-pingme rocketchat --channel "general,Pingme" --msg ":wave: rocketchat from cli" --userid "123" --token "abcxyz" \
---url 'localhost:3000' --scheme "http"
+pingme rocketchat \
+  --channel "general,Pingme" \
+  --msg ":wave: rocketchat from cli" \
+  --userid "123" \
+  --token "abcxyz" \
+  --url 'localhost:3000' \
+  --scheme "http"
 ```
 
 - Github Action
@@ -92,26 +95,31 @@ jobs:
           ROCKETCHAT_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         with:
           # Chose the messaging platform. 
-          # slack / telegram / rocketchat / teams / pushover / discord / email / mattermost
+          # slack / telegram / rocketchat / teams / 
+          # pushover / discord / email / mattermost
           service: rocketchat
 ```
+
 - **Variables**
 
-|          Variables         | Default Value  | 
+|          Variables         | Default Value      |
 | -------------------------- | :----------------: |
-| ROCKETCHAT_USERID           |         ""        |
-| ROCKETCHAT_TOKEN   |         ""         | 
-| ROCKETCHAT_SERVER_URL            |         ""         | 
-| ROCKETCHAT_URL_SCHEME        |         "https"         |  
-| RTOCKETCHAT_MESSAGE            |         ""         | 
-| ROCKETCHAT_TITLE            |         ""         | 
-| ROCKETCHAT_CHANNELS        |         ""         |  
-
+| ROCKETCHAT_USERID          | ""                 |
+| ROCKETCHAT_TOKEN           | ""                 |
+| ROCKETCHAT_SERVER_URL      | ""                 |
+| ROCKETCHAT_URL_SCHEME      | "https"            |  
+| RTOCKETCHAT_MESSAGE        | ""                 |
+| ROCKETCHAT_TITLE           | ""                 |
+| ROCKETCHAT_CHANNELS        | ""                 |  
 
 ## Pushover
 
 ```bash
-pingme pushover --token '123' --user '12345567' --title 'some title' --msg 'some message'
+pingme pushover \
+  --token '123' \
+  --user '12345567' \
+  --title 'some title' \
+  --msg 'some message'
 ```
 
 - GitHub Action
@@ -137,28 +145,35 @@ jobs:
         
         with:
           # Chose the messaging platform. 
-          # slack / telegram / rocketchat / teams / pushover / discord / email
+          # slack / telegram / rocketchat / teams / 
+          # pushover / discord / email
           service: pushover
 ```
 
 - **Variables**
 
-|          Variables         | Default Value  | 
+|          Variables         | Default Value      |
 | -------------------------- | :----------------: |
-| PUSHOVER_TOKEN           |         ""        |
-| PUSHOVER_USER   |         ""         | 
-| PUSHOVER_MESSAGE            |         ""         |
-| PUSHOVER_TITLE            |         ""         | 
+| PUSHOVER_TOKEN             | ""                 |
+| PUSHOVER_USER              | ""                 |
+| PUSHOVER_MESSAGE           | ""                 |
+| PUSHOVER_TITLE             | ""                 |
 
 ## Mattermost
-Mattermost uses token to authenticate and channel ids for targets.
-Destination server can be specified as 'example.com' by default the 'https' is used, you
-can change this with --scheme flag and set it to 'http'.
-Latest api  version 4 is used for interacting with server, this can also be changes with --api flag.
+
+Mattermost uses token to authenticate and channel ids for targets. Destination
+server can be specified as 'example.com' by default the 'https' is used, you
+can change this with --scheme flag and set it to 'http'. Latest api  version 4
+is used for interacting with server, this can also be changes with --api flag.
 You can specify multiple channels by separating the value with ','.
 
 ```bash
-pingme mattermost --token '123' --channel '12345,567' --url 'localhost' --scheme 'http' --msg 'some message'
+pingme mattermost \
+  --token '123' \
+  --channel '12345,567' \
+  --url 'localhost' \
+  --scheme 'http' \
+  --msg 'some message'
 ```
 
 - GitHub Action
@@ -186,28 +201,33 @@ jobs:
           MATTERMOST_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         with:
           # Chose the messaging platform. 
-          # slack / telegram / rocketchat / teams / pushover / discord / email / mattermost
+          # slack / telegram / rocketchat / teams / 
+          # pushover / discord / email / mattermost
           service: mattermost
 ```
 
 - **Variables**
 
-|          Variables         | Default Value  | 
+|          Variables         | Default Value      |
 | -------------------------- | :----------------: |
-| MATTERMOST_API_URL           |         "/api/v4/posts"        |
-| MATTERMOST_TOKEN   |         ""         | 
-| MATTERMOST_SERVER_URL            |         ""         | 
-| MATTERMOST_SCHEME        |         "https"         |  
-| MATTERMOST_MESSAGE            |         ""         | 
-| MATTERMOST_TITLE            |         ""         | 
-| MATTERMOST_CHANNELS        |         ""         |  
+| MATTERMOST_API_URL         | "/api/v4/posts"    |
+| MATTERMOST_TOKEN           | ""                 |
+| MATTERMOST_SERVER_URL      | ""                 |
+| MATTERMOST_SCHEME          | "https"            |  
+| MATTERMOST_MESSAGE         | ""                 |
+| MATTERMOST_TITLE           | ""                 |
+| MATTERMOST_CHANNELS        | ""                 |  
 
 ## Slack
+
 Slack uses token to authenticate and send messages to defined channels.
 Multiple channel ids can be used separated by comma ','.
 
 ```bash
-pingme slack --token '123' --channel '1234567890' --msg 'some message'
+pingme slack \
+  --token '123' \
+  --channel '1234567890' \
+  --msg 'some message'
 ```
 
 - Github Action
@@ -233,20 +253,21 @@ jobs:
           SLACK_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         with:
           # Chose the messaging platform. 
-          # slack / telegram / rocketchat / teams / pushover / discord / email
+          # slack / telegram / rocketchat / teams / 
+          # pushover / discord / email
           service: slack
 ```
 
 - **Variables**
 
-|          Variables         | Default Value  | 
+|          Variables         | Default Value      |
 | -------------------------- | :----------------: |
-| SLACK_TOKEN           |         ""        |
-| SLACK_CHANNELS   |         ""         | 
-| SLACK_MESSAGE            |         ""         | 
-
+| SLACK_TOKEN                | ""                 |
+| SLACK_CHANNELS             | ""                 |
+| SLACK_MESSAGE              | ""                 |
 
 ## Discord
+
 Discord uses bot token to authenticate & send messages to defined channels.
 Multiple channel ids can be used separated by comma ','.
 
@@ -277,22 +298,24 @@ jobs:
           DISCORD_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         with:
           # Chose the messaging platform. 
-          # slack / telegram / rocketchat / teams / pushover / discord / email / mattermost
+          # slack / telegram / rocketchat / teams / 
+          # pushover / discord / email / mattermost
           service: discord
 ```
+
 - **Variables**
 
-|          Variables         | Default Value  | 
+|          Variables         | Default Value      |
 | -------------------------- | :----------------: |
-| DISCORD_TOKEN           |         ""        |
-| DISCORD_CHANNELS   |         ""         | 
-| DISCORD_MESSAGE            |         ""         | 
-| DISCORD_MSG_TITLE        |         ""         |  
-
+| DISCORD_TOKEN              | ""                 |
+| DISCORD_CHANNELS           | ""                 |
+| DISCORD_MESSAGE            | ""                 |
+| DISCORD_MSG_TITLE          | ""                 |  
 
 ## Microsoft Teams
-Teams uses webhooks to send messages, you can add multiple webhooks separated by comma ',' or
-you can add permissions for multiple channels to single webhook.
+
+Teams uses webhooks to send messages, you can add multiple webhooks separated
+by comma ',' or you can add permissions for multiple channels to single webhook.
 
 ```bash
 pingme teams --webhook 'https://example.webhook.office.com/xx' --msg 'some message'
@@ -320,25 +343,34 @@ jobs:
         
         with:
           # Chose the messaging platform. 
-          # slack / telegram / rocketchat / teams / pushover / discord / email / mattermost
+          # slack / telegram / rocketchat / teams /
+          # pushover / discord / email / mattermost
           service: teams
 ```
+
 - **Variables**
 
-|          Variables         | Default Value  | 
+|          Variables         | Default Value      |
 | -------------------------- | :----------------: |
-| TEAMS_WEBHOOK           |         ""        |
-| TEAMS_MESSAGE            |         ""         | 
-| TEAMS_MSG_TITLE        |         ""         |  
+| TEAMS_WEBHOOK              | ""                 |
+| TEAMS_MESSAGE              | ""                 |
+| TEAMS_MSG_TITLE            | ""                 |  
 
 ## Pushbullet
 
 - SMS
+
 ```bash
-pingme pushbullet  --sms true --token "abcdefg" -d "adnroid" --msg "some message" --number "00123456789"
+pingme pushbullet \
+  --sms true \
+  --token "abcdefg" \
+  -d "adnroid" \
+  --msg "some message" \
+  --number "00123456789"
 ```
 
 - Push notification
+
 ```bash
 pingme pushbullet --token "abcdefg" -d "adnroid" --msg "some message"
 ```
@@ -366,28 +398,34 @@ jobs:
         
         with:
           # Chose the messaging platform. 
-          # slack / telegram / rocketchat / teams / pushover / discord / email
+          # slack / telegram / rocketchat / teams /
+          # pushover / discord / email
           service: pushbullet
 ```
 
 - **Variables**
 
-|          Variables         | Default Value  | 
+|          Variables         | Default Value      |
 | -------------------------- | :----------------: |
-| PUSHBULLET_TOKEN           |         ""        |
-| PUSHBULLET_DEVICE   |         ""         | 
-| PUSHBULLET_NUMBER            |         ""         |
-| PUSHBULLET_MESSAGE            |         ""         | 
-| PUSHBULLET_SMS            |         "false"         | 
-| PUSHBULLET_TITLE            |         ""         | 
-
-
+| PUSHBULLET_TOKEN           | ""                 |
+| PUSHBULLET_DEVICE          | ""                 |
+| PUSHBULLET_NUMBER          | ""                 |
+| PUSHBULLET_MESSAGE         | ""                 |
+| PUSHBULLET_SMS             | "false"            |
+| PUSHBULLET_TITLE           | ""                 |
 
 ## Twillio SMS
-SMS can be sent via twillio to multiple numbers, you can add multiple receivers separated by a comma.
+
+SMS can be sent via twillio to multiple numbers, you can add multiple receivers
+separated by a comma.
 
 ```bash
- pingme twillio --token 'tokenabc' --account 'sid123' --sender '+140001442' --receiver '+140001442'' --msg 'some message'
+ pingme twillio \
+   --token 'tokenabc' \
+   --account 'sid123' \
+   --sender '+140001442' \
+   --receiver '+140001442' \
+   --msg 'some message'
 ```
 
 - GitHub Action
@@ -414,40 +452,50 @@ jobs:
           TWILLIO_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         with:
           # Chose the messaging platform. 
-          # slack / telegram / rocketchat / teams / pushover / discord / email / mattermost / twillio
+          # slack / telegram / rocketchat / teams /
+          # pushover / discord / email / mattermost / twillio
           service: twillio
 ```
+
 - **Variables**
 
-|          Variables         | Default Value  | 
+|          Variables         | Default Value      |
 | -------------------------- | :----------------: |
-| TWILLIO_TOKEN           |         ""        |
-| TWILLIO_ACCOUNT_SID            |         ""         | 
-| TWILLIO_SENDER        |         ""         |  
-| TWILLIO_RECEIVER            |         ""         | 
-| TWILLIO_TITLE        |         ""         |
-| TWILLIO_MESSAGE        |         ""         |
+| TWILLIO_TOKEN              | ""                 |
+| TWILLIO_ACCOUNT_SID        | ""                 |
+| TWILLIO_SENDER             | ""                 |  
+| TWILLIO_RECEIVER           | ""                 |
+| TWILLIO_TITLE              | ""                 |
+| TWILLIO_MESSAGE            | ""                 |
 
 ## Email
-Email uses username  & password to authenticate for sending emails.
-SMTP hostname i.e smtp.gmail.com and port i.e (587) should be provided as well for the server.
-Multiple email ids can be used separated by comma ',' as receiver email address.
-All configuration options are also available via environment variables check configuration section.
+
+Email uses username  & password to authenticate for sending emails. SMTP
+hostname i.e smtp.gmail.com and port i.e (587) should be provided as well for
+the server. Multiple email ids can be used separated by comma ',' as receiver
+email address. All configuration options are also available via environment
+variables check configuration section.
 
 ```bash
-pingme email --rec "example@gmail.com,example@outlook.com" --msg "This is an email from PingMe CLI" --sub "Email from PingMe CLI" \
- --sender "sender@gmail.com" --host "smtp.gmail.com" --port "587" --pass "secretPassword"
-
+pingme email \
+  --rec "example@gmail.com,example@outlook.com" \
+  --msg "This is an email from PingMe CLI" \
+  --sub "Email from PingMe CLI" \
+  --sender "sender@gmail.com" \
+  --host "smtp.gmail.com" \
+  --port "587" \
+  --pass "secretPassword"
 ```
+
 - **Variables**
 
-|          Variables         | Default Value  | 
+|          Variables         | Default Value      |
 | -------------------------- | :----------------: |
-| EMAIL_SENDER           |         ""        |
-| EMAIL_PASSWORD   |         ""         | 
-| EMAIL_RECEIVER            |         ""         | 
-| EMAIL_IDENTITY        |         ""         |  
-| EMAIL_HOST            |         "smtp.gmail.com"         | 
-| EMAIL_PORT            |         "587"         | 
-| EMAIL_MESSAGE        |         ""         |  
-| EMAIL_SUBJECT            |         ""         | 
+| EMAIL_SENDER               | ""                 |
+| EMAIL_PASSWORD             | ""                 |
+| EMAIL_RECEIVER             | ""                 |
+| EMAIL_IDENTITY             | ""                 |
+| EMAIL_HOST                 | "smtp.gmail.com"   |
+| EMAIL_PORT                 | "587"              |
+| EMAIL_MESSAGE              | ""                 |  
+| EMAIL_SUBJECT              | ""                 |

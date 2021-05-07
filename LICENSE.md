@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 MIT License
 
 Copyright (c) 2021 Khaliq
