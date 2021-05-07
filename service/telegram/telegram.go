@@ -1,11 +1,12 @@
-package cmd
+package telegram
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"strconv"
 	"strings"
+
+	"github.com/kha7iq/pingme/service/helpers"
 
 	"github.com/nikoksr/notify"
 	"github.com/nikoksr/notify/service/telegram"
@@ -20,11 +21,11 @@ type teleGram struct {
 	Title   string
 }
 
-// SendToTelegram parse values from *cli.context and return *cli.Command.
+// Send parse values from *cli.context and return *cli.Command.
 // Values include telegram token, channelIDs, Message and Title.
 // If multiple channels are provided they the string is split with "," separator and
 // each channelID is added to receiver.
-func SendToTelegram() *cli.Command {
+func Send() *cli.Command {
 	var telegramOpts teleGram
 	return &cli.Command{
 		Name:  "telegram",
@@ -60,7 +61,7 @@ All configuration options are also available via environment variables.`,
 			&cli.StringFlag{
 				Destination: &telegramOpts.Title,
 				Name:        "title",
-				Value:       TimeValue,
+				Value:       helpers.TimeValue,
 				Usage:       "Title of the message.",
 				EnvVars:     []string{"TELEGRAM_TITLE"},
 			},
@@ -75,11 +76,11 @@ All configuration options are also available via environment variables.`,
 			chn := strings.Split(telegramOpts.Channel, ",")
 			for _, v := range chn {
 				if len(v) <= 0 {
-					return fmt.Errorf(EmptyChannel)
+					return helpers.ErrChannel
 				}
-				k, err := strconv.Atoi(v)
-				if err != nil {
-					log.Println(err)
+				k, errStr := strconv.Atoi(v)
+				if errStr != nil {
+					return errStr
 				}
 				telegramSvc.AddReceivers(int64(k))
 			}

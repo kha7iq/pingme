@@ -1,7 +1,15 @@
 
-## Linux & MacOs
+## MacOS & Linux Homebrew
 ```bash
 brew install kha7iq/tap/pingme
+```
+
+## Linux Binary
+```bash
+wget -q https://github.com/kha7iq/pingme/releases/download/v0.1.6/pingme_Linux_x86_64.tar.gz
+tar -xf pingme_Linux_x86_64.tar.gz
+chmod +x pingme
+sudo mv pingme /usr/local/bin/pingme
 ```
 
 ## Go Get
@@ -29,7 +37,7 @@ Checkout [release](https://github.com/kha7iq/pingme/releases) page for available
 ```bash
 docker pull khaliq/pingme:latest
 ```
-- Github Registry
+- GitHub Registry
 ```bash
 docker pull ghcr.io/kha7iq/pingme:latest
 ```
@@ -39,7 +47,7 @@ docker run ghcr.io/kha7iq/pingme:latest
 ```
 
 
-## Github Action
+## GitHub Action
 A github action is also available now for this app, you can find it on [Github Market Place](https://github.com/marketplace/actions/pingme-action) or from this [repository](https://github.com/kha7iq/pingme-action) on github.
 
 Usage examples for workflow are available in the repo.

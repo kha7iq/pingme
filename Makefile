@@ -28,7 +28,6 @@ test:
 # gofumports and gci all go files
 fmt:
 	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do gofumports -w "$$file"; done
-	gci -w -local github.com/kha7iq/pingme .
 .PHONY: fmt
 
 # Run all the linters

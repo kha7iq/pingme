@@ -1,10 +1,11 @@
-package cmd
+package email
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"strings"
+
+	"github.com/kha7iq/pingme/service/helpers"
 
 	"github.com/nikoksr/notify"
 	"github.com/nikoksr/notify/service/mail"
@@ -23,12 +24,12 @@ type email struct {
 	Identity        string
 }
 
-// SendToEmail parse values from *cli.context and return *cli.Command.
+// Send parses values from *cli.context and return *cli.Command.
 // SendAddress is used for authentication with smtp server, host and port is required
 // the default value for port is set to "587" and host as "smtp.gmail.com"
 // If multiple ReceiverAddress are provided then the string value is split with "," separator and
 // each ReceiverAddress is added to receiver.
-func SendToEmail() *cli.Command {
+func Send() *cli.Command {
 	var emailOpts email
 	return &cli.Command{
 		Name:  "email",
@@ -98,7 +99,7 @@ All configuration options are also available via environment variables.`,
 			&cli.StringFlag{
 				Destination: &emailOpts.Subject,
 				Name:        "sub",
-				Value:       TimeValue,
+				Value:       helpers.TimeValue,
 				Usage:       "Subject of the email",
 				EnvVars:     []string{"EMAIL_SUBJECT"},
 			},
@@ -111,7 +112,7 @@ All configuration options are also available via environment variables.`,
 			chn := strings.Split(emailOpts.ReceiverAddress, ",")
 			for _, v := range chn {
 				if len(v) <= 0 {
-					return fmt.Errorf(EmptyChannel)
+					return helpers.ErrChannel
 				}
 
 				emailSvc.AddReceivers(v)

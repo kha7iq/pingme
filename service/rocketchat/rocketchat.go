@@ -1,11 +1,10 @@
-package cmd
+package rocketchat
 
 import (
 	"context"
-	"fmt"
 	"strings"
-	"time"
 
+	"github.com/kha7iq/pingme/service/helpers"
 	"github.com/nikoksr/notify"
 	"github.com/nikoksr/notify/service/rocketchat"
 	"github.com/urfave/cli/v2"
@@ -13,7 +12,7 @@ import (
 
 type rocketChat struct {
 	Token     string
-	UserId    string
+	UserID    string
 	Message   string
 	Channel   string
 	Title     string
@@ -21,17 +20,11 @@ type rocketChat struct {
 	Scheme    string
 }
 
-var (
-	// EmptyChannel variable holds default error message if no channel is provided.
-	EmptyChannel = "channel name or id can not be empty"
-	TimeValue    = "⏰ " + time.Now().Format(time.UnixDate)
-)
-
-// SendToRocketChat parse values from *cli.context and return *cli.Command.
+// Send parse values from *cli.context and return *cli.Command.
 // Values include rocketchat token, , UserId, channelIDs, ServerURL, Scheme, Message and Title.
 // If multiple channels are provided then the string is split with "," separator and
 // each channelID is added to receiver.
-func SendToRocketChat() *cli.Command {
+func Send() *cli.Command {
 	var rocketChatOpts rocketChat
 	return &cli.Command{
 		Name:  "rocketchat",
@@ -43,7 +36,7 @@ All configuration options are also available via environment variables.`,
 			" --channel 'alert' --msg 'some message'",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Destination: &rocketChatOpts.UserId,
+				Destination: &rocketChatOpts.UserID,
 				Name:        "userid",
 				Aliases:     []string{"id"},
 				Required:    true,
@@ -90,7 +83,7 @@ All configuration options are also available via environment variables.`,
 			&cli.StringFlag{
 				Destination: &rocketChatOpts.Title,
 				Name:        "title",
-				Value:       TimeValue,
+				Value:       helpers.TimeValue,
 				Usage:       "Title of the message",
 				EnvVars:     []string{"ROCKETCHAT_TITLE"},
 			},
@@ -99,14 +92,14 @@ All configuration options are also available via environment variables.`,
 			notifier := notify.New()
 
 			rocketChatSvc, err := rocketchat.New(rocketChatOpts.ServerURL, rocketChatOpts.Scheme,
-				rocketChatOpts.UserId, rocketChatOpts.Token)
+				rocketChatOpts.UserID, rocketChatOpts.Token)
 			if err != nil {
 				return err
 			}
 			chn := strings.Split(rocketChatOpts.Channel, ",")
 			for _, v := range chn {
 				if len(v) <= 0 {
-					return fmt.Errorf(EmptyChannel)
+					return helpers.ErrChannel
 				}
 
 				rocketChatSvc.AddReceivers(v)

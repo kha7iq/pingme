@@ -1,4 +1,4 @@
-package cmd
+package mattermost
 
 import (
 	"bytes"
@@ -9,6 +9,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/kha7iq/pingme/service/helpers"
+
 	"github.com/urfave/cli/v2"
 )
 
@@ -18,7 +20,7 @@ type matterMost struct {
 	Token     string
 	ServerURL string
 	Scheme    string
-	ApiURL    string
+	APIURL    string
 	Message   string
 	ChanIDs   string
 }
@@ -47,11 +49,11 @@ type matterMostResponse struct {
 	Metadata      struct{} `json:"metadata"`
 }
 
-// SendToMattermost parse values from *cli.context and return *cli.Command
+// Send parse values from *cli.context and return *cli.Command
 // and send messages to target channels.
 // If multiple channel ids are provided then the string is split with "," separator and
 // message is sent to each channel.
-func SendToMattermost() *cli.Command {
+func Send() *cli.Command {
 	var mattermostOpts matterMost
 	return &cli.Command{
 		Name:  "mattermost",
@@ -87,7 +89,7 @@ You can specify multiple channels by separating the value with ','.`,
 			&cli.StringFlag{
 				Destination: &mattermostOpts.Title,
 				Name:        "title",
-				Value:       TimeValue,
+				Value:       helpers.TimeValue,
 				Usage:       "Title of the message.",
 				EnvVars:     []string{"MATTERMOST_TITLE"},
 			},
@@ -108,7 +110,7 @@ You can specify multiple channels by separating the value with ','.`,
 				EnvVars:     []string{"MATTERMOST_SCHEME"},
 			},
 			&cli.StringFlag{
-				Destination: &mattermostOpts.ApiURL,
+				Destination: &mattermostOpts.APIURL,
 				Name:        "api",
 				Value:       "/api/v4/posts",
 				Usage:       "Unless using older version of api default is fine.",
@@ -116,7 +118,7 @@ You can specify multiple channels by separating the value with ','.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			endPointURL := mattermostOpts.Scheme + "://" + mattermostOpts.ServerURL + mattermostOpts.ApiURL
+			endPointURL := mattermostOpts.Scheme + "://" + mattermostOpts.ServerURL + mattermostOpts.APIURL
 
 			// Create a Bearer string by appending string access token
 			bearer := "Bearer " + mattermostOpts.Token
@@ -126,10 +128,10 @@ You can specify multiple channels by separating the value with ','.`,
 			ids := strings.Split(mattermostOpts.ChanIDs, ",")
 			for _, v := range ids {
 				if len(v) == 0 {
-					return fmt.Errorf(EmptyChannel)
+					return helpers.ErrChannel
 				}
 
-				jsonData, err := toJson(v, fullMessage)
+				jsonData, err := toJSON(v, fullMessage)
 				if err != nil {
 					return fmt.Errorf("error parsing json\n[ERROR] - %v", err)
 				}
@@ -137,7 +139,6 @@ You can specify multiple channels by separating the value with ','.`,
 				if err := sendMattermost(endPointURL, bearer, jsonData); err != nil {
 					return fmt.Errorf("failed to send message\n[ERROR] - %v", err)
 				}
-
 			}
 			return nil
 		},
@@ -145,8 +146,7 @@ You can specify multiple channels by separating the value with ','.`,
 }
 
 // toJson takes strings and convert them to json byte array
-func toJson(channel string, msg string) ([]byte, error) {
-
+func toJSON(channel string, msg string) ([]byte, error) {
 	m := make(map[string]string, 2)
 	m["channel_id"] = channel
 	m["message"] = msg

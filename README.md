@@ -24,14 +24,13 @@
 </p>
 
 <p align="center">
-  <a href="#about">About</a> •
   <a href="https://kha7iq.github.io/pingme">Documentation</a> •
   <a href="#supported-services">Supported Services</a> •
   <a href="#install">Install</a> •
   <a href="#github-action">Github Action</a> •
   <a href="#configuration">Configuration</a> •
   <a href="#contributing">Contributing</a> •
-  <a href="#show-your-support">Show Your Support</a> •
+  <a href="#show-your-support">Show Your Support</a>
 </p>
 
 ---
@@ -45,7 +44,7 @@ And i can ship it everywhere with ease.
 Hence, the birth of PingMe.
 
 Everything is configurable via environment variables, and you can simply export the logs or messages to a variable which will be sent
-as message. And most of all this serves as a swiss army knife sort of tool which supports multiple platforms.
+as message, and most of all this serves as a swiss army knife sort of tool which supports multiple platforms.
 
 
 
@@ -53,18 +52,27 @@ as message. And most of all this serves as a swiss army knife sort of tool which
 - *Discord*
 - *Email*
 - *Microsoft Teams*
+- *Mattermost*
+- *Pushover*
+- *Pushbullet*
 - *RocketChat*
 - *Slack*
 - *Telegram*
-- *Pushover*
-- *Mattermost*
-
+- *Twillio*
 
 ## Install
 
-### Linux & MacOs
+### MacOS & Linux Homebrew
 ```bash
 brew install kha7iq/tap/pingme
+```
+
+## Linux Binary
+```bash
+wget -q https://github.com/kha7iq/pingme/releases/download/v0.1.6/pingme_Linux_x86_64.tar.gz
+tar -xf pingme_Linux_x86_64.tar.gz
+chmod +x pingme
+sudo mv pingme /usr/local/bin/pingme
 ```
 
 ### Go Get
@@ -91,7 +99,7 @@ Docker Registry
 ```bash
 docker pull khaliq/pingme:latest
 ```
-Gighub Registry
+Github Registry
 ```bash
 docker pull ghcr.io/kha7iq/pingme:latest
 ```
@@ -132,6 +140,7 @@ COMMANDS:
    pushover    Send message to pushover
    email       Send an email
    mattermost  Send message to mattermost
+   pushbullet  Send message to pushbullet
    help, h     Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:

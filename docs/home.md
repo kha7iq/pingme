@@ -33,24 +33,26 @@
 ## About
 
 **PingMe** is a personal project to satisfy my needs of having alerts, most major platforms have integration to send alerts
-but its not always useful, either you are stuck with one particular platform, or you have to do alot of integrations. I needed a small app
+but it's not always useful, either you are stuck with one particular platform, or you have to do alot of integrations. I needed a small app
 which i can just call from my backup scripts, cron jobs, CI/CD pipelines or from anywhere to send a message with particular information.
 And i can ship it everywhere with ease.
 Hence, the birth of PingMe.
 
 Everything is configurable via environment variables, and you can simply export the logs or messages to a variable which will be sent
-as message. And most of all this serves as a swiss army knife sort of tool which supports multiple platforms.
+as message, and most of all this serves as a swiss army knife sort of tool which supports multiple platforms.
 
 
 ## Supported services
 - *Discord*
 - *Email*
 - *Microsoft Teams*
+- *Mattermost*
+- *Pushover*
+- *Pushbullet*
 - *RocketChat*
 - *Slack*
 - *Telegram*
-- *Pushover*
-- *Mattermost*
+- *Twillio*
 
 
 
@@ -60,7 +62,7 @@ as message. And most of all this serves as a swiss army knife sort of tool which
 
 ## Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/kha7iq/pingme/issues). You can also take a look at the [contributing guide](https://github.com/kha7iq/pingme/blob/master/CONTRIBUTING.md).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/kha7iq/pingme/issues). You can also take a look at the [contribution guide](contribution.md).
 
 
 
@@ -72,6 +74,6 @@ Give a ⭐️  if you like this project!
 
 ## Disclaimer
 
-Any misuse of this utilify is your own liability and responsibility and cannot be attributed to the authors of this library.  See [license](LICENSE) for more.
+Any misuse of this utility is your own liability and responsibility and cannot be attributed to the authors of this library.  See [license](https://github.com/kha7iq/pingme/blob/master/LICENSE.md) for more.
 
 Spamming through the use of this library **may get you permanently banned** on most supported platforms.

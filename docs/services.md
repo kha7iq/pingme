@@ -19,7 +19,7 @@ Multiple channel ids can be used separated by comma ','.
 pingme  telegram  --token "0125:AAFHvnYf_ABC"  --msg "This is a new message ✈" --channel="-1001001001,-1002002001"
 ```
 
-- Github Action
+- GitHub Action
 
 ```yaml
 on: [push]
@@ -37,8 +37,8 @@ jobs:
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHANNELS: ${{ secrets.TELEGRAM_CHANNELS }}
-          TELEGRAM_TITLE: 'Refrence: ${{ github.ref }}'
-          TELEGRAM_MESSAGE: 'Event is triggerd by ${{ github.event_name }}'
+          TELEGRAM_TITLE: 'Reference: ${{ github.ref }}'
+          TELEGRAM_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         
         with:
           # Chose the messaging platform. 
@@ -88,8 +88,8 @@ jobs:
           ROCKETCHAT_SERVER_URL: ${{ secrets.ROCKETCHAT_SERVER_URL }}
           ROCKETCHAT_CHANNELS: ${{ secrets.ROCKETCHAT_CHANNELS }}
           ROCKETCHAT_URL_SCHEME: "https"
-          ROCKETCHAT_TITLE: 'Refrence: ${{ github.ref }}'
-          ROCKETCHAT_MESSAGE: 'Event is triggerd by ${{ github.event_name }}'
+          ROCKETCHAT_TITLE: 'Reference: ${{ github.ref }}'
+          ROCKETCHAT_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         with:
           # Chose the messaging platform. 
           # slack / telegram / rocketchat / teams / pushover / discord / email / mattermost
@@ -114,7 +114,7 @@ jobs:
 pingme pushover --token '123' --user '12345567' --title 'some title' --msg 'some message'
 ```
 
-- Github Action
+- GitHub Action
 
 ```yaml
 on: [push]
@@ -132,8 +132,8 @@ jobs:
         env:
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
-          PUSHOVER_TITLE: 'Refrence: ${{ github.ref }}'
-          PUSHOVER_MESSAGE: 'Event is triggerd by ${{ github.event_name }}'
+          PUSHOVER_TITLE: 'Reference: ${{ github.ref }}'
+          PUSHOVER_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         
         with:
           # Chose the messaging platform. 
@@ -161,7 +161,7 @@ You can specify multiple channels by separating the value with ','.
 pingme mattermost --token '123' --channel '12345,567' --url 'localhost' --scheme 'http' --msg 'some message'
 ```
 
-- Github Action
+- GitHub Action
 
 ```yaml
 on:
@@ -179,11 +179,11 @@ jobs:
         uses: kha7iq/pingme-action@v1
         env:
           MATTERMOST_TOKEN: ${{ secrets.MATTERMOST_TOKEN }}
-          ROCKETCHAT_SERVER_URL: ${{ secrets.ROCKETCHAT_SERVER_URL }}
+          MATTERMOST_SERVER_URL: ${{ secrets.MATTERMOST_SERVER_URL }}
           MATTERMOST_CHANNELS: ${{ secrets.MATTERMOST_CHANNELS }}
           MATTERMOST_CHANNELS: ${{ secrets.MATTERMOST_CHANNELS }}
-          MATTERMOST_TITLE: 'Refrence: ${{ github.ref }}'
-          MATTERMOST_MESSAGE: 'Event is triggerd by ${{ github.event_name }}'
+          MATTERMOST_TITLE: 'Reference: ${{ github.ref }}'
+          MATTERMOST_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         with:
           # Chose the messaging platform. 
           # slack / telegram / rocketchat / teams / pushover / discord / email / mattermost
@@ -227,10 +227,10 @@ jobs:
       - name: Ping me On
         uses: kha7iq/pingme-action@v1
         env:
-          PUSHOVER_TOKEN: ${{ secrets.SLACK_TOKEN }}
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           SLACK_CHANNELS: ${{ secrets.SLACK_CHANNELS }}
-          SLACK_MSG_TITLE: 'Refrence: ${{ github.ref }}'
-          SLACK_MESSAGE: 'Event is triggerd by ${{ github.event_name }}'
+          SLACK_MSG_TITLE: 'Reference: ${{ github.ref }}'
+          SLACK_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         with:
           # Chose the messaging platform. 
           # slack / telegram / rocketchat / teams / pushover / discord / email
@@ -254,7 +254,7 @@ Multiple channel ids can be used separated by comma ','.
  pingme discord --token '123' --channel '1234567890' --msg 'some message'
 ```
 
-- Github Action
+- GitHub Action
 
 ```yaml
 on:
@@ -273,8 +273,8 @@ jobs:
         env:
           DISCORD_CHANNELS: ${{ secrets.DISCORD_CHANNELS }}
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          DISCORD_TITLE: 'Refrence: ${{ github.ref }}'
-          DISCORD_MESSAGE: 'Event is triggerd by ${{ github.event_name }}'
+          DISCORD_TITLE: 'Reference: ${{ github.ref }}'
+          DISCORD_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         with:
           # Chose the messaging platform. 
           # slack / telegram / rocketchat / teams / pushover / discord / email / mattermost
@@ -298,7 +298,7 @@ you can add permissions for multiple channels to single webhook.
 pingme teams --webhook 'https://example.webhook.office.com/xx' --msg 'some message'
 ```
 
-- Github Action
+- GitHub Action
 
 ```yaml
 on: [push]
@@ -315,9 +315,8 @@ jobs:
         uses: kha7iq/pingme-action@v1
         env:
           TEAMS_WEBHOOK: ${{ secrets.TEAMS_WEBHOOK }}
-          TELEGRAM_CHANNELS: ${{ secrets.TELEGRAM_CHANNELS }}
-          TEAMS_MSG_TITLE: 'Refrence: ${{ github.ref }}'
-          TEAMS_MESSAGE: 'Event is triggerd by ${{ github.event_name }}'
+          TEAMS_MSG_TITLE: 'Reference: ${{ github.ref }}'
+          TEAMS_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         
         with:
           # Chose the messaging platform. 
@@ -332,6 +331,102 @@ jobs:
 | TEAMS_MESSAGE            |         ""         | 
 | TEAMS_MSG_TITLE        |         ""         |  
 
+## Pushbullet
+
+- SMS
+```bash
+pingme pushbullet  --sms true --token "abcdefg" -d "adnroid" --msg "some message" --number "00123456789"
+```
+
+- Push notification
+```bash
+pingme pushbullet --token "abcdefg" -d "adnroid" --msg "some message"
+```
+
+- GitHub Action
+
+```yaml
+on: [push]
+
+jobs:
+  pingme-job:
+    runs-on: ubuntu-latest
+    name: PingMe
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ping me On
+        uses: kha7iq/pingme-action@v1
+        env:
+          PUSHBULLET_TOKEN: ${{ secrets.PUSHBULLET_TOKEN }}
+          PUSHBULLET_DEVICE: ${{ secrets.PUSHBULLET_DEVICE }}
+          PUSHBULLET_TITLE: 'Reference: ${{ github.ref }}'
+          PUSHBULLET_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
+        
+        with:
+          # Chose the messaging platform. 
+          # slack / telegram / rocketchat / teams / pushover / discord / email
+          service: pushbullet
+```
+
+- **Variables**
+
+|          Variables         | Default Value  | 
+| -------------------------- | :----------------: |
+| PUSHBULLET_TOKEN           |         ""        |
+| PUSHBULLET_DEVICE   |         ""         | 
+| PUSHBULLET_NUMBER            |         ""         |
+| PUSHBULLET_MESSAGE            |         ""         | 
+| PUSHBULLET_SMS            |         "false"         | 
+| PUSHBULLET_TITLE            |         ""         | 
+
+
+
+## Twillio SMS
+SMS can be sent via twillio to multiple numbers, you can add multiple receivers separated by a comma.
+
+```bash
+ pingme twillio --token 'tokenabc' --account 'sid123' --sender '+140001442' --receiver '+140001442'' --msg 'some message'
+```
+
+- GitHub Action
+
+```yaml
+on: [push]
+
+jobs:
+  pingme-job:
+    runs-on: ubuntu-latest
+    name: PingMe
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ping me On
+        uses: kha7iq/pingme-action@v1
+        env:
+          TWILLIO_TOKEN: ${{ secrets.TWILLIO_TOKEN }}
+          TWILLIO_ACCOUNT_SID: ${{ secrets.TWILLIO_ACCOUNT_SID }}
+          TWILLIO_SENDER: ${{ secrets.TWILLIO_SENDER }}
+          TWILLIO_RECEIVER: ${{ secrets.TWILLIO_RECEIVER }}
+          TWILLIO_TITLE: 'Reference: ${{ github.ref }}'
+          TWILLIO_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
+        with:
+          # Chose the messaging platform. 
+          # slack / telegram / rocketchat / teams / pushover / discord / email / mattermost / twillio
+          service: twillio
+```
+- **Variables**
+
+|          Variables         | Default Value  | 
+| -------------------------- | :----------------: |
+| TWILLIO_TOKEN           |         ""        |
+| TWILLIO_ACCOUNT_SID            |         ""         | 
+| TWILLIO_SENDER        |         ""         |  
+| TWILLIO_RECEIVER            |         ""         | 
+| TWILLIO_TITLE        |         ""         |
+| TWILLIO_MESSAGE        |         ""         |
 
 ## Email
 Email uses username  & password to authenticate for sending emails.
