@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 -->
+<!-- markdownlint-disable-next-line -->
 <h2 align="center">
   <br>
   <p align="center"><img width=30% src="https://raw.githubusercontent.com/kha7iq/pingme/master/.github/img/logo.png"></p>
@@ -13,7 +15,6 @@
    <a href="#">
    <img alt="Build" src="https://img.shields.io/github/workflow/status/kha7iq/pingme/goreleaser">
    <a href="https://github.com/kha7iq/pingme/issues">
-   
    <img alt="GitHub issues" src="https://img.shields.io/github/issues/kha7iq/pingme?style=flat-square&logo=github&logoColor=white">
    <a href="https://github.com/kha7iq/pingme/blob/master/LICENSE.md">
    <img alt="License" src="https://img.shields.io/github/license/kha7iq/pingme">
@@ -37,18 +38,20 @@
 
 ## About
 
-**PingMe** is a personal project to satisfy my needs of having alerts, most major platforms have integration to send alerts
-but its not always useful, either you are stuck with one particular platform, or you have to do alot of integrations. I needed a small app
-which i can just call from my backup scripts, cron jobs, CI/CD pipelines or from anywhere to send a message with particular information.
-And i can ship it everywhere with ease.
-Hence, the birth of PingMe.
+**PingMe** is a personal project to satisfy my needs of having alerts, most
+major platforms have integration to send alerts but its not always useful,
+either you are stuck with one particular platform, or you have to do alot of
+integrations. I needed a small app which i can just call from my backup scripts,
+cron jobs, CI/CD pipelines or from anywhere to send a message with particular
+information. And i can ship it everywhere with ease. Hence, the birth of PingMe.
 
-Everything is configurable via environment variables, and you can simply export the logs or messages to a variable which will be sent
-as message, and most of all this serves as a swiss army knife sort of tool which supports multiple platforms.
-
-
+Everything is configurable via environment variables, and you can simply export
+the logs or messages to a variable which will be sent as message, and most of
+all this serves as a swiss army knife sort of tool which supports multiple
+platforms.
 
 ## Supported services
+
 - *Discord*
 - *Email*
 - *Microsoft Teams*
@@ -63,11 +66,13 @@ as message, and most of all this serves as a swiss army knife sort of tool which
 ## Install
 
 ### MacOS & Linux Homebrew
+
 ```bash
 brew install kha7iq/tap/pingme
 ```
 
 ## Linux Binary
+
 ```bash
 wget -q https://github.com/kha7iq/pingme/releases/download/v0.1.6/pingme_Linux_x86_64.tar.gz
 tar -xf pingme_Linux_x86_64.tar.gz
@@ -76,43 +81,54 @@ sudo mv pingme /usr/local/bin/pingme
 ```
 
 ### Go Get
+
 ```bash
 go get -u github.com/kha7iq/pingme
 ```
 
 ### Windows
+
 ```powershell
 scoop bucket add pingme https://github.com/kha7iq/scoop-bucket.git
 scoop install pingme
 ```
 
-Alternatively you can head over to [release pages](https://github.com/kha7iq/pingme/releases) and download the binary for windows & all other supported platforms.
-
+Alternatively you can head over to [release pages](https://github.com/kha7iq/pingme/releases)
+and download the binary for windows & all other supported platforms.
 
 ### Docker
+
 Docker container is also available on both dockerhub and github container registry.
 
-`latest` tage will always pull the latest version avaialbe, you can also download specific version.
-Checkout [release](https://github.com/kha7iq/pingme/releases) page for available versions.
+`latest` tage will always pull the latest version avaialbe, you can also download
+specific version. Checkout [release](https://github.com/kha7iq/pingme/releases)
+page for available versions.
 
 Docker Registry
+
 ```bash
 docker pull khaliq/pingme:latest
 ```
+
 Github Registry
+
 ```bash
 docker pull ghcr.io/kha7iq/pingme:latest
 ```
+
 Run
+
 ```bash
 docker run ghcr.io/kha7iq/pingme:latest
 ```
+
 ## Github Action
 
-A github action is also available now for this app, you can find it on [Github Market Place](https://github.com/marketplace/actions/pingme-action) or from this [repository](https://github.com/kha7iq/pingme-action) on github.
+A github action is also available now for this app, you can find it on
+[Github Market Place](https://github.com/marketplace/actions/pingme-action) or
+from this [repository](https://github.com/kha7iq/pingme-action) on github.
 
 Usage examples for workflow are available in the repo.
-
 
 ## Usage
 
@@ -126,10 +142,11 @@ USAGE:
    main [global options] command [command options] [arguments...]
 
 DESCRIPTION:
-   PingMe is a CLI tool which provides the ability to send messages or alerts to multiple
-   messaging platforms and also email, everything is configurable via environment
-   variables and command line switches.Currently supported platforms include Slack, Telegram,
-   RocketChat, Discord, Pushover, Mattermost, Microsoft Teams and email address.
+   PingMe is a CLI tool which provides the ability to send messages or alerts 
+   to multiple messaging platforms and also email, everything is configurable 
+   via environment variables and command line switches.Currently supported 
+   platforms include Slack, Telegram, RocketChat, Discord, Pushover, Mattermost,
+   Microsoft Teams and email address.
 
 COMMANDS:
    telegram    Send message to telegram
@@ -151,16 +168,17 @@ Check [Documentation Page](https://kha7iq.github.io/pingme/#/) for more details.
 
 ## Configuration
 
-All the flags have corresponding environment variables associated with it. You can either provide the value with flags
-or export to a variable.
+All the flags have corresponding environment variables associated with it. You
+can either provide the value with flags or export to a variable.
 
-View the [Documentation Page](https://kha7iq.github.io/pingme/#/) for more details.
-
+View the [Documentation Page](https://kha7iq.github.io/pingme/#/) for more
+details.
 
 ## Contributing
 
-Contributions, issues and feature requests are welcome!<br/>Feel free to check [issues page](https://github.com/kha7iq/pingme/issues). You can also take a look at the [contributing guide](https://github.com/kha7iq/pingme/blob/master/CONTRIBUTING.md).
-
+Contributions, issues and feature requests are welcome!<br/>Feel free to check
+[issues page](https://github.com/kha7iq/pingme/issues). You can also take a look
+at the [contributing guide](https://github.com/kha7iq/pingme/blob/master/CONTRIBUTING.md).
 
 ## Show your support
 

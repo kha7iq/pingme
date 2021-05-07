@@ -1,3 +1,6 @@
+<!-- markdownlint-disable MD041 -->
+<!-- markdownlint-disable MD036 -->
+
 ---
 name: Feature request
 about: Suggest an idea for this project
