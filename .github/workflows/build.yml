@@ -60,3 +60,27 @@ jobs:
           args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
+      - 
+        name: Notify on failure
+        uses: kha7iq/pingme-action@v1
+        if: failure()
+        env:
+          PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
+          PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
+          PUSHOVER_TITLE: '🟢 New Release: ${{ github.ref }}'
+          PUSHOVER_MESSAGE: 'Event is triggerd by ${{ github.event_name }} ❌  ${{ job.status }}'
+        with:
+          service: pushover
+
+      - 
+        name: Notify on success
+        uses: kha7iq/pingme-action@v1
+        if: success()
+        env:
+          PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
+          PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
+          PUSHOVER_TITLE: '🟢 New Release: ${{ github.ref }}'
+          PUSHOVER_MESSAGE: 'Event is triggerd by ${{ github.event_name }} ✅  ${{ job.status }}'
+        with:
+          service: pushover
