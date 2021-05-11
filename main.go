@@ -4,6 +4,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/kha7iq/pingme/service/zulip"
+
 	"github.com/kha7iq/pingme/service/twillio"
 
 	"github.com/kha7iq/pingme/service/discord"
@@ -44,6 +46,7 @@ RocketChat, Discord, Pushover, Mattermost, Pushbullet, Microsoft Teams and email
 		mattermost.Send(),
 		pushbullet.Send(),
 		twillio.Send(),
+		zulip.Send(),
 	}
 
 	err := app.Run(os.Args)
