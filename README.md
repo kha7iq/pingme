@@ -54,10 +54,11 @@ platforms.
 
 - *Discord*
 - *Email*
-- *Microsoft Teams*
+- *Mastodon*
 - *Mattermost*
-- *Pushover*
+- *Microsoft Teams*
 - *Pushbullet*
+- *Pushover*
 - *RocketChat*
 - *Slack*
 - *Telegram*
@@ -146,11 +147,10 @@ USAGE:
    main [global options] command [command options] [arguments...]
 
 DESCRIPTION:
-   PingMe is a CLI tool which provides the ability to send messages or alerts 
-   to multiple messaging platforms and also email, everything is configurable 
-   via environment variables and command line switches.Currently supported 
-   platforms include Slack, Telegram, RocketChat, Discord, Pushover, Mattermost,
-   Microsoft Teams and email address.
+   PingMe is a CLI tool which provides the ability to send messages or alerts to multiple
+   messaging platforms and also email, everything is configurable via environment
+   variables and command line switches.Currently supported platforms include Slack, Telegram,
+   RocketChat, Discord, Pushover, Mattermost, Pushbullet, Microsoft Teams, Twillio, Mastodon and email address.
 
 COMMANDS:
    telegram    Send message to telegram
@@ -162,6 +162,8 @@ COMMANDS:
    email       Send an email
    mattermost  Send message to mattermost
    pushbullet  Send message to pushbullet
+   twillio     Send sms via twillio
+   mastodon    Set status message for mastodon
    help, h     Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
