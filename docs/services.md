@@ -468,6 +468,49 @@ jobs:
 | TWILLIO_TITLE              | ""                 |
 | TWILLIO_MESSAGE            | ""                 |
 
+## Mastodon
+
+Mastodon uses application token to authorize and set status.
+
+```bash
+mastodon --url "mastodon.social" --msg "some message" --title "PingMe CLI" --token "123"
+```
+
+- GitHub Action
+
+```yaml
+on: [push]
+
+jobs:
+  pingme-job:
+    runs-on: ubuntu-latest
+    name: PingMe
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ping me On
+        uses: kha7iq/pingme-action@v1
+        env:
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_SERVER: 'mastodon.social'
+          MASTODON_TITLE: 'Reference: ${{ github.ref }}'
+          MASTODON_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
+        
+        with:
+          service: mastodon
+```
+
+- **Variables**
+
+|          Variables         | Default Value      |
+| -------------------------- | :----------------: |
+| MASTODON_TOKEN              | ""                 |
+| MASTODON_SERVER              | ""                 |
+| MASTODON_TITLE            | ""                 |
+| MASTODON_MESSAGE            | ""                 |  
+
+
 ## Email
 
 Email uses username  & password to authenticate for sending emails. SMTP
