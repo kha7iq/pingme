@@ -4,6 +4,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/kha7iq/pingme/service/mastodon"
+
 	"github.com/kha7iq/pingme/service/twillio"
 
 	"github.com/kha7iq/pingme/service/discord"
@@ -31,7 +33,7 @@ func main() {
 	app.Description = `PingMe is a CLI tool which provides the ability to send messages or alerts to multiple 
 messaging platforms and also email, everything is configurable via environment
 variables and command line switches.Currently supported platforms include Slack, Telegram,
-RocketChat, Discord, Pushover, Mattermost, Pushbullet, Microsoft Teams and email address.`
+RocketChat, Discord, Pushover, Mattermost, Pushbullet, Microsoft Teams, Twillio, Mastodon and email address.`
 	// app.Commands contains the subcommands as functions which return []*cli.Command.
 	app.Commands = []*cli.Command{
 		telegram.Send(),
@@ -44,6 +46,7 @@ RocketChat, Discord, Pushover, Mattermost, Pushbullet, Microsoft Teams and email
 		mattermost.Send(),
 		pushbullet.Send(),
 		twillio.Send(),
+		mastodon.Send(),
 	}
 
 	err := app.Run(os.Args)
