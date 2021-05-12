@@ -7,6 +7,7 @@ require (
 	github.com/gregdel/pushover v0.0.0-20210216095829-2131362cb888
 	github.com/nikoksr/notify v0.15.0
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
-	github.com/sfreiberg/gotwilio v0.0.0-20201211181435-c426a3710ab5 // indirect
+	github.com/sfreiberg/gotwilio v0.0.0-20201211181435-c426a3710ab5
+	github.com/stretchr/testify v1.7.0
 	github.com/urfave/cli/v2 v2.3.0
 )

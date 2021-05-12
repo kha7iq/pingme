@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/kha7iq/pingme/service/mastodon"
-
 	"github.com/kha7iq/pingme/service/twillio"
+	"github.com/kha7iq/pingme/service/zulip"
 
 	"github.com/kha7iq/pingme/service/discord"
 	"github.com/kha7iq/pingme/service/email"
@@ -46,6 +46,7 @@ RocketChat, Discord, Pushover, Mattermost, Pushbullet, Microsoft Teams, Twillio,
 		mattermost.Send(),
 		pushbullet.Send(),
 		twillio.Send(),
+		zulip.Send(),
 		mastodon.Send(),
 	}
 
