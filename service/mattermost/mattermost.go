@@ -49,6 +49,21 @@ type matterMostResponse struct {
 	Metadata      struct{} `json:"metadata"`
 }
 
+// HTTPClient interface
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
+var (
+	Client HTTPClient
+)
+
+func initialize() {
+	Client = &http.Client{
+		Timeout: 10 * time.Second,
+	}
+}
+
 // Send parse values from *cli.context and return *cli.Command
 // and send messages to target channels.
 // If multiple channel ids are provided then the string is split with "," separator and
@@ -118,6 +133,7 @@ You can specify multiple channels by separating the value with ','.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
+			initialize()
 			endPointURL := mattermostOpts.Scheme + "://" + mattermostOpts.ServerURL + mattermostOpts.APIURL
 
 			// Create a Bearer string by appending string access token
@@ -173,9 +189,7 @@ func sendMattermost(url string, token string, jsonPayload []byte) error {
 	req.Header.Set("Authorization", token)
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	// create a new http client and send request to server
-	c := &http.Client{Timeout: 10 * time.Second}
-	resp, err := c.Do(req)
+	resp, err := Client.Do(req)
 	if err != nil {
 		return err
 	}
