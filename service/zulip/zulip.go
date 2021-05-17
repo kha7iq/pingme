@@ -39,9 +39,7 @@ type HTTPClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
 
-var (
-	Client HTTPClient
-)
+var Client HTTPClient
 
 func initialize() {
 	Client = &http.Client{
