@@ -19,6 +19,20 @@ type Mastodon struct {
 	Message   string
 }
 
+// HTTPClient interface
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
+var Client HTTPClient
+
+func initialize() {
+	// create a new http client
+	Client = &http.Client{
+		Timeout: 10 * time.Second,
+	}
+}
+
 // Send parse values from *cli.context and return *cli.Command
 // and sets a status message for mastodon.
 func Send() *cli.Command {
@@ -62,6 +76,7 @@ func Send() *cli.Command {
 			},
 		},
 		Action: func(ctx *cli.Context) error {
+			initialize()
 			endPointURL := "https://" + mastodonOpts.ServerURL + "/api/v1/statuses/"
 
 			// Create a Bearer string by appending string access token
@@ -98,9 +113,8 @@ func sendMastodon(url string, token string, msg string) error {
 	req.Header.Set("Authorization", token)
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	// create a new http client and send request to server
-	c := &http.Client{Timeout: 10 * time.Second}
-	resp, err := c.Do(req)
+	// send request to server
+	resp, err := Client.Do(req)
 	if err != nil {
 		return err
 	}
