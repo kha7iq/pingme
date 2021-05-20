@@ -63,6 +63,7 @@ platforms.
 - *Slack*
 - *Telegram*
 - *Twillio*
+- *Zulip*
 
 ## Install
 

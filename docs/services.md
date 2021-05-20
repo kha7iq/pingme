@@ -510,6 +510,60 @@ jobs:
 | MASTODON_TITLE            | ""                 |
 | MASTODON_MESSAGE            | ""                 |  
 
+## Zulip
+
+Mastodon uses application token to authorize and set status.
+
+```bash
+pingme zulip 
+--email 'john.doe@email.com' \ 
+ --api-key '12345567' \ 
+ --to 'london' \
+ --type 'stream' \
+ --topic 'some topic' \
+ --msg 'content of message'
+```
+
+- GitHub Action
+
+```yaml
+on: [push]
+
+jobs:
+  pingme-job:
+    runs-on: ubuntu-latest
+    name: PingMe
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ping me On
+        uses: kha7iq/pingme-action@v1
+        env:
+          ZULIP_DOMAIN: ${{ secrets.ZULIP_DOMAIN }}
+          ZULIP_BOT_EMAIL_ADDRESS: ${{ secrets.ZULIP_BOT_EMAIL_ADDRESS }}
+          ZULIP_BOT_API_KEY: ${{ secrets.ZULIP_BOT_API_KEY }}
+          ZULIP_MSG_TYPE: 'stream'
+          ZULIP_STREAM_NAME: 'general'
+          ZULIP_TOPIC: 'Reference: ${{ github.ref }}'
+          ZULIP_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
+        
+        with:
+          service: zulip
+```
+
+- **Variables**
+
+|          Variables         | Default Value      |
+| -------------------------- | :----------------: |
+| ZULIP_DOMAIN              | ""                 |
+| ZULIP_BOT_EMAIL_ADDRESS              | ""                 |
+| ZULIP_BOT_API_KEY            | ""                 |
+| ZULIP_MSG_TYPE            | ""                 |
+| ZULIP_STREAM_NAME            | ""                 |
+| ZULIP_TOPIC            | ""                 |  
+| ZULIP_MESSAGE            | ""                 |  
+
 
 ## Email
 
