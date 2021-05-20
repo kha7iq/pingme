@@ -65,15 +65,15 @@ nfpms:
     dependencies:
     - git
 
-# # snapcrafts:
-# #   - name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
-# #     summary: PingMe is a CLI tool which provides the ability to send messages
-# #     description: |
-# #       PingMe is a CLI tool which provides the ability to send messages
-# #       or alerts to multiple messaging platforms.
-# #     grade: stable
-# #     confinement: classic
-# #     publish: false
+snapcrafts:
+  - name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    summary: PingMe is a CLI tool which provides the ability to send messages
+    description: |
+      PingMe is a CLI tool which provides the ability to send messages
+      or alerts to multiple messaging platforms.
+    grade: stable
+    confinement: strict
+    publish: false
 
 scoop:
   url_template: "https://github.com/kha7iq/pingme/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
