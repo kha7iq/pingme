@@ -18,8 +18,8 @@
    <img alt="GitHub issues" src="https://img.shields.io/github/issues/kha7iq/pingme?style=flat-square&logo=github&logoColor=white">
    <a href="https://github.com/kha7iq/pingme/blob/master/LICENSE.md">
    <img alt="License" src="https://img.shields.io/github/license/kha7iq/pingme">
-   <a href="#">
-   <img alt="Go Version" src="https://img.shields.io/github/go-mod/go-version/kha7iq/pingme">
+   <a href="https://github.com/agarrharr/awesome-cli-apps#devops">
+   <img alt="Awesome" src="https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg">
    <a href="https://pkg.go.dev/github.com/kha7iq/pingme">
    <img alt="Go Dev Reference" src="https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat">
 </p>
