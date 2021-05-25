@@ -190,3 +190,7 @@ at the [contributing guide](https://github.com/kha7iq/pingme/blob/master/CONTRIB
 ## Show your support
 
 Give a ⭐️  if you like this project!
+
+## Acknowledgments
+
+This project is based on amazing library [Notify](https://github.com/nikoksr/notify)
