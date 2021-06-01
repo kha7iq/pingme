@@ -13,11 +13,11 @@ import (
 
 // Line struct holds data parsed via flags for the service
 type Line struct {
-	ChanSecret      string
-	ChanAccessToken string
-	Message         string
-	Receivers       string
-	Title           string
+	Secret    string
+	Token     string
+	Message   string
+	Receivers string
+	Title     string
 }
 
 // Send parses values from *cli.context and returns a *cli.Command.
@@ -26,24 +26,26 @@ type Line struct {
 func Send() *cli.Command {
 	var lineOpts Line
 	return &cli.Command{
-		Name:        "line",
-		Usage:       "Send message to line messenger",
-		Description: `Line messenger uses a channel secret and a channel access token to authenticate & send messages through line to various receivers. Multiple receiver IDs can be used separated by comma ','. All configuration options are also available via environment variables.`,
-		UsageText:   "pingme line --channelsecret '123' --channelaccesstoken '123' --msg 'some message' --receivers '123,456,789'",
+		Name:  "line",
+		Usage: "Send message to line messenger",
+		Description: `Line messenger uses a channel secret and
+a channel access token to authenticate & send messages
+through line to various receivers.`,
+		UsageText: "pingme line --secret '123' --token '123' --msg 'some message' --receivers '123,456,789'",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Destination: &lineOpts.ChanSecret,
-				Name:        "channelsecret",
+				Destination: &lineOpts.Secret,
+				Name:        "secret",
 				Required:    true,
 				Usage:       "Channel secret.",
-				EnvVars:     []string{"LINE_CHANNELSECRET"},
+				EnvVars:     []string{"LINE_SECRET"},
 			},
 			&cli.StringFlag{
-				Destination: &lineOpts.ChanAccessToken,
-				Name:        "channelaccesstoken",
+				Destination: &lineOpts.Token,
+				Name:        "token",
 				Required:    true,
 				Usage:       "Channel access token.",
-				EnvVars:     []string{"LINE_CHANNELACCESSTOKEN"},
+				EnvVars:     []string{"LINE_TOKEN"},
 			},
 			&cli.StringFlag{
 				Destination: &lineOpts.Message,
@@ -69,7 +71,7 @@ func Send() *cli.Command {
 		},
 		Action: func(ctx *cli.Context) error {
 			notifier := notify.New()
-			lineSvc, err := line.New(lineOpts.ChanSecret, lineOpts.ChanAccessToken)
+			lineSvc, err := line.New(lineOpts.Secret, lineOpts.Token)
 			if err != nil {
 				return err
 			}
