@@ -13,6 +13,7 @@ possible.
   - `service/slack` - Slack notification service.
   - `service/telegram` - Telegram notification service.
   - `service/pushover` - Pushover Notification service.
+  - `service/line` - Line notification service.
   
 ### Documentation
 

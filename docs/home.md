@@ -58,6 +58,7 @@ platforms.
 - *Slack*
 - *Telegram*
 - *Twillio*
+- *Line Messenger*
 
 ## Demo
 

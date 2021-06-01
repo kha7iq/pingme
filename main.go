@@ -10,6 +10,7 @@ import (
 
 	"github.com/kha7iq/pingme/service/discord"
 	"github.com/kha7iq/pingme/service/email"
+	"github.com/kha7iq/pingme/service/line"
 	"github.com/kha7iq/pingme/service/mattermost"
 	"github.com/kha7iq/pingme/service/msteams"
 	"github.com/kha7iq/pingme/service/pushbullet"
@@ -48,6 +49,7 @@ RocketChat, Discord, Pushover, Mattermost, Pushbullet, Microsoft Teams, Twillio,
 		twillio.Send(),
 		zulip.Send(),
 		mastodon.Send(),
+		line.Send(),
 	}
 
 	err := app.Run(os.Args)
