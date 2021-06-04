@@ -54,6 +54,7 @@ platforms.
 
 - *Discord*
 - *Email*
+- *Line*
 - *Mastodon*
 - *Mattermost*
 - *Microsoft Teams*
@@ -164,7 +165,9 @@ COMMANDS:
    mattermost  Send message to mattermost
    pushbullet  Send message to pushbullet
    twillio     Send sms via twillio
+   zulip       Send message to zulip
    mastodon    Set status message for mastodon
+   line        Send message to line messenger
    help, h     Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:

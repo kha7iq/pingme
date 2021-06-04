@@ -512,7 +512,7 @@ jobs:
 
 ## Zulip
 
-Mastodon uses application token to authorize and set status.
+Zulip uses bot email and token for authentication, and sends messages to particular topic.
 
 ```bash
 pingme zulip 
@@ -564,6 +564,53 @@ jobs:
 | ZULIP_TOPIC            | ""                 |  
 | ZULIP_MESSAGE            | ""                 |  
 
+## Line
+
+Line uses chanel secret and token for authentication, and sends messages.
+
+```bash
+pingme line 
+ --secret 'secretxxx' \ 
+ --token '12345567' \ 
+ --receivers 'ab1234545xx' \
+ --msg 'content of message'
+```
+
+- GitHub Action
+
+```yaml
+on: [push]
+
+jobs:
+  pingme-job:
+    runs-on: ubuntu-latest
+    name: PingMe
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ping me On
+        uses: kha7iq/pingme-action@v1
+        env:
+          LINE_SECRET: ${{ secrets.LINE_SECRET }}
+          LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
+          LINE_RECEIVER_IDS: 'ab1235xxx8'
+          LINE_MSG_TITLE: 'Reference: ${{ github.ref }}'
+          LINE_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
+        
+        with:
+          service: line
+```
+
+- **Variables**
+
+|          Variables         | Default Value      |
+| -------------------------- | :----------------: |
+| LINE_SECRET              | ""                 |
+| LINE_TOKEN              | ""                 |
+| LINE_RECEIVER_IDS            | ""                 |
+| LINE_MSG_TITLE            | ""                 |
+| LINE_MESSAGE            | ""                 |
 
 ## Email
 
