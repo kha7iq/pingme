@@ -66,10 +66,10 @@ jobs:
         uses: kha7iq/pingme-action@v1
         if: failure()
         env:
-          PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
-          PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
-          PUSHOVER_TITLE: '🟢 New Release: ${{ github.ref }}'
-          PUSHOVER_MESSAGE: 'Event is triggerd by ${{ github.event_name }} ❌  ${{ job.status }}'
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHANNELS: ${{ secrets.TELEGRAM_CHANNELS }}
+          TELEGRAM_TITLE: '🟢 New Release: ${{ github.ref }}'
+          TELEGRAM_MESSAGE: 'Event is triggerd by ${{ github.event_name }} ❌  ${{ job.status }}'
         with:
           service: pushover
 
@@ -78,9 +78,9 @@ jobs:
         uses: kha7iq/pingme-action@v1
         if: success()
         env:
-          PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
-          PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
-          PUSHOVER_TITLE: '🟢 New Release: ${{ github.ref }}'
-          PUSHOVER_MESSAGE: 'Event is triggerd by ${{ github.event_name }} ✅  ${{ job.status }}'
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHANNELS: ${{ secrets.TELEGRAM_CHANNELS }}
+          TELEGRAM_TITLE: '🟢 New Release: ${{ github.ref }}'
+          TELEGRAM_MESSAGE: 'Event is triggerd by ${{ github.event_name }} ✅  ${{ job.status }}'
         with:
-          service: pushover
+          service: telegram
