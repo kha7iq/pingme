@@ -1,17 +1,17 @@
 # Configuration
 
-All the flags have crosponding enviornment variables assosiated with it. You
+All the flags have corresponding environment variables assosiated with it. You
 can either provide the value with flags or export to a variable. You can view
-the crosponding variable to each with --help flag.
+the corresponding variable to each with --help flag.
 
-*Flags* take presedance over *variables*
+*Flags* take precedence over *variables*
 
 *Default* value for message title is current *time*
 
 ## Telegram
 
 Telegram uses bot token to authenticate & send messages to defined channels.
-Multiple channel ids can be used separated by comma ','.
+Multiple channel IDs can be used separated by comma ','.
 
 ```bash
 pingme  telegram  --token "0125:AAFHvnYf_ABC"  --msg "This is a new message ✈" --channel="-1001001001,-1002002001"
@@ -57,7 +57,7 @@ jobs:
 ## RocketChat
 
 RocketChat uses token & userID to authenticate and send messages to defined
-channels. Multiple channel ids can be used separated by comma ','.
+channels. Multiple channel IDs can be used separated by comma ','.
 
 ```bash
 pingme rocketchat \
@@ -161,10 +161,10 @@ jobs:
 
 ## Mattermost
 
-Mattermost uses token to authenticate and channel ids for targets. Destination
+Mattermost uses token to authenticate and channel IDs for targets. Destination
 server can be specified as 'example.com' by default the 'https' is used, you
 can change this with --scheme flag and set it to 'http'. Latest api  version 4
-is used for interacting with server, this can also be changes with --api flag.
+is used for interacting with server, this can also be changed with --api flag.
 You can specify multiple channels by separating the value with ','.
 
 ```bash
@@ -221,7 +221,7 @@ jobs:
 ## Slack
 
 Slack uses token to authenticate and send messages to defined channels.
-Multiple channel ids can be used separated by comma ','.
+Multiple channel IDs can be used separated by comma ','.
 
 ```bash
 pingme slack \
@@ -269,7 +269,7 @@ jobs:
 ## Discord
 
 Discord uses bot token to authenticate & send messages to defined channels.
-Multiple channel ids can be used separated by comma ','.
+Multiple channel IDs can be used separated by comma ','.
 
 ```bash
  pingme discord --token '123' --channel '1234567890' --msg 'some message'
@@ -566,7 +566,7 @@ jobs:
 
 ## Line
 
-Line uses chanel secret and token for authentication, and sends messages.
+Line uses channel secret and token for authentication, and sends messages.
 
 ```bash
 pingme line 
@@ -614,11 +614,11 @@ jobs:
 
 ## Email
 
-Email uses username  & password to authenticate for sending emails. SMTP
+Email uses username & password to authenticate for sending emails. SMTP
 hostname i.e smtp.gmail.com and port i.e (587) should be provided as well for
-the server. Multiple email ids can be used separated by comma ',' as receiver
+the server. Multiple email IDs can be used separated by comma ',' as receiver
 email address. All configuration options are also available via environment
-variables check configuration section.
+variables. Check configuration section.
 
 ```bash
 pingme email \
