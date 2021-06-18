@@ -78,7 +78,7 @@ All configuration options are also available via environment variables.`,
 				if len(v) <= 0 {
 					return helpers.ErrChannel
 				}
-				k, errStr := strconv.Atoi(v)
+				k, errStr := strconv.ParseInt(v, 10, 64)
 				if errStr != nil {
 					return errStr
 				}
