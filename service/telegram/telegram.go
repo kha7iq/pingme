@@ -82,7 +82,7 @@ All configuration options are also available via environment variables.`,
 				if errStr != nil {
 					return errStr
 				}
-				telegramSvc.AddReceivers(int64(k))
+				telegramSvc.AddReceivers(k)
 			}
 
 			notifier.UseServices(telegramSvc)
