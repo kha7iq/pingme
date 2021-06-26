@@ -643,3 +643,58 @@ pingme email \
 | EMAIL_PORT                 | "587"              |
 | EMAIL_MESSAGE              | ""                 |  
 | EMAIL_SUBJECT              | ""                 |
+
+
+## Wechat Official Account
+
+Wechat uses appid, appsecret, chatbot server token and encoding AES key for authentication, and sends messages.
+
+```bash
+pingme wechat
+--appid "xxxxxxxx" \
+--appsecret 'xxxxxxxxxx' \
+--token 'xxxxxxxxxx' \
+--aes 'IGNORED-IN-SANDBOX' \
+--msg 'content of message' \
+--receivers 'some receivers'
+```
+
+- GitHub Action
+
+```yaml
+on: [push]
+
+jobs:
+  pingme-job:
+    runs-on: ubuntu-latest
+    name: PingMe
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ping me On
+        uses: kha7iq/pingme-action@v1
+        env:
+          WECHAT_APPID: ${{ secrets.WECHAT_APPID }}
+          WECHAT_APPSECRET: ${{ secrets.WECHAT_APPSECRET }}
+          WECHAT_TOKEN: ${{ secrets.WECHAT_TOKEN }}
+          WECHAT_ENCODINGAESKEY: ${{ secrets.WECHAT_ENCODINGAESKEY }}
+          WECHAT_RECEIVER_IDS: ${{ secrets.WECHAT_RECEIVER_IDS }}
+          WECHAT_MSG_TITLE: 'Reference: ${{ github.ref }}'
+          WECHAT_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
+        
+        with:
+          service: wechat
+```
+
+- **Variables**
+
+|          Variables         | Default Value      |
+| -------------------------- | :----------------: |
+| WECHAT_APPID               | ""                 |
+| WECHAT_APPSECRET           | ""                 |
+| WECHAT_TOKEN               | ""                 |
+| WECHAT_ENCODINGAESKEY      | ""                 |
+| WECHAT_RECEIVER_IDS        | ""                 |
+| WECHAT_MSG_TITLE           | ""                 |
+| WECHAT_MESSAGE             | ""                 |
