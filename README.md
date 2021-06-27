@@ -65,7 +65,7 @@ platforms.
 - *Telegram*
 - *Twillio*
 - *Zulip*
-- *Wechat Official Account*
+- *Wechat*
 
 ## Install
 
