@@ -65,6 +65,7 @@ platforms.
 - *Telegram*
 - *Twillio*
 - *Zulip*
+- *Wechat*
 
 ## Install
 
@@ -168,6 +169,7 @@ COMMANDS:
    zulip       Send message to zulip
    mastodon    Set status message for mastodon
    line        Send message to line messenger
+   wechat      Send message to wechat official account
    help, h     Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:

@@ -59,6 +59,7 @@ platforms.
 - *Telegram*
 - *Twillio*
 - *Line Messenger*
+- *Wechat*
 
 ## Demo
 

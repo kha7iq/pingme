@@ -14,6 +14,7 @@ possible.
   - `service/telegram` - Telegram notification service.
   - `service/pushover` - Pushover Notification service.
   - `service/line` - Line notification service.
+  - `service/wechat` - Wechat Official Account notification service.
   
 ### Documentation
 
