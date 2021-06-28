@@ -48,11 +48,54 @@ jobs:
 
 |          Variables         | Default Value      |
 | -------------------------- | :----------------: |
-| TELEGRAM_MSG_TITLE         | ""                 |  
+| TELEGRAM_TITLE         | ""                 |  
 | TELEGRAM_TOKEN             | ""                 |
 | TELEGRAM_CHANNELS          | ""                 |
 | TELEGRAM_MESSAGE           | ""                 |
-| TELEGRAM_MSG_TITLE         | ""                 |  
+
+## Gotify
+
+With gotify you can send push messages to any instance of Gotify server.
+
+```bash
+pingme gotify  --url 'https://example.com' --token 'tokenabc' --title 'some title'  --msg 'some message' --priority 5
+```
+
+- GitHub Action
+
+```yaml
+on: [push]
+
+jobs:
+  pingme-job:
+    runs-on: ubuntu-latest
+    name: PingMe
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ping me On
+        uses: kha7iq/pingme-action@v1
+        env:
+          GOTIFY_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          GOTIFY_TITLE: 'Reference: ${{ github.ref }}'
+          GOTIFY_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
+        
+        with:
+          # Chose the messaging platform. 
+          # slack / telegram / rocketchat / teams / pushover / discord / email
+          service: gotify
+```
+
+- **Variables**
+
+|          Variables         | Default Value      |
+| -------------------------- | :----------------: |
+| GOTIFY_URL       | ""                 |  
+| GOTIFY_TOKEN             | ""                 |
+| GOTIFY_PRIORITY          | "5"                 |
+| GOTIFY_MESSAGE           | ""                 |
+| GOTIFY_TITLE         | "Server Time"                 |  
 
 ## RocketChat
 

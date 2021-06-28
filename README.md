@@ -54,6 +54,7 @@ platforms.
 
 - *Discord*
 - *Email*
+- *Gotify*
 - *Line*
 - *Mastodon*
 - *Mattermost*
@@ -78,7 +79,7 @@ brew install kha7iq/tap/pingme
 ## Linux Binary
 
 ```bash
-wget -q https://github.com/kha7iq/pingme/releases/download/v0.1.6/pingme_Linux_x86_64.tar.gz
+wget -q https://github.com/kha7iq/pingme/releases/download/v0.2.3/pingme_Linux_x86_64.tar.gz
 tar -xf pingme_Linux_x86_64.tar.gz
 chmod +x pingme
 sudo mv pingme /usr/local/bin/pingme
@@ -153,7 +154,8 @@ DESCRIPTION:
    PingMe is a CLI tool which provides the ability to send messages or alerts to multiple
    messaging platforms and also email, everything is configurable via environment
    variables and command line switches.Currently supported platforms include Slack, Telegram,
-   RocketChat, Discord, Pushover, Mattermost, Pushbullet, Microsoft Teams, Twillio, Mastodon and email address.
+   RocketChat, Discord, Pushover, Mattermost, Pushbullet, Microsoft Teams, Twillio, Mastodon,
+   email address, Line, Gotify and Wechat.
 
 COMMANDS:
    telegram    Send message to telegram
@@ -170,6 +172,7 @@ COMMANDS:
    mastodon    Set status message for mastodon
    line        Send message to line messenger
    wechat      Send message to wechat official account
+   gotify      Send push notification to gotify server
    help, h     Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:

@@ -50,15 +50,18 @@ platforms.
 
 - *Discord*
 - *Email*
-- *Microsoft Teams*
+- *Gotify*
+- *Line*
+- *Mastodon*
 - *Mattermost*
-- *Pushover*
+- *Microsoft Teams*
 - *Pushbullet*
+- *Pushover*
 - *RocketChat*
 - *Slack*
 - *Telegram*
 - *Twillio*
-- *Line Messenger*
+- *Zulip*
 - *Wechat*
 
 ## Demo
