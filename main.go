@@ -4,6 +4,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/kha7iq/pingme/service/gotify"
+
 	"github.com/kha7iq/pingme/service/mastodon"
 	"github.com/kha7iq/pingme/service/twillio"
 	"github.com/kha7iq/pingme/service/wechat"
@@ -36,7 +38,7 @@ func main() {
 messaging platforms and also email, everything is configurable via environment
 variables and command line switches.Currently supported platforms include Slack, Telegram,
 RocketChat, Discord, Pushover, Mattermost, Pushbullet, Microsoft Teams, Twillio, Mastodon,
-email address, Line, and Wechat official account.`
+email address, Line, Gotify and Wechat.`
 	// app.Commands contains the subcommands as functions which return []*cli.Command.
 	app.Commands = []*cli.Command{
 		telegram.Send(),
@@ -53,6 +55,7 @@ email address, Line, and Wechat official account.`
 		mastodon.Send(),
 		line.Send(),
 		wechat.Send(),
+		gotify.Send(),
 	}
 
 	err := app.Run(os.Args)
