@@ -14,7 +14,10 @@ Telegram uses bot token to authenticate & send messages to defined channels.
 Multiple channel IDs can be used separated by comma ','.
 
 ```bash
-pingme  telegram  --token "0125:AAFHvnYf_ABC"  --msg "This is a new message ✈" --channel="-1001001001,-1002002001"
+pingme  telegram \
+--token "0125:AAFHvnYf_ABC" \
+--msg "This is a new message ✈" \
+--channel="-1001001001,-1002002001"
 ```
 
 - GitHub Action
@@ -58,7 +61,12 @@ jobs:
 With gotify you can send push messages to any instance of Gotify server.
 
 ```bash
-pingme gotify  --url 'https://example.com' --token 'tokenabc' --title 'some title'  --msg 'some message' --priority 5
+pingme gotify \
+--url 'https://example.com' \
+--token 'tokenabc' \
+--title 'some title' \
+--msg 'some message' \
+--priority 5
 ```
 
 - GitHub Action
@@ -315,7 +323,10 @@ Discord uses bot token to authenticate & send messages to defined channels.
 Multiple channel IDs can be used separated by comma ','.
 
 ```bash
- pingme discord --token '123' --channel '1234567890' --msg 'some message'
+ pingme discord \
+ --token '123' \
+ --channel '1234567890' \
+ --msg 'some message'
 ```
 
 - GitHub Action
@@ -361,7 +372,9 @@ Teams uses webhooks to send messages, you can add multiple webhooks separated
 by comma ',' or you can add permissions for multiple channels to single webhook.
 
 ```bash
-pingme teams --webhook 'https://example.webhook.office.com/xx' --msg 'some message'
+pingme teams \
+--webhook 'https://example.webhook.office.com/xx' \
+--msg 'some message'
 ```
 
 - GitHub Action
@@ -559,7 +572,7 @@ Zulip uses bot email and token for authentication, and sends messages to particu
 
 ```bash
 pingme zulip 
---email 'john.doe@email.com' \ 
+ --email 'john.doe@email.com' \ 
  --api-key '12345567' \ 
  --to 'london' \
  --type 'stream' \
