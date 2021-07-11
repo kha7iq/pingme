@@ -76,8 +76,14 @@ platforms.
 brew install kha7iq/tap/pingme
 ```
 
-## Linux Binary
+## Linux
 
+* AUR
+```bash
+yay -S pingme-bin
+```
+
+* Binary
 ```bash
 wget -q https://github.com/kha7iq/pingme/releases/download/v0.2.3/pingme_Linux_x86_64.tar.gz
 tar -xf pingme_Linux_x86_64.tar.gz
