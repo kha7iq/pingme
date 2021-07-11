@@ -1,0 +1,23 @@
+pkgbase = pingme-bin
+	pkgdesc = PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms & email (official binary)
+	pkgver = ${PKGVER}
+	pkgrel = ${PKGREL}
+	url = https://pingme.lmno.pk
+	arch = i686
+	arch = x86_64
+	arch = aarch64
+	license = MIT
+	optdepends = nfpm: deb and rpm packager
+	provides = ${_PKGNAME}
+	conflicts = ${_PKGNAME}
+
+	source_x86_64 = ${_PKGNAME}_${PKGVER}_linux_x86_64.tar.gz::https://github.com/kha7iq/${_PKGNAME}/releases/download/v${PKGVER}/${_PKGNAME}_linux_x86_64.tar.gz")
+	sha256sums_x86_64 = (${SHA256SUM_X86})
+
+	source_i686 = ${_PKGNAME}_${PKGVER}_linux_i386.tar.gz::https://github.com/kha7iq/${_PKGNAME}/releases/download/v${PKGVER}/${_PKGNAME}_linux_i386.tar.gz")
+	sha256sums_i686 = (${SHA256SUM_i686})
+
+	source_aarch64 = ${_PKGNAME}_${PKGVER}_linux_arm64.tar.gz::https://github.com/kha7iq/${_PKGNAME}/releases/download/v${PKGVER}/${_PKGNAME}_linux_arm64.tar.gz")
+	sha256sums_aarch64 = (${SHA256SUM_AARCH64})
+
+pkgname = pingme-bin

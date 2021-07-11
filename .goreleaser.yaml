@@ -100,3 +100,10 @@ dockers:
   - "--label=org.opencontainers.image.version={{.Version}}"
   - "--label=org.opencontainers.image.source={{.GitURL}}"
   - "--platform=linux/amd64"
+
+publishers:
+  - name: aur-pingme
+    env:
+      - AUR_SSH_PRIVATE_KEY={{ .Env.AUR_SSH_PRIVATE_KEY }}
+    cmd: |
+      .github/aur/pingme-bin/publish.sh {{ .Version }}
