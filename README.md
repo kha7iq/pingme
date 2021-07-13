@@ -80,7 +80,12 @@ brew install kha7iq/tap/pingme
 
 * AUR
 ```bash
+# build from sources
+yay -S pingme
+
+# binary
 yay -S pingme-bin
+
 ```
 
 * Binary
@@ -91,12 +96,6 @@ chmod +x pingme
 sudo mv pingme /usr/local/bin/pingme
 ```
 
-### Go Get
-
-```bash
-go get -u github.com/kha7iq/pingme
-```
-
 ### Windows
 
 ```powershell
@@ -105,7 +104,7 @@ scoop install pingme
 ```
 
 Alternatively you can head over to [release pages](https://github.com/kha7iq/pingme/releases)
-and download the binary for windows & all other supported platforms.
+and download `deb`, `rpm` or `binary` for windows & all other supported platforms.
 
 ### Docker
 
