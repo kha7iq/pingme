@@ -102,8 +102,14 @@ dockers:
   - "--platform=linux/amd64"
 
 publishers:
-  - name: aur-pingme
+  - name: aur pingme binary
     env:
       - AUR_SSH_PRIVATE_KEY={{ .Env.AUR_SSH_PRIVATE_KEY }}
     cmd: |
       .github/aur/pingme-bin/publish.sh {{ .Version }}
+
+  - name: aur pingme sources
+    env:
+      - AUR_SSH_PRIVATE_KEY={{ .Env.AUR_SSH_PRIVATE_KEY }}
+    cmd: |
+      .github/aur/pingme/publish.sh {{ .Version }}

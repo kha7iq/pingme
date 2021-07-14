@@ -1,0 +1,27 @@
+# Maintainer: André Kugland <kugland@gmail.com>
+
+pkgname=pingme
+pkgver=${PKGVER}
+pkgrel=${PKGREL}
+pkgdesc="Substitute environment variables from command line for template driven configuration files."
+url='https://pingme.lmno.pk'
+arch=("i686" "x86_64" "aarch64")
+license=("MIT")
+makedepends=('go>=1.16')
+source=(
+  "${pkgname}-${pkgver}.tar.gz::https://github.com/kha7iq/pingme/archive/v${pkgver}.tar.gz"
+)
+sha256sums=(
+  ${SHA256SUM}
+)
+
+build() {
+  cd "${pkgname}-${pkgver}"
+  export CGO_LDFLAGS="$LDFLAGS"
+  go build -ldflags "-linkmode=external -s -w -X main.version=${pkgver}" -o ${pkgname} .
+}
+
+package() {
+  cd "${pkgname}-${pkgver}"
+  install -Dm755 ${pkgname} "${pkgdir}/usr/bin/${pkgname}"
+}

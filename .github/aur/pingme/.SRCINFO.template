@@ -1,0 +1,13 @@
+pkgbase = subvars
+	pkgdesc = Substitute environment variables from command line for template driven configuration files
+	pkgver = ${PKGVER}
+	pkgrel = ${PKGREL}
+	url = https://pingme.lmno.pk
+	arch = i686
+	arch = x86_64
+	arch = aarch64
+	license = MIT
+	makedepends = go
+	source = pingme-${PKGVER}.tar.gz::https://github.com/kha7iq/pingme/archive/v{PKGVER}.tar.gz
+
+pkgname = pingme
