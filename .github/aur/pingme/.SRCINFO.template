@@ -1,5 +1,5 @@
 pkgbase = subvars
-	pkgdesc = Substitute environment variables from command line for template driven configuration files
+	pkgdesc = PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms & email
 	pkgver = ${PKGVER}
 	pkgrel = ${PKGREL}
 	url = https://pingme.lmno.pk
