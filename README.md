@@ -41,7 +41,7 @@
 **PingMe** is a personal project to satisfy my needs of having alerts, most
 major platforms have integration to send alerts but its not always useful,
 either you are stuck with one particular platform, or you have to do alot of
-integrations. I needed a small app which i can just call from my backup scripts,
+integrations. I needed a small utility which i can just call from my backup scripts,
 cron jobs, CI/CD pipelines or from anywhere to send a message with particular
 information. And i can ship it everywhere with ease. Hence, the birth of PingMe.
 
@@ -90,9 +90,10 @@ yay -S pingme-bin
 
 * Binary
 ```bash
-wget -q https://github.com/kha7iq/pingme/releases/download/v0.2.3/pingme_Linux_x86_64.tar.gz
-tar -xf pingme_Linux_x86_64.tar.gz
-chmod +x pingme
+export PINGME_VERSION="0.2.3"
+wget -q https://github.com/kha7iq/pingme/releases/download/v${PINGME_VERSION}/pingme_Linux_x86_64.tar.gz && \
+tar -xf pingme_Linux_x86_64.tar.gz && \
+chmod +x pingme && \
 sudo mv pingme /usr/local/bin/pingme
 ```
 
@@ -110,7 +111,7 @@ and download `deb`, `rpm` or `binary` for windows & all other supported platform
 
 Docker container is also available on both dockerhub and github container registry.
 
-`latest` tage will always pull the latest version avaialbe, you can also download
+`latest` tag will always pull the latest version available, or you can also download
 specific version. Checkout [release](https://github.com/kha7iq/pingme/releases)
 page for available versions.
 
@@ -134,15 +135,13 @@ docker run ghcr.io/kha7iq/pingme:latest
 
 ## Github Action
 
-A github action is also available now for this app, you can find it on
+A github action is available for integration with your workflows, you can find it on
 [Github Market Place](https://github.com/marketplace/actions/pingme-action) or
-from this [repository](https://github.com/kha7iq/pingme-action) on github.
+here [Github Repo](https://github.com/kha7iq/pingme-action).
 ```yaml
 - name: PingMe-Action
   uses: kha7iq/pingme-action@v1
 ```
-
-Usage examples for workflow are available in the repo.
 
 ## Usage
 
