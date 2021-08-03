@@ -23,7 +23,7 @@ type TextMagic struct {
 func Send() *cli.Command {
 	var textMagicOpts TextMagic
 	return &cli.Command{
-		Name:  "textMagic",
+		Name:  "textmagic",
 		Usage: "Send message via TextMagic",
 		UsageText: "pingme textmagic --token 'tokenabc' --user 'sid123' " +
 			"--receiver '+140001442' --msg 'some message'",
@@ -55,7 +55,7 @@ You can specify multiple receivers by separating the value with a comma.`,
 				EnvVars:     []string{"TEXTMAGIC_SUBJECT"},
 			},
 			&cli.StringFlag{
-				Destination: &textMagicOpts.Message,
+				Destination: &textMagicOpts.Receivers,
 				Name:        "receiver",
 				Usage:       "Receiver(s) of the message",
 				Aliases:     []string{"r"},

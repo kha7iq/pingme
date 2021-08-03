@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/kha7iq/pingme/service/gotify"
+	"github.com/kha7iq/pingme/service/textmagic"
 
 	"github.com/kha7iq/pingme/service/mastodon"
 	"github.com/kha7iq/pingme/service/twillio"
@@ -56,6 +57,7 @@ email address, Line, Gotify and Wechat.`
 		line.Send(),
 		wechat.Send(),
 		gotify.Send(),
+		textmagic.Send(),
 	}
 
 	err := app.Run(os.Args)
