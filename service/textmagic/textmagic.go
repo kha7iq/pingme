@@ -91,8 +91,6 @@ You can specify multiple receivers by separating the value with a comma.`,
 	}
 }
 
-//getReceivers returns a slice of receivers from comma separated string
-//if receivers is an empty string return an error otherwise return slice of strings
 func getReceivers(receivers string) ([]string, error) {
 	if len(receivers) == 0 {
 		return nil, fmt.Errorf("no receivers found")
