@@ -26,7 +26,7 @@ func Send() *cli.Command {
 		Name:  "textmagic",
 		Usage: "Send message via TextMagic",
 		UsageText: "pingme textmagic --token 'tokenabc' --user 'sid123' " +
-			"--receiver '+140001442' --msg 'some message'",
+			"--subject 'foo' --receiver '+140001442' --msg 'some message'",
 		Description: `textmagic provides ability to send sms to multiple numbers.
 You can specify multiple receivers by separating the value with a comma.`,
 		Flags: []cli.Flag{
