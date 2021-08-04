@@ -786,8 +786,8 @@ jobs:
         env:
           TEXTMAGIC_USER: ${{ secrets.TEXTMAGIC_USER }}
           TEXTMAGIC_TOKEN: ${{ secrets.TEXTMAGIC_TOKEN }}
+          TEXTMAGIC_SUBJECT: 'Reference: ${{ github.ref }}'
           TEXTMAGIC_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
-          TEXTMAGIC_TITLE: 'Reference: ${{ github.ref }}'
           TEXTMAGIC_RECEIVER:  ${{ secrets.TEXTMAGIC_RECEIVER }}
         
         with:

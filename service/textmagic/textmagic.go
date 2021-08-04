@@ -12,11 +12,11 @@ import (
 
 //TextMagic struct describes required data needed to integrate with TextMagic
 type TextMagic struct {
-	Token     string
-	User      string
-	Subject   string
-	Message   string
-	Receivers string
+	Token    string
+	User     string
+	Subject  string
+	Message  string
+	Receiver string
 }
 
 //Send method sends a message via TextMagic service
@@ -55,7 +55,7 @@ You can specify multiple receivers by separating the value with a comma.`,
 				EnvVars:     []string{"TEXTMAGIC_SUBJECT"},
 			},
 			&cli.StringFlag{
-				Destination: &textMagicOpts.Receivers,
+				Destination: &textMagicOpts.Receiver,
 				Name:        "receiver",
 				Usage:       "Receiver(s) of the message",
 				Aliases:     []string{"r"},
@@ -73,7 +73,7 @@ You can specify multiple receivers by separating the value with a comma.`,
 		},
 		Action: func(c *cli.Context) error {
 			textMagicService := textmagic.New(textMagicOpts.User, textMagicOpts.Token)
-			receivers, err := getReceivers(textMagicOpts.Receivers)
+			receivers, err := getReceivers(textMagicOpts.Receiver)
 			if err != nil {
 				return fmt.Errorf("invalid receivers provided, %w", err)
 			}
