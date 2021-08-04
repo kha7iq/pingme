@@ -784,9 +784,11 @@ jobs:
       - name: Ping me On
         uses: kha7iq/pingme-action@v1
         env:
-          TEAMS_WEBHOOK: ${{ secrets.TEAMS_WEBHOOK }}
-          TEAMS_MSG_TITLE: 'Reference: ${{ github.ref }}'
-          TEAMS_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
+          TEXTMAGIC_USER: ${{ secrets.TEXTMAGIC_USER }}
+          TEXTMAGIC_USER: ${{ secrets.TEXTMAGIC_TITLE }}
+          TEXTMAGIC_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
+          TEXTMAGIC_TITLE: 'Reference: ${{ github.ref }}'
+          TEXTMAGIC_RECEIVER:  ${{ secrets.TEXTMAGIC_RECEIVER }}
         
         with:
           # Chose the messaging platform. 
@@ -799,8 +801,8 @@ jobs:
 
 |          Variables         | Default Value      |
 | -------------------------- | :----------------: |
-| TEAMS_USER                 | ""                 |
-| TEAMS_TOKEN                | ""                 |
-| TEAMS_SUBJECT              | ""                 | 
-| TEAMS_MESSAGE              | ""                 | 
-| TEAMS_RECEIVER             | ""                 | 
+| TEXTMAGIC_USER             | ""                 |
+| TEXTMAGIC_TOKEN            | ""                 |
+| TEXTMAGIC_SUBJECT          | ""                 | 
+| TEXTMAGIC_MESSAGE          | ""                 | 
+| TEXTMAGIC_RECEIVER         | ""                 | 
