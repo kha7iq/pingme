@@ -785,7 +785,7 @@ jobs:
         uses: kha7iq/pingme-action@v1
         env:
           TEXTMAGIC_USER: ${{ secrets.TEXTMAGIC_USER }}
-          TEXTMAGIC_USER: ${{ secrets.TEXTMAGIC_TITLE }}
+          TEXTMAGIC_TOKEN: ${{ secrets.TEXTMAGIC_TOKEN }}
           TEXTMAGIC_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
           TEXTMAGIC_TITLE: 'Reference: ${{ github.ref }}'
           TEXTMAGIC_RECEIVER:  ${{ secrets.TEXTMAGIC_RECEIVER }}
