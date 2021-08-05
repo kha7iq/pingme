@@ -64,6 +64,7 @@ platforms.
 - *RocketChat*
 - *Slack*
 - *Telegram*
+- *Textmagic*
 - *Twillio*
 - *Zulip*
 - *Wechat*
