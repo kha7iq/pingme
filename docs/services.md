@@ -375,7 +375,7 @@ by comma ',' or you can add permissions for multiple channels to single webhook.
 pingme teams \
 --webhook 'https://example.webhook.office.com/xx' \
 --msg 'some message'
-```
+``` 
 
 - GitHub Action
 
@@ -754,3 +754,55 @@ jobs:
 | WECHAT_RECEIVER_IDS        | ""                 |
 | WECHAT_MSG_TITLE           | ""                 |
 | WECHAT_MESSAGE             | ""                 |
+
+## TextMagic
+
+TextMagic allows you to send SMS to multiple receivers provided by comma separated string.
+
+```bash
+ pingme textmagic \
+   --token 'tokenabc' \
+   --user 'sid123' \
+   --subject '+140001442' \
+   --receiver '+140001442' \
+   --msg 'some message'
+```
+
+- GitHub Action
+
+```yaml
+on: [push]
+
+jobs:
+  pingme-job:
+    runs-on: ubuntu-latest
+    name: PingMe
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ping me On
+        uses: kha7iq/pingme-action@v1
+        env:
+          TEXTMAGIC_USER: ${{ secrets.TEXTMAGIC_USER }}
+          TEXTMAGIC_TOKEN: ${{ secrets.TEXTMAGIC_TOKEN }}
+          TEXTMAGIC_SUBJECT: 'Reference: ${{ github.ref }}'
+          TEXTMAGIC_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
+          TEXTMAGIC_RECEIVER:  ${{ secrets.TEXTMAGIC_RECEIVER }}
+        
+        with:
+          # Chose the messaging platform. 
+          # slack / telegram / rocketchat / teams /
+          # pushover / discord / email / mattermost / textmagic
+          service: textmagic
+```
+
+- **Variables**
+
+|          Variables         | Default Value      |
+| -------------------------- | :----------------: |
+| TEXTMAGIC_USER             | ""                 |
+| TEXTMAGIC_TOKEN            | ""                 |
+| TEXTMAGIC_SUBJECT          | ""                 | 
+| TEXTMAGIC_MESSAGE          | ""                 | 
+| TEXTMAGIC_RECEIVER         | ""                 | 
