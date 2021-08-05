@@ -41,7 +41,7 @@ else
     export PKGREL=1
 fi
 
-export SHA256SUM=$(curl -sL https://github.com/kha7iq/subvars/archive/v$PKGVER.tar.gz | sha256sum | awk '{ print $1 }')
+export SHA256SUM=$(curl -sL https://github.com/kha7iq/${PKGNAME}/archive/v$PKGVER.tar.gz | sha256sum | awk '{ print $1 }')
 
 envsubst '$PKGVER $PKGREL $SHA256SUM' < .SRCINFO.template > $GITDIR/.SRCINFO
 envsubst '$PKGVER $PKGREL $SHA256SUM' < PKGBUILD.template > $GITDIR/PKGBUILD

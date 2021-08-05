@@ -9,7 +9,7 @@ arch=("i686" "x86_64" "aarch64")
 license=("MIT")
 makedepends=('go>=1.16')
 source=(
-  "${pkgname}-${pkgver}.tar.gz::https://github.com/kha7iq/pingme/archive/v${pkgver}.tar.gz"
+  "${pkgname}-${pkgver}.tar.gz::https://github.com/kha7iq/${pkgname}/archive/v${pkgver}.tar.gz"
 )
 sha256sums=(
   ${SHA256SUM}
