@@ -7,7 +7,7 @@ on:
     # paths-ignore:
     # - '**.md'
     tags:
-      - 'v*.*.*'
+      - 'v0.[0-9]+.[0-9]'
 
 jobs:
   release-pingme:
@@ -70,9 +70,9 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHANNELS: ${{ secrets.TELEGRAM_CHANNELS }}
           TELEGRAM_TITLE: '🟢 New Release: ${{ github.ref }}'
-          TELEGRAM_MESSAGE: 'Event is triggerd by ${{ github.event_name }} ❌  ${{ job.status }}'
+          TELEGRAM_MESSAGE: 'Event is triggered by ${{ github.event_name }} ❌  ${{ job.status }}'
         with:
-          service: pushover
+          service: telegram
 
       - 
         name: Notify on success
@@ -82,6 +82,6 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHANNELS: ${{ secrets.TELEGRAM_CHANNELS }}
           TELEGRAM_TITLE: '🟢 New Release: ${{ github.ref }}'
-          TELEGRAM_MESSAGE: 'Event is triggerd by ${{ github.event_name }} ✅  ${{ job.status }}'
+          TELEGRAM_MESSAGE: 'Event is triggered by ${{ github.event_name }} ✅  ${{ job.status }}'
         with:
           service: telegram
