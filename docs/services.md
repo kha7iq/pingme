@@ -763,7 +763,7 @@ TextMagic allows you to send SMS to multiple receivers provided by comma separat
  pingme textmagic \
    --token 'tokenabc' \
    --user 'sid123' \
-   --subject '+140001442' \
+   --title 'message title' \
    --receiver '+140001442' \
    --msg 'some message'
 ```
@@ -786,7 +786,7 @@ jobs:
         env:
           TEXTMAGIC_USER: ${{ secrets.TEXTMAGIC_USER }}
           TEXTMAGIC_TOKEN: ${{ secrets.TEXTMAGIC_TOKEN }}
-          TEXTMAGIC_SUBJECT: 'Reference: ${{ github.ref }}'
+          TEXTMAGIC_TITLE: 'Reference: ${{ github.ref }}'
           TEXTMAGIC_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
           TEXTMAGIC_RECEIVER:  ${{ secrets.TEXTMAGIC_RECEIVER }}
         
@@ -803,6 +803,6 @@ jobs:
 | -------------------------- | :----------------: |
 | TEXTMAGIC_USER             | ""                 |
 | TEXTMAGIC_TOKEN            | ""                 |
-| TEXTMAGIC_SUBJECT          | ""                 | 
+| TEXTMAGIC_TITLE          | ""                 | 
 | TEXTMAGIC_MESSAGE          | ""                 | 
 | TEXTMAGIC_RECEIVER         | ""                 | 
