@@ -1,4 +1,4 @@
-pkgbase = subvars
+pkgbase = pingme
 	pkgdesc = PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms & email
 	pkgver = ${PKGVER}
 	pkgrel = ${PKGREL}
