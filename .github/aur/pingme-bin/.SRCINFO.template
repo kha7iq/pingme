@@ -11,13 +11,13 @@ pkgbase = pingme-bin
 	provides = ${_PKGNAME}
 	conflicts = ${_PKGNAME}
 
-	source_x86_64 = ${_PKGNAME}_${PKGVER}_linux_x86_64.tar.gz::https://github.com/kha7iq/${_PKGNAME}/releases/download/v${PKGVER}/${_PKGNAME}_linux_x86_64.tar.gz")
+	source_x86_64 = ${_PKGNAME}_${pkgver}_linux_x86_64.tar.gz::https://github.com/kha7iq/${_PKGNAME}/releases/download/v${pkgver}/${_PKGNAME}_linux_x86_64.tar.gz")
 	sha256sums_x86_64 = (${SHA256SUM_X86})
 
-	source_i686 = ${_PKGNAME}_${PKGVER}_linux_i386.tar.gz::https://github.com/kha7iq/${_PKGNAME}/releases/download/v${PKGVER}/${_PKGNAME}_linux_i386.tar.gz")
+	source_i686 = ${_PKGNAME}_${pkgver}_linux_i386.tar.gz::https://github.com/kha7iq/${_PKGNAME}/releases/download/v${pkgver}/${_PKGNAME}_linux_i386.tar.gz")
 	sha256sums_i686 = (${SHA256SUM_i686})
 
-	source_aarch64 = ${_PKGNAME}_${PKGVER}_linux_arm64.tar.gz::https://github.com/kha7iq/${_PKGNAME}/releases/download/v${PKGVER}/${_PKGNAME}_linux_arm64.tar.gz")
+	source_aarch64 = ${_PKGNAME}_${pkgver}_linux_arm64.tar.gz::https://github.com/kha7iq/${_PKGNAME}/releases/download/v${pkgver}/${_PKGNAME}_linux_arm64.tar.gz")
 	sha256sums_aarch64 = (${SHA256SUM_AARCH64})
 
 pkgname = pingme-bin

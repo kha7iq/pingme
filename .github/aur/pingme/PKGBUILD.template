@@ -18,7 +18,7 @@ sha256sums=(
 build() {
   cd "${pkgname}-${pkgver}"
   export CGO_LDFLAGS="$LDFLAGS"
-  go build -ldflags "-linkmode=external -s -w -X main.version=${pkgver}" -o ${pkgname} .
+  go build -ldflags "-linkmode=external -s -w -X main.Version=${pkgver}" -o ${pkgname} .
 }
 
 package() {
