@@ -8,6 +8,6 @@ pkgbase = pingme
 	arch = aarch64
 	license = MIT
 	makedepends = go
-	source = pingme-${PKGVER}.tar.gz::https://github.com/kha7iq/pingme/archive/v{PKGVER}.tar.gz
+	source = pingme-${pkgver}.tar.gz::https://github.com/kha7iq/${pkgname}/archive/v${pkgver}.tar.gz
 
 pkgname = pingme
