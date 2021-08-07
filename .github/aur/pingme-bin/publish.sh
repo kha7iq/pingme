@@ -54,7 +54,7 @@ envsubst '$PKGVER $PKGREL $_PKGNAME $SHA256SUM_X86 $SHA256SUM_i686 $SHA256SUM_AA
 envsubst '$PKGVER $PKGREL $SHA256SUM_X86 $SHA256SUM_i686 $SHA256SUM_AARCH64' < PKGBUILD.template > $GITDIR/PKGBUILD
 
 cd $GITDIR
-git config user.name "GoReleaser"
+git config user.name "kha7iq"
 git config user.email "a.khaliq@outlook.my"
 git add -A
 if [ -z "$(git status --porcelain)" ]; then

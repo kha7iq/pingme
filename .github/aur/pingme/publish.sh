@@ -47,7 +47,7 @@ envsubst '$PKGVER $PKGREL $SHA256SUM' < .SRCINFO.template > $GITDIR/.SRCINFO
 envsubst '$PKGVER $PKGREL $SHA256SUM' < PKGBUILD.template > $GITDIR/PKGBUILD
 
 cd $GITDIR
-git config user.name "GoReleaser"
+git config user.name "kha7iq"
 git config user.email "a.khaliq@outlook.my"
 git add -A
 if [ -z "$(git status --porcelain)" ]; then
