@@ -15,9 +15,10 @@ yay -S pingme-bin
 
 * Binary
 ```bash
-wget -q https://github.com/kha7iq/pingme/releases/download/v0.2.3/pingme_Linux_x86_64.tar.gz
-tar -xf pingme_Linux_x86_64.tar.gz
-chmod +x pingme
+export PINGME_VERSION="0.2.4"
+wget -q https://github.com/kha7iq/pingme/releases/download/v${PINGME_VERSION}/pingme_Linux_x86_64.tar.gz && \
+tar -xf pingme_Linux_x86_64.tar.gz && \
+chmod +x pingme && \
 sudo mv pingme /usr/local/bin/pingme
 ```
 
