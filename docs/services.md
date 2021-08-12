@@ -1,8 +1,8 @@
 # Configuration
 
-All the flags have corresponding environment variables assosiated with it. You
+All the flags have corresponding environment variables associated with them. You
 can either provide the value with flags or export to a variable. You can view
-the corresponding variable to each with --help flag.
+the corresponding variable with `--help` flag.
 
 *Flags* take precedence over *variables*
 
@@ -85,7 +85,8 @@ jobs:
       - name: Ping me On
         uses: kha7iq/pingme-action@v1
         env:
-          GOTIFY_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          GOTIFY_TOKEN: ${{ secrets.GOTIFY_TOKEN }}
+          GOTIFY_URL: "example.com"
           GOTIFY_TITLE: 'Reference: ${{ github.ref }}'
           GOTIFY_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
         
@@ -246,7 +247,6 @@ jobs:
         env:
           MATTERMOST_TOKEN: ${{ secrets.MATTERMOST_TOKEN }}
           MATTERMOST_SERVER_URL: ${{ secrets.MATTERMOST_SERVER_URL }}
-          MATTERMOST_CHANNELS: ${{ secrets.MATTERMOST_CHANNELS }}
           MATTERMOST_CHANNELS: ${{ secrets.MATTERMOST_CHANNELS }}
           MATTERMOST_TITLE: 'Reference: ${{ github.ref }}'
           MATTERMOST_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
