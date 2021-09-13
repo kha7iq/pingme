@@ -91,7 +91,7 @@ yay -S pingme-bin
 
 * Binary
 ```bash
-export PINGME_VERSION="0.2.3"
+export PINGME_VERSION="0.2.4"
 wget -q https://github.com/kha7iq/pingme/releases/download/v${PINGME_VERSION}/pingme_Linux_x86_64.tar.gz && \
 tar -xf pingme_Linux_x86_64.tar.gz && \
 chmod +x pingme && \
@@ -203,6 +203,10 @@ at the [contributing guide](https://github.com/kha7iq/pingme/blob/master/CONTRIB
 ## Show your support
 
 Give a ⭐️  if you like this project!
+
+Fork it ⚙️
+
+Make it better 🕶️
 
 ## Acknowledgments
 
