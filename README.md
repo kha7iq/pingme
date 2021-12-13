@@ -81,9 +81,13 @@ brew install kha7iq/tap/pingme
 ## Shell Script
 By default pingme is going to be installed at `/usr/bin/` sudo is requried for this operation.
 
-If you would like to provide a custome install path you can do so by prviding it as input to scipt. i.e `./install.sh $HOME/bin`
+If you would like to provide a custom install path you can do so as input to script. i.e `./install.sh $HOME/bin`
 ```bash
 curl -s https://raw.githubusercontent.com/kha7iq/pingme/master/install.sh | sudo sh
+```
+or
+```bash
+curl -sL https://bit.ly/installpm | sudo sh
 ```
 
 ## Linux
