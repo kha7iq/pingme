@@ -806,3 +806,28 @@ jobs:
 | TEXTMAGIC_TITLE          | ""                 | 
 | TEXTMAGIC_MESSAGE          | ""                 | 
 | TEXTMAGIC_RECEIVER         | ""                 | 
+
+## Whatsapp
+
+WhatsApp allows you to send messages to defined contacts.
+Multiple contacts can be used separated by comma ','.
+
+#### Authentication
+The authentication process requires you to scan the qr code, that is send through the channel, with the device you are using whatsapp on. 
+The session struct that is returned can be saved and used to restore the login without scanning the qr code again. 
+The qr code has a ttl of 20 seconds and the login function throws a timeout err if the time has passed or any other request fails.
+
+```bash
+pingme whatsapp \
+  --contact "01234567891,01234567892" \
+  --msg "This is an whatsapp message from PingMe CLI" \
+  --title "message title"
+```
+
+- **Variables**
+
+|          Variables         | Default Value      |
+| -------------------------- | :----------------: |
+| WHATSAPP_CONTACT           | ""                 |
+| WHATSAPP_MESSAGE           | ""                 |
+| WHATSAPP_TITLE             | "Server time"      |

@@ -22,6 +22,7 @@ import (
 	"github.com/kha7iq/pingme/service/rocketchat"
 	"github.com/kha7iq/pingme/service/slack"
 	"github.com/kha7iq/pingme/service/telegram"
+	"github.com/kha7iq/pingme/service/whatsapp"
 
 	"github.com/urfave/cli/v2"
 )
@@ -58,6 +59,7 @@ email address, Line, Gotify and Wechat.`
 		wechat.Send(),
 		gotify.Send(),
 		textmagic.Send(),
+		whatsapp.Send(),
 	}
 
 	err := app.Run(os.Args)
