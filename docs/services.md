@@ -806,3 +806,72 @@ jobs:
 | TEXTMAGIC_TITLE          | ""                 | 
 | TEXTMAGIC_MESSAGE          | ""                 | 
 | TEXTMAGIC_RECEIVER         | ""                 | 
+
+## Matrix
+
+Matrix uses either username and password, or an access token for authentication. Tokens will be used first, if not 
+present, username and password will be used. Similarly for --room, if not present, room will be determined using roomId 
+and domain. 
+
+```bash
+ pingme matrix \
+   --username 'matrix username' \
+   --password 'password' \
+   --token 'access token' \
+   --url 'https://matrix-client.matrix.org' \
+   --serverName 'server1.matrix.org' \
+   --room 'LRovrjPJaRChcTKgoK:matrix.org' \
+   --roomId 'LRovrjPJaRChcTKgoK' \
+   --domain 'matrix.org' \
+   --msg 'some message' \
+   --autoJoin
+```
+
+- GitHub Action
+
+```yaml
+on: [push]
+
+jobs:
+  pingme-job:
+    runs-on: ubuntu-latest
+    name: PingMe
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ping me On
+        uses: kha7iq/pingme-action@v1
+        env:
+          MATRIX_USERNAME: ${{ secrets.MATRIX_USERNAME }}
+          MATRIX_PASSWORD: ${{ secrets.MATRIX_PASSWORD }}
+          MATRIX_ACCESS_TOKEN: ${{ secrets.MATRIX_ACCESS_TOKEN }}
+          MATRIX_SERVER_URL: ${{ secrets.MATRIX_SERVER_URL }}
+          MATRIX_SERVER_NAME: ${{ secrets.MATRIX_SERVER_NAME }}
+          MATRIX_ROOM: ${{ secrets.MATRIX_ROOM }}
+          MATRIX_ROOM_ID: ${{ secrets.MATRIX_ROOM_ID }}
+          MATRIX_DOMAIN: ${{ secrets.MATRIX_DOMAIN }}
+          MATRIX_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
+          MATRIX_AUTO_JOIN: ${{ secrets.MATRIX_AUTO_JOIN }}
+        
+        with:
+          # Chose the messaging platform. 
+          # slack / telegram / rocketchat / teams /
+          # pushover / discord / email / mattermost / textmagic / matrix
+          service: matrix
+```
+
+- **Variables**
+
+| Variables          | Default Value      |
+|--------------------| :----------------: |
+| MATRIX_USERNAME    | ""                 |
+| MATRIX_PASSWORD    | ""                 |
+| MATRIX_ACCESS_TOKEN    | ""                 | 
+| MATRIX_SERVER_URL  | ""                 | 
+| MATRIX_SERVER_NAME | ""                 | 
+| MATRIX_ROOM | ""                 | 
+| MATRIX_ROOM_ID | ""                 | 
+| MATRIX_DOMAIN | ""                 | 
+| MATRIX_MESSAGE | ""                 | 
+| MATRIX_AUTO_JOIN | ""                 | 

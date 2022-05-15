@@ -26,14 +26,14 @@ func Send() *cli.Command {
 		Name:  "matrix",
 		Usage: "Send message via matrix",
 		UsageText: "pingme matrix --token 'syt_YW...E2qD' --room 'LRovrjPJaRChcTKgoK:matrix.org' " +
-			"--url 'matrix-client.matrix.org' --autoJoin --message 'Hello, Matrix!'",
+			"--url 'matrix-client.matrix.org' --autoJoin --msg 'Hello, Matrix!'",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Destination: &matrix.Username,
 				Name:        "username",
 				Aliases:     []string{"u"},
 				Usage:       "Matrix username",
-				EnvVars:     []string{"MATRIX_USERNAME"},
+				EnvVars:     []string{"MATRIX_USER"},
 			},
 			&cli.StringFlag{
 				Destination: &matrix.Password,
@@ -44,7 +44,7 @@ func Send() *cli.Command {
 			},
 			&cli.StringFlag{
 				Destination: &matrix.Token,
-				Name:        "accessToken",
+				Name:        "token",
 				Aliases:     []string{"t"},
 				Usage:       "Matrix access token. Can be used instead of username+password",
 				EnvVars:     []string{"MATRIX_ACCESS_TOKEN"},
@@ -81,7 +81,7 @@ func Send() *cli.Command {
 			},
 			&cli.StringFlag{
 				Destination: &matrix.Message,
-				Name:        "message",
+				Name:        "msg",
 				Aliases:     []string{"m"},
 				Required:    true,
 				Usage:       "Message to send to matrix",

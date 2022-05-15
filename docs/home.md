@@ -54,6 +54,7 @@ platforms.
 - *Line*
 - *Mastodon*
 - *Mattermost*
+- *Matrix*
 - *Microsoft Teams*
 - *Pushbullet*
 - *Pushover*
