@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/kha7iq/pingme/service/matrix"
 	"log"
 	"os"
 
@@ -58,6 +59,7 @@ email address, Line, Gotify and Wechat.`
 		wechat.Send(),
 		gotify.Send(),
 		textmagic.Send(),
+		matrix.Send(),
 	}
 
 	err := app.Run(os.Args)
