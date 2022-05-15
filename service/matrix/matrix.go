@@ -5,7 +5,6 @@ import (
 	"github.com/matrix-org/gomatrix"
 	"github.com/urfave/cli/v2"
 	"strings"
-	//"github.com/urfave/cli/v2"
 )
 
 type matrixPingMe struct {
