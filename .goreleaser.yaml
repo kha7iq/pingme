@@ -56,6 +56,7 @@ brews:
 
 nfpms:
   - file_name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    maintainer: 'Abdul Khaliq <a.khaliq@outlook.my>'
     homepage:  pingme.lmno.pk
     description: PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms.
     license: MIT
@@ -65,15 +66,6 @@ nfpms:
     dependencies:
     - git
 
-# snapcrafts:
-#   - name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
-#     summary: PingMe is a CLI tool which provides the ability to send messages
-#     description: |
-#       PingMe is a CLI tool which provides the ability to send messages
-#       or alerts to multiple messaging platforms.
-#     grade: stable
-#     confinement: strict
-#     publish: false
 
 scoop:
   url_template: "https://github.com/kha7iq/pingme/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
@@ -101,15 +93,15 @@ dockers:
   - "--label=org.opencontainers.image.source={{.GitURL}}"
   - "--platform=linux/amd64"
 
-publishers:
-  - name: aur pingme binary
-    env:
-      - AUR_SSH_PRIVATE_KEY={{ .Env.AUR_SSH_PRIVATE_KEY }}
-    cmd: |
-      .github/aur/pingme-bin/publish.sh {{ .Version }}
+# publishers:
+#   - name: aur pingme binary
+#     env:
+#       - AUR_SSH_PRIVATE_KEY={{ .Env.AUR_SSH_PRIVATE_KEY }}
+#     cmd: |
+#       .github/aur/pingme-bin/publish.sh {{ .Version }}
 
-  - name: aur pingme sources
-    env:
-      - AUR_SSH_PRIVATE_KEY={{ .Env.AUR_SSH_PRIVATE_KEY }}
-    cmd: |
-      .github/aur/pingme/publish.sh {{ .Version }}
+#   - name: aur pingme sources
+#     env:
+#       - AUR_SSH_PRIVATE_KEY={{ .Env.AUR_SSH_PRIVATE_KEY }}
+#     cmd: |
+#       .github/aur/pingme/publish.sh {{ .Version }}
