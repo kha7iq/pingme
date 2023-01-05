@@ -12,8 +12,6 @@
    <img alt="Release" src="https://img.shields.io/github/v/release/kha7iq/pingme">
    <a href="https://goreportcard.com/report/github.com/kha7iq/pingme">
    <img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/kha7iq/pingme">
-   <a href="#">
-   <img alt="Build" src="https://img.shields.io/github/workflow/status/kha7iq/pingme/goreleaser">
    <a href="https://github.com/kha7iq/pingme/issues">
    <img alt="GitHub issues" src="https://img.shields.io/github/issues/kha7iq/pingme?style=flat-square&logo=github&logoColor=white">
    <a href="https://github.com/kha7iq/pingme/blob/master/LICENSE.md">
