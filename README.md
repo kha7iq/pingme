@@ -29,7 +29,6 @@
   <a href="#github-action">Github Action</a> •
   <a href="#configuration">Configuration</a> •
   <a href="#contributing">Contributing</a> •
-  <a href="#show-your-support">Show Your Support</a>
 </p>
 
 ---
@@ -215,14 +214,6 @@ details.
 Contributions, issues and feature requests are welcome!<br/>Feel free to check
 [issues page](https://github.com/kha7iq/pingme/issues). You can also take a look
 at the [contributing guide](https://github.com/kha7iq/pingme/blob/master/CONTRIBUTING.md).
-
-## Show your support
-
-Give a ⭐️  if you like this project!
-
-Fork it ⚙️
-
-Make it better 🕶️
 
 ## Acknowledgments
 
