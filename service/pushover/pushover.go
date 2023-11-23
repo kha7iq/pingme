@@ -16,6 +16,7 @@ type pushOver struct {
 	Recipient string
 	Message   string
 	Title     string
+	Priority  int
 }
 
 // Send parse values from *cli.context and return *cli.Command.
@@ -61,10 +62,27 @@ All configuration options are also available via environment variables.`,
 				Usage:       "Title of the message.",
 				EnvVars:     []string{"PUSHOVER_TITLE"},
 			},
+			&cli.IntFlag{
+				Destination: &pushOverOpts.Priority,
+				Name:        "priority",
+				Aliases:     []string{"p"},
+				Value:       0,
+				Usage:       "Priority of the message.",
+				EnvVars:     []string{"PUSHOVER_PRIORITY"},
+			},
 		},
 		Action: func(ctx *cli.Context) error {
 			app := pushover.New(pushOverOpts.Token)
-			message := pushover.NewMessageWithTitle(pushOverOpts.Message, pushOverOpts.Title)
+
+			// message := &pushover.Message{Title: pushOverOpts.Title, Message: pushOverOpts.Message, Priority: pushOverOpts.Priority}
+
+			message := &pushover.Message{Title: pushOverOpts.Title,
+				Message:  pushOverOpts.Message,
+				Priority: pushOverOpts.Priority,
+				Retry:    60,
+				Expire:   3600,
+			}
+
 			users := strings.Split(pushOverOpts.Recipient, ",")
 
 			for _, v := range users {
