@@ -2,10 +2,6 @@ name: build
 
 on:
   push:
-    # branches:
-    #   - 'master'
-    # paths-ignore:
-    # - '**.md'
     tags:
       - 'v0.[0-9]+.[0-9]'
 
@@ -15,46 +11,31 @@ jobs:
     env:
       DOCKER_CLI_EXPERIMENTAL: "enabled"
     steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v2.3.4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      -
-        name: Set up Go
-        uses: actions/setup-go@v2
+          
+      - name: Set up Go
+        uses: actions/setup-go@v4
         with:
-          go-version: '1.16'
-      -
-        name: Cache Go modules
-        uses: actions/cache@v2.1.5
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-      -
-        name: Diff
-        run: git diff
-      
-      -
-        name: Docker login GHCR
+          go-version: '>=1.20.0'
+
+      - name: Docker login GHCR
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
-      -
-        name: Docker Login DockerHub
+      - name: Docker Login DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      -
-        name: Release PingMe
-        uses: goreleaser/goreleaser-action@v2
+      - name: Release PingMe
+        uses: goreleaser/goreleaser-action@v3
         with:
           version: latest
           args: release --rm-dist
@@ -62,8 +43,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
           AUR_SSH_PRIVATE_KEY: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
 
-      - 
-        name: Notify on failure
+      - name: Notify on failure
         uses: kha7iq/pingme-action@v1
         if: failure()
         env:
@@ -74,8 +54,7 @@ jobs:
         with:
           service: telegram
 
-      - 
-        name: Notify on success
+      - name: Notify on success
         uses: kha7iq/pingme-action@v1
         if: success()
         env:
