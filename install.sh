@@ -41,6 +41,11 @@ fi
 
 machine=$(uname -m)
 
+if [ "$machine" = "x86_64" ]; then
+    machine="amd64"
+fi
+
+
 case $(uname -s) in
     Linux)
         os="Linux"
