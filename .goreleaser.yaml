@@ -36,18 +36,15 @@ changelog:
 
 archives:
   - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
     format_overrides:
     - goos: windows
       format: zip
-
+    files:
+    - README.md
+    - LICENSE.md
+    
 brews:
-  - tap:
+  - repository:
       owner: kha7iq
       name: homebrew-tap
     folder: Formula
@@ -71,12 +68,11 @@ nfpms:
     dependencies:
     - git
 
-
-scoop:
-  url_template: "https://github.com/kha7iq/pingme/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
-  bucket:
+scoops:
+- repository:
     owner: kha7iq
     name: scoop-bucket
+  url_template: "https://github.com/kha7iq/pingme/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
   homepage:  https://pingme.lmno.pk
   description: PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms.
   license: MIT
@@ -97,16 +93,3 @@ dockers:
   - "--label=org.opencontainers.image.version={{.Version}}"
   - "--label=org.opencontainers.image.source={{.GitURL}}"
   - "--platform=linux/amd64"
-
-# publishers:
-#   - name: aur pingme binary
-#     env:
-#       - AUR_SSH_PRIVATE_KEY={{ .Env.AUR_SSH_PRIVATE_KEY }}
-#     cmd: |
-#       .github/aur/pingme-bin/publish.sh {{ .Version }}
-
-#   - name: aur pingme sources
-#     env:
-#       - AUR_SSH_PRIVATE_KEY={{ .Env.AUR_SSH_PRIVATE_KEY }}
-#     cmd: |
-#       .github/aur/pingme/publish.sh {{ .Version }}
