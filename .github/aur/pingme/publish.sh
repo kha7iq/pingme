@@ -5,14 +5,17 @@ set -e
 WD=$(cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd)
 PKGNAME=$(basename $WD)
 ROOT=${WD%/.github/aur/$PKGNAME}
+repo="kha7iq/pingme"
 
 LOCKFILE=/tmp/aur-$PKGNAME.lock
 exec 100>$LOCKFILE || exit 0
 flock -n 100 || exit 0
 trap "rm -f $LOCKFILE" EXIT
 
-export VERSION=$1
-echo "Publishing to AUR as version ${VERSION}"
+
+export PKGVER=$(curl -s https://api.github.com/repos/$repo/releases/latest | grep -o '"tag_name": "v[^"]*' | cut -d'"' -f4 | sed 's/^v//')
+
+echo "Publishing to AUR as version ${PKGVER}"
 
 cd $WD
 
@@ -33,7 +36,6 @@ git clone aur@aur.archlinux.org:$PKGNAME $GITDIR 2>&1
 CURRENT_PKGVER=$(cat $GITDIR/.SRCINFO | grep pkgver | awk '{ print $3 }')
 CURRENT_PKGREL=$(cat $GITDIR/.SRCINFO | grep pkgrel | awk '{ print $3 }')
 
-export PKGVER=${VERSION/-/}
 
 if [[ "${CURRENT_PKGVER}" == "${PKGVER}" ]]; then
     export PKGREL=$((CURRENT_PKGREL+1))
@@ -47,6 +49,7 @@ envsubst '$PKGVER $PKGREL $SHA256SUM' < .SRCINFO.template > $GITDIR/.SRCINFO
 envsubst '$PKGVER $PKGREL $SHA256SUM' < PKGBUILD.template > $GITDIR/PKGBUILD
 
 cd $GITDIR
+
 git config user.name "kha7iq"
 git config user.email "a.khaliq@outlook.my"
 git add -A
