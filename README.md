@@ -102,7 +102,7 @@ yay -S pingme-bin
 ## Manual
 ```bash
 # Chose desired version, architecture & target os
-export PINGME_VERSION="0.2.4"
+export PINGME_VERSION="0.2.6"
 export ARCH="x86_64"
 export OS="Linux"
 wget -q https://github.com/kha7iq/pingme/releases/download/v${PINGME_VERSION}/pingme_${OS}_${ARCH}.tar.gz && \
