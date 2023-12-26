@@ -11,7 +11,6 @@
 
 set -euf
 
-
 if [ -n "${DEBUG-}" ]; then
     set -x
 fi
@@ -40,6 +39,14 @@ if ! _can_install; then
 fi
 
 machine=$(uname -m)
+case $machine in
+    "armv7*")
+        machine="arm"
+        ;;
+    "aarch64")
+        machine="arm64"
+        ;;
+esac
 
 case $(uname -s) in
     Linux)
@@ -62,9 +69,10 @@ printf -- "Found version %s\n" "${latest}"
 
 mkdir -p "${tempFolder}" 2> /dev/null
 printf -- "Downloading pingme_%s_%s_%s.tar.gz\n" "${latest}" "${os}" "${machine}"
-curl -sL "https://github.com/kha7iq/pingme/releases/download/v${latest}/pingme_${os}_${machine}.tar.gz" | tar -C "${tempFolder}" -xzf -
+curl -sL -o "${tempFolder}/pingme.tar.gz" "https://github.com/kha7iq/pingme/releases/download/v${latest}/pingme_${os}_${machine}.tar.gz"
 
 printf -- "Installing...\n"
+tar -C "${tempFolder}" -xf "${tempFolder}/pingme.tar.gz"
 install -m755 "${tempFolder}/pingme" "${BINDIR}/pingme"
 
 printf "Cleaning up temp files\n"
