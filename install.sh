@@ -40,10 +40,10 @@ fi
 
 machine=$(uname -m)
 case $machine in
-    "armv7*")
+    armv7*)
         machine="arm"
         ;;
-    "aarch64")
+    aarch64)
         machine="arm64"
         ;;
 esac
