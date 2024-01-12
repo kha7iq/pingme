@@ -420,7 +420,7 @@ jobs:
 pingme pushbullet \
   --sms true \
   --token "abcdefg" \
-  -d "adnroid" \
+  -d "android" \
   --msg "some message" \
   --number "00123456789"
 ```
@@ -428,7 +428,7 @@ pingme pushbullet \
 - Push notification
 
 ```bash
-pingme pushbullet --token "abcdefg" -d "adnroid" --msg "some message"
+pingme pushbullet --token "abcdefg" -d "android" --msg "some message"
 ```
 
 - GitHub Action
