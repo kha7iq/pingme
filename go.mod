@@ -23,6 +23,6 @@ require (
 	github.com/stretchr/testify v1.8.0
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.3361 // indirect
 	github.com/urfave/cli/v2 v2.11.0
-	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/net v0.36.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20220630143837-2104d58473e0 // indirect
 )
