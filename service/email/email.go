@@ -2,6 +2,7 @@ package email
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"strings"
 
@@ -24,17 +25,58 @@ type email struct {
 	Identity        string
 }
 
+// SendMessage sends an email to multiple receivers.
+// receivers can be comma-separated string of email addresses.
+func SendMessage(senderAddress, password, host, port, identity, receivers, subject, message string) error {
+	if senderAddress == "" {
+		return fmt.Errorf("sender email address is required")
+	}
+	if password == "" {
+		return fmt.Errorf("email password is required")
+	}
+	if host == "" {
+		return fmt.Errorf("SMTP host is required")
+	}
+	if port == "" {
+		return fmt.Errorf("SMTP port is required")
+	}
+	if receivers == "" {
+		return fmt.Errorf("receiver email address is required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	notifier := notify.New()
+	emailSvc := mail.New(senderAddress, host+":"+port)
+	emailSvc.AuthenticateSMTP(identity, senderAddress, password, host)
+
+	chn := strings.Split(receivers, ",")
+	for _, v := range chn {
+		v = strings.TrimSpace(v)
+		if len(v) <= 0 {
+			return helpers.ErrChannel
+		}
+		emailSvc.AddReceivers(v)
+	}
+
+	notifier.UseServices(emailSvc)
+
+	if err := notifier.Send(context.Background(), subject, message); err != nil {
+		return fmt.Errorf("failed to send email: %w", err)
+	}
+
+	log.Println("Successfully sent!")
+	return nil
+}
+
 // Send parses values from *cli.context and return *cli.Command.
-// SendAddress is used for authentication with smtp server, host and port is required
-// the default value for port is set to "587" and host as "smtp.gmail.com"
-// If multiple ReceiverAddress are provided then the string value is split with "," separator and
-// each ReceiverAddress is added to receiver.
 func Send() *cli.Command {
 	var emailOpts email
 	return &cli.Command{
 		Name:  "email",
 		Usage: "Send an email",
-		Description: `Email uses username  & password to authenticate for sending emails.
+		Description: `Email uses username & password to authenticate for sending emails.
 SMTP hostname i.e smtp.gmail.com and port i.e (587) should be provided as well for the server.
 Multiple email ids can be used separated by comma ',' as receiver email address.
 All configuration options are also available via environment variables.`,
@@ -105,30 +147,16 @@ All configuration options are also available via environment variables.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			notifier := notify.New()
-			emailSvc := mail.New(emailOpts.SenderAddress, emailOpts.Host+":"+emailOpts.Port)
-			emailSvc.AuthenticateSMTP(emailOpts.Identity, emailOpts.SenderAddress, emailOpts.Password, emailOpts.Host)
-
-			chn := strings.Split(emailOpts.ReceiverAddress, ",")
-			for _, v := range chn {
-				if len(v) <= 0 {
-					return helpers.ErrChannel
-				}
-
-				emailSvc.AddReceivers(v)
-			}
-
-			notifier.UseServices(emailSvc)
-
-			if err := notifier.Send(
-				context.Background(),
+			return SendMessage(
+				emailOpts.SenderAddress,
+				emailOpts.Password,
+				emailOpts.Host,
+				emailOpts.Port,
+				emailOpts.Identity,
+				emailOpts.ReceiverAddress,
 				emailOpts.Subject,
 				emailOpts.Message,
-			); err != nil {
-				return err
-			}
-			log.Println("Successfully sent!")
-			return nil
+			)
 		},
 	}
 }
