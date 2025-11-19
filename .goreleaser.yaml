@@ -1,5 +1,8 @@
+version: 2
+
 env:
   - GO111MODULE=on
+
 before:
   hooks:
     - go mod tidy
@@ -21,11 +24,14 @@ builds:
   ignore:
   - goos: windows
     goarch: arm64
+  - goos: windows
+    goarch: arm
   mod_timestamp: '{{ .CommitTimestamp }}'
   flags:
     - -trimpath
   ldflags:
     - -s -w -X main.Version={{.Version}}
+
 checksum:
   name_template: '{{ .ProjectName }}_checksums.txt'
 
@@ -43,28 +49,24 @@ archives:
       {{- else }}{{ .Arch }}{{ end }}
     format_overrides:
     - goos: windows
-      format: zip
+      formats:
+        - zip
     files:
     - README.md
     - LICENSE.md
-    
-brews:
+
+homebrew_casks:
   - repository:
       owner: kha7iq
       name: homebrew-tap
-    folder: Formula
-    homepage: pingme.lmno.pk
+    homepage: https://pingme.lmno.pk
     description: PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms.
     license: MIT
-    test: |
-      system "#{bin}/pingme -v"
-    install: |-
-      bin.install "pingme"
 
 nfpms:
   - file_name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
     maintainer: 'Abdul Khaliq <a.khaliq@outlook.my>'
-    homepage:  pingme.lmno.pk
+    homepage: https://pingme.lmno.pk
     description: PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms.
     license: MIT
     formats:
@@ -78,23 +80,23 @@ scoops:
     owner: kha7iq
     name: scoop-bucket
   url_template: "https://github.com/kha7iq/pingme/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
-  homepage:  https://pingme.lmno.pk
+  homepage: https://pingme.lmno.pk
   description: PingMe is a CLI tool which provides the ability to send messages or alerts to multiple messaging platforms.
   license: MIT
 
-
-dockers:
-- image_templates:
-  - 'khaliq/pingme:{{ .Tag }}'
-  - 'khaliq/pingme:latest'
-  - 'ghcr.io/kha7iq/pingme:{{ .Tag }}'
-  - 'ghcr.io/kha7iq/pingme:latest'
-  dockerfile: Dockerfile
-  build_flag_templates:
-  - "--pull"
-  - "--label=org.opencontainers.image.created={{.Date}}"
-  - "--label=org.opencontainers.image.name={{.ProjectName}}"
-  - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-  - "--label=org.opencontainers.image.version={{.Version}}"
-  - "--label=org.opencontainers.image.source={{.GitURL}}"
-  - "--platform=linux/amd64"
+dockers_v2:
+- images:
+  - 'khaliq/pingme'
+  - 'ghcr.io/kha7iq/pingme'
+  tags:
+  - '{{ .Tag }}'
+  - 'latest'
+  platforms:
+  - linux/amd64
+  - linux/arm64
+  labels:
+    "org.opencontainers.image.created": "{{.Date}}"
+    "org.opencontainers.image.name": "{{.ProjectName}}"
+    "org.opencontainers.image.revision": "{{.FullCommit}}"
+    "org.opencontainers.image.version": "{{.Version}}"
+    "org.opencontainers.image.source": "{{.GitURL}}"
