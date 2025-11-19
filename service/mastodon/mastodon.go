@@ -27,10 +27,34 @@ type HTTPClient interface {
 var Client HTTPClient
 
 func initialize() {
-	// create a new http client
 	Client = &http.Client{
 		Timeout: 10 * time.Second,
 	}
+}
+
+// SendMessage sends a status message to mastodon.
+func SendMessage(token, serverURL, title, message string) error {
+	if token == "" {
+		return fmt.Errorf("mastodon token is required")
+	}
+	if serverURL == "" {
+		return fmt.Errorf("mastodon server URL is required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	initialize()
+
+	endPointURL := "https://" + serverURL + "/api/v1/statuses/"
+	bearer := "Bearer " + token
+	fullMessage := title + "\n" + message
+
+	if err := sendMastodon(endPointURL, bearer, fullMessage); err != nil {
+		return fmt.Errorf("failed to send message: %w", err)
+	}
+
+	return nil
 }
 
 // Send parse values from *cli.context and return *cli.Command
@@ -76,24 +100,17 @@ func Send() *cli.Command {
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			initialize()
-			endPointURL := "https://" + mastodonOpts.ServerURL + "/api/v1/statuses/"
-
-			// Create a Bearer string by appending string access token
-			bearer := "Bearer " + mastodonOpts.Token
-
-			fullMessage := mastodonOpts.Title + "\n" + mastodonOpts.Message
-
-			if err := sendMastodon(endPointURL, bearer, fullMessage); err != nil {
-				return fmt.Errorf("failed to send message\n[ERROR] - %v", err)
-			}
-
-			return nil
+			return SendMessage(
+				mastodonOpts.Token,
+				mastodonOpts.ServerURL,
+				mastodonOpts.Title,
+				mastodonOpts.Message,
+			)
 		},
 	}
 }
 
-// sendMastodon function take the server url , authorization token
+// sendMastodon function take the server url, authorization token
 // and message string to set the status.
 func sendMastodon(url string, token string, msg string) error {
 	reqBody, err := json.Marshal(map[string]string{
@@ -103,31 +120,26 @@ func sendMastodon(url string, token string, msg string) error {
 		return err
 	}
 
-	// Create a new request using http
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(reqBody))
 	if err != nil {
 		return err
 	}
 
-	// add authorization header to the request
 	req.Header.Set("Authorization", token)
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
-	// send request to server
 	resp, err := Client.Do(req)
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
 
-	// decode response received from server
 	var data map[string]interface{}
 	err = json.NewDecoder(resp.Body).Decode(&data)
 	if err != nil {
 		return err
 	}
 
-	// check if server returned an error
 	checkErr, ok := data["error"]
 	if ok {
 		return fmt.Errorf("%v", checkErr)
