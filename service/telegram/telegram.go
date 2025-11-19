@@ -2,6 +2,7 @@ package telegram
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -19,6 +20,50 @@ type teleGram struct {
 	Message string
 	Channel string
 	Title   string
+}
+
+// SendMessage sends a message to telegram channels.
+// This is the core logic extracted for reuse by both CLI and webhook.
+// channels can be comma-separated string of channel IDs.
+func SendMessage(token, channels, title, message string) error {
+	if token == "" {
+		return fmt.Errorf("telegram token is required")
+	}
+	if channels == "" {
+		return fmt.Errorf("telegram channel is required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	notifier := notify.New()
+
+	telegramSvc, err := telegram.New(token)
+	if err != nil {
+		return fmt.Errorf("failed to create telegram service: %w", err)
+	}
+
+	chn := strings.Split(channels, ",")
+	for _, v := range chn {
+		v = strings.TrimSpace(v)
+		if len(v) <= 0 {
+			return helpers.ErrChannel
+		}
+		chatID, err := strconv.ParseInt(v, 10, 64)
+		if err != nil {
+			return fmt.Errorf("invalid channel ID '%s': %w", v, err)
+		}
+		telegramSvc.AddReceivers(chatID)
+	}
+
+	notifier.UseServices(telegramSvc)
+
+	if err = notifier.Send(context.Background(), title, message); err != nil {
+		return fmt.Errorf("failed to send telegram message: %w", err)
+	}
+
+	log.Println("Successfully sent!")
+	return nil
 }
 
 // Send parse values from *cli.context and return *cli.Command.
@@ -67,35 +112,13 @@ All configuration options are also available via environment variables.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			notifier := notify.New()
-
-			telegramSvc, err := telegram.New(telegramOpts.Token)
-			if err != nil {
-				return err
-			}
-			chn := strings.Split(telegramOpts.Channel, ",")
-			for _, v := range chn {
-				if len(v) <= 0 {
-					return helpers.ErrChannel
-				}
-				k, errStr := strconv.ParseInt(v, 10, 64)
-				if errStr != nil {
-					return errStr
-				}
-				telegramSvc.AddReceivers(k)
-			}
-
-			notifier.UseServices(telegramSvc)
-
-			if err = notifier.Send(
-				context.Background(),
+			// Now just call the extracted function
+			return SendMessage(
+				telegramOpts.Token,
+				telegramOpts.Channel,
 				telegramOpts.Title,
 				telegramOpts.Message,
-			); err != nil {
-				return err
-			}
-			log.Println("Successfully sent!")
-			return nil
+			)
 		},
 	}
 }
