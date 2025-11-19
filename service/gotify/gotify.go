@@ -1,6 +1,7 @@
 package gotify
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"net/url"
@@ -21,6 +22,40 @@ type Gotify struct {
 	Priority int
 	Title    string
 	Message  string
+}
+
+// SendMessage sends a message to gotify server.
+func SendMessage(serverURL, token, title, msg string, priority int) error {
+	if serverURL == "" {
+		return fmt.Errorf("gotify server URL is required")
+	}
+	if token == "" {
+		return fmt.Errorf("gotify token is required")
+	}
+	if msg == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	parsedURL, err := url.Parse(serverURL)
+	if err != nil {
+		return fmt.Errorf("invalid gotify URL: %w", err)
+	}
+
+	client := gotify.NewClient(parsedURL, &http.Client{})
+	params := message.NewCreateMessageParams()
+	params.Body = &models.MessageExternal{
+		Title:    title,
+		Message:  msg,
+		Priority: priority,
+	}
+
+	_, err = client.Message.CreateMessage(params, auth.TokenAuth(token))
+	if err != nil {
+		return fmt.Errorf("failed to send gotify message: %w", err)
+	}
+
+	log.Println("Successfully sent!")
+	return nil
 }
 
 // Send parse values from *cli.context and return *cli.Command
@@ -73,25 +108,13 @@ func Send() *cli.Command {
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			serverURL, err := url.Parse(gotifyOpts.URL)
-			if err != nil {
-				return err
-			}
-			c := gotify.NewClient(serverURL, &http.Client{})
-			params := message.NewCreateMessageParams()
-			params.Body = &models.MessageExternal{
-				Title:    gotifyOpts.Title,
-				Message:  gotifyOpts.Message,
-				Priority: gotifyOpts.Priority,
-			}
-
-			_, err = c.Message.CreateMessage(params, auth.TokenAuth(gotifyOpts.Token))
-			if err != nil {
-				return err
-			}
-
-			log.Println("Successfully sent!")
-			return nil
+			return SendMessage(
+				gotifyOpts.URL,
+				gotifyOpts.Token,
+				gotifyOpts.Title,
+				gotifyOpts.Message,
+				gotifyOpts.Priority,
+			)
 		},
 	}
 }
