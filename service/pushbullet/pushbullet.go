@@ -2,6 +2,7 @@ package pushbullet
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"strings"
 
@@ -22,10 +23,83 @@ type pushBullet struct {
 	SMS         bool
 }
 
+// SendMessage sends a message via pushbullet to devices.
+// devices can be comma-separated string of device nicknames.
+func SendMessage(token, devices, title, message string) error {
+	if token == "" {
+		return fmt.Errorf("pushbullet token is required")
+	}
+	if devices == "" {
+		return fmt.Errorf("pushbullet device is required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	notifier := notify.New()
+	pushBulletSvc := pushbullet.New(token)
+
+	deviceList := strings.Split(devices, ",")
+	for _, v := range deviceList {
+		v = strings.TrimSpace(v)
+		if len(v) <= 0 {
+			return helpers.ErrChannel
+		}
+		pushBulletSvc.AddReceivers(v)
+	}
+
+	notifier.UseServices(pushBulletSvc)
+
+	if err := notifier.Send(context.Background(), title, message); err != nil {
+		return fmt.Errorf("failed to send pushbullet message: %w", err)
+	}
+
+	log.Println("Successfully sent!")
+	return nil
+}
+
+// SendSMS sends an SMS via pushbullet.
+func SendSMS(token, device, phoneNumber, title, message string) error {
+	if token == "" {
+		return fmt.Errorf("pushbullet token is required")
+	}
+	if device == "" {
+		return fmt.Errorf("pushbullet device is required")
+	}
+	if phoneNumber == "" {
+		return fmt.Errorf("phone number is required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	notifier := notify.New()
+
+	pushBulletSmsSvc, err := pushbullet.NewSMS(token, device)
+	if err != nil {
+		return fmt.Errorf("failed to create pushbullet SMS service: %w", err)
+	}
+
+	numbers := strings.Split(phoneNumber, ",")
+	for _, v := range numbers {
+		v = strings.TrimSpace(v)
+		if len(v) <= 0 {
+			return helpers.ErrChannel
+		}
+		pushBulletSmsSvc.AddReceivers(v)
+
+		notifier.UseServices(pushBulletSmsSvc)
+
+		if err := notifier.Send(context.Background(), title, message); err != nil {
+			return fmt.Errorf("failed to send SMS to %s: %w", v, err)
+		}
+	}
+
+	log.Println("Successfully sent!")
+	return nil
+}
+
 // Send parse values from *cli.context and return *cli.Command.
-// Values include pushbullet token, Device, phone number, Message and Title.
-// If multiple devices are provided they the string is split with "," separator and
-// each device is added to receiver.
 func Send() *cli.Command {
 	var pushBulletOpts pushBullet
 	return &cli.Command{
@@ -82,55 +156,21 @@ Multiple device nicknames or numbers can be used separated by comma.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			notifier := notify.New()
-
-			switch pushBulletOpts.SMS {
-			case true:
-				pushBulletSmsSvc, err := pushbullet.NewSMS(pushBulletOpts.Token, pushBulletOpts.Device)
-				if err != nil {
-					return err
-				}
-				devices := strings.Split(pushBulletOpts.PhoneNumber, ",")
-				for _, v := range devices {
-					if len(v) <= 0 {
-						return helpers.ErrChannel
-					}
-					pushBulletSmsSvc.AddReceivers(v)
-
-					notifier.UseServices(pushBulletSmsSvc)
-
-					if err := notifier.Send(
-						context.Background(),
-						pushBulletOpts.Title,
-						pushBulletOpts.Message,
-					); err != nil {
-						return err
-					}
-				}
-			default:
-				pushBulletSvc := pushbullet.New(pushBulletOpts.Token)
-
-				devices := strings.Split(pushBulletOpts.Device, ",")
-				for _, v := range devices {
-					if len(v) <= 0 {
-						return helpers.ErrChannel
-					}
-					pushBulletSvc.AddReceivers(v)
-				}
-
-				notifier.UseServices(pushBulletSvc)
-
-				if err := notifier.Send(
-					context.Background(),
+			if pushBulletOpts.SMS {
+				return SendSMS(
+					pushBulletOpts.Token,
+					pushBulletOpts.Device,
+					pushBulletOpts.PhoneNumber,
 					pushBulletOpts.Title,
 					pushBulletOpts.Message,
-				); err != nil {
-					return err
-				}
+				)
 			}
-
-			log.Println("Successfully sent!")
-			return nil
+			return SendMessage(
+				pushBulletOpts.Token,
+				pushBulletOpts.Device,
+				pushBulletOpts.Title,
+				pushBulletOpts.Message,
+			)
 		},
 	}
 }
