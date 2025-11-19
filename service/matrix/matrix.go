@@ -2,9 +2,11 @@ package matrix
 
 import (
 	"fmt"
+	"log"
+	"strings"
+
 	"github.com/matrix-org/gomatrix"
 	"github.com/urfave/cli/v2"
-	"strings"
 )
 
 type matrixPingMe struct {
@@ -18,6 +20,56 @@ type matrixPingMe struct {
 	Domain     string
 	Message    string
 	AutoJoin   bool
+}
+
+// SendMessage sends a message to a matrix room.
+func SendMessage(serverURL, username, password, token, room, roomID, domain, serverName, message string, autoJoin bool) error {
+	if serverURL == "" {
+		return fmt.Errorf("matrix server URL is required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	m := &matrixPingMe{
+		Username:   username,
+		Password:   password,
+		Token:      token,
+		Url:        serverURL,
+		ServerName: serverName,
+		Room:       room,
+		RoomID:     roomID,
+		Domain:     domain,
+		Message:    message,
+		AutoJoin:   autoJoin,
+	}
+
+	// Login
+	client, err := m.login()
+	if err != nil {
+		return fmt.Errorf("failed to login to matrix: %w", err)
+	}
+
+	// Parse and set variables
+	err = m.setupVars()
+	if err != nil {
+		return err
+	}
+
+	// If necessary, join the given room
+	err = m.joinRoomIfNecessary(client)
+	if err != nil {
+		return err
+	}
+
+	// Send the message
+	_, err = client.SendText(m.Room, m.Message)
+	if err != nil {
+		return fmt.Errorf("failed to send matrix text: %w", err)
+	}
+
+	log.Println("Successfully sent!")
+	return nil
 }
 
 func Send() *cli.Command {
@@ -95,69 +147,42 @@ func Send() *cli.Command {
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			// Login
-			client, err := matrix.login()
-			if err != nil {
-				return fmt.Errorf("failed to login to matrix: %v", err)
-			}
-
-			// Parse and set variables
-			err = matrix.setupVars()
-			if err != nil {
-				return err
-			}
-
-			// If necessary, join the given room
-			err = matrix.joinRoomIfNecessary(client)
-			if err != nil {
-				return err
-			}
-
-			// Send the message
-			_, err = client.SendText(matrix.Room, matrix.Message)
-			if err != nil {
-				return fmt.Errorf("failed to send matrix text: %v", err)
-			}
-			return nil
+			return SendMessage(
+				matrix.Url,
+				matrix.Username,
+				matrix.Password,
+				matrix.Token,
+				matrix.Room,
+				matrix.RoomID,
+				matrix.Domain,
+				matrix.ServerName,
+				matrix.Message,
+				matrix.AutoJoin,
+			)
 		},
 	}
 }
 
-/*
-setupVars will ensure the room ID begins with an exclamation mark and set the room string if not
-already set, using the room ID and domain. If the room string, room id and domain are not set,
-an error will be thrown.
-*/
 func (m *matrixPingMe) setupVars() error {
-	// Format the room ID
 	if !strings.HasPrefix(m.RoomID, "!") {
 		m.RoomID = "!" + m.RoomID
 	}
 
-	// Create the matrix room string if not already provided
 	if m.Room == "" {
 		if m.RoomID == "" || m.Domain == "" {
 			return fmt.Errorf("matrix room, or room ID and domain must be provided")
 		}
-
 		m.Room = fmt.Sprintf("%s:%s", m.RoomID, m.Domain)
 	}
 	return nil
 }
 
-/*
-joinRoomIfNecessary gets all the joined rooms and checks if the desired room is in the list.
-If not, and autoJoin is set to true - will attempt to join the room. If autoJoin is set to
-false, an error will be thrown
-*/
 func (m *matrixPingMe) joinRoomIfNecessary(client *gomatrix.Client) error {
-	// Get already joined rooms
 	joined, err := client.JoinedRooms()
 	if err != nil {
-		return fmt.Errorf("failed to get joined rooms: %v", err)
+		return fmt.Errorf("failed to get joined rooms: %w", err)
 	}
 
-	// Check if we've already joined the desired room
 	foundRoom := false
 	for _, room := range joined.JoinedRooms {
 		if room == m.Room {
@@ -166,7 +191,6 @@ func (m *matrixPingMe) joinRoomIfNecessary(client *gomatrix.Client) error {
 		}
 	}
 
-	// If not, try auto join the room
 	if !foundRoom {
 		if !m.AutoJoin {
 			return fmt.Errorf("not joined room '%s' and --autoJoin is set to false", m.Room)
@@ -174,24 +198,18 @@ func (m *matrixPingMe) joinRoomIfNecessary(client *gomatrix.Client) error {
 
 		_, err = client.JoinRoom(m.Room, m.ServerName, nil)
 		if err != nil {
-			return fmt.Errorf("failed to auto join room '%s': %v", m.Room, err)
+			return fmt.Errorf("failed to auto join room '%s': %w", m.Room, err)
 		}
 	}
 	return nil
 }
 
-/*
-login creates a gomatrix.Client instance, connecting to the given URL, using the provided login details
-*/
 func (m *matrixPingMe) login() (*gomatrix.Client, error) {
-	// Create a client instance
 	client, err := gomatrix.NewClient(m.Url, "", "")
 	if err != nil {
-		return nil, fmt.Errorf("failed to create matrix client: %v", err)
+		return nil, fmt.Errorf("failed to create matrix client: %w", err)
 	}
 
-	// Attempt to log in with whatever login details were provided.
-	// Or, throw an error if no login details were given
 	var resp *gomatrix.RespLogin
 	if m.Token != "" {
 		resp, err = client.Login(&gomatrix.ReqLogin{
@@ -214,7 +232,6 @@ func (m *matrixPingMe) login() (*gomatrix.Client, error) {
 		return nil, fmt.Errorf("no token, or username and password provided")
 	}
 
-	// Set the access token for this session
 	client.SetCredentials(resp.UserID, resp.AccessToken)
 	m.Token = resp.AccessToken
 	return client, nil
