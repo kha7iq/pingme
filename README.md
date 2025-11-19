@@ -26,6 +26,7 @@
   <a href="https://kha7iq.github.io/pingme">Documentation</a> •
   <a href="#supported-services">Supported Services</a> •
   <a href="#install">Install</a> •
+  <a href="#webhook-server">Webhook Server</a> •
   <a href="#github-action">Github Action</a> •
   <a href="#configuration">Configuration</a> •
   <a href="#contributing">Contributing</a> •
@@ -47,6 +48,10 @@ the logs or messages to a variable which will be sent as message, and most of
 all this serves as a swiss army knife sort of tool which supports multiple
 platforms.
 
+**New:** PingMe now supports running as a webhook server, allowing you to receive
+HTTP POST requests and dispatch notifications to any supported platform. Perfect
+for integrating with monitoring tools, CI/CD pipelines, and custom applications.
+
 ## Supported services
 
 - *Discord*
@@ -61,7 +66,6 @@ platforms.
 - *RocketChat*
 - *Slack*
 - *Telegram*
-- *Textmagic*
 - *Twillio*
 - *Zulip*
 - *Wechat*
@@ -73,7 +77,6 @@ platforms.
 ```bash
 brew install kha7iq/tap/pingme
 ```
-
 
 ## Shell Script
 By default pingme is going to be installed at `/usr/bin/` sudo is requried for this operation.
@@ -96,7 +99,6 @@ yay -S pingme
 
 # binary
 yay -S pingme-bin
-
 ```
 
 ## Manual
@@ -110,8 +112,6 @@ tar -xf pingme_${OS}_${ARCH}.tar.gz && \
 chmod +x pingme && \
 sudo mv pingme /usr/local/bin/pingme
 ```
-
-
 
 ### Windows
 
@@ -149,19 +149,97 @@ Run
 docker run ghcr.io/kha7iq/pingme:latest
 ```
 
+## Webhook Server
+
+PingMe can run as a standalone webhook server to receive and dispatch notifications via HTTP POST requests.
+
+### Quick Start
+
+```
+# Set credentials for your desired service(s)
+export TELEGRAM_TOKEN="your-bot-token"
+export TELEGRAM_CHANNELS="-123456789"
+
+# Start the server (default: 0.0.0.0:8080)
+pingme serve
+
+# Or specify custom host and port
+pingme serve --port 9000 --host 127.0.0.1
+```
+
+### Sending Webhooks
+
+Send a POST request with JSON payload:
+
+```
+curl -X POST http://localhost:8080/webhook \
+  -H "Content-Type: application/json" \
+  -d '{
+    "service": "telegram",
+    "message": "Hello from webhook!",
+    "title": "Test Alert"
+  }'
+```
+
+### Authentication (Optional)
+
+Secure your webhook endpoint with API key, HMAC, or basic authentication:
+
+```
+# API Key Authentication
+export PINGME_AUTH_METHOD="apikey"
+export PINGME_API_KEYS="secret-key-1,secret-key-2"
+
+# HMAC Authentication
+export PINGME_AUTH_METHOD="hmac"
+export PINGME_HMAC_SECRET="my-secret"
+
+# Basic Authentication
+export PINGME_AUTH_METHOD="basic"
+export PINGME_BASIC_USER="admin"
+export PINGME_BASIC_PASS="password"
+
+pingme serve
+```
+
+### Docker Compose Example
+
+```
+version: '3.8'
+services:
+  pingme:
+    image: ghcr.io/kha7iq/pingme:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - TELEGRAM_TOKEN=your-bot-token
+      - TELEGRAM_CHANNELS=-123456789
+      - PINGME_AUTH_METHOD=apikey
+      - PINGME_API_KEYS=your-secret-key
+    command: serve
+```
+
+### Endpoints
+
+- `POST /webhook` - Send notifications
+- `GET /health` - Health check endpoint
+- `GET /` - Server information
+
+For more details, see the [webhook documentation](https://kha7iq.github.io/pingme/#/webhook).
+
 ## Github Action
 
 A github action is available for integration with your workflows, you can find it on
 [Github Market Place](https://github.com/marketplace/actions/pingme-action) or
 here [Github Repo](https://github.com/kha7iq/pingme-action).
-```yaml
+```
 - name: PingMe-Action
   uses: kha7iq/pingme-action@v1
 ```
 
 ## Usage
 
-```bash
+```
 ❯ pingme
 
 NAME:
@@ -173,11 +251,15 @@ USAGE:
 DESCRIPTION:
    PingMe is a CLI tool which provides the ability to send messages or alerts to multiple
    messaging platforms and also email, everything is configurable via environment
-   variables and command line switches.Currently supported platforms include Slack, Telegram,
+   variables and command line switches. Currently supported platforms include Slack, Telegram,
    RocketChat, Discord, Pushover, Mattermost, Pushbullet, Microsoft Teams, Twillio, Mastodon,
    email address, Line, Gotify and Wechat.
+   
+   PingMe can also run as a webhook server to receive HTTP POST requests and dispatch
+   notifications to any supported platform.
 
 COMMANDS:
+   serve       Start webhook server
    telegram    Send message to telegram
    rocketchat  Send message to rocketchat
    slack       Send message to slack

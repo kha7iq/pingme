@@ -21,10 +21,46 @@ type discordPingMe struct {
 	Title   string
 }
 
+// SendMessage sends a message to discord channels.
+// channels can be comma-separated string of channel IDs.
+func SendMessage(token, channels, title, message string) error {
+	if token == "" {
+		return fmt.Errorf("discord token is required")
+	}
+	if channels == "" {
+		return fmt.Errorf("discord channel is required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	notifier := notify.New()
+	discordSvc := discord.New()
+
+	if err := discordSvc.AuthenticateWithBotToken(token); err != nil {
+		return fmt.Errorf("unable to authenticate: %w", err)
+	}
+
+	chn := strings.Split(channels, ",")
+	for _, v := range chn {
+		v = strings.TrimSpace(v)
+		if len(v) <= 0 {
+			return helpers.ErrChannel
+		}
+		discordSvc.AddReceivers(v)
+	}
+
+	notifier.UseServices(discordSvc)
+
+	if err := notifier.Send(context.Background(), title, message); err != nil {
+		return fmt.Errorf("failed to send discord message: %w", err)
+	}
+
+	log.Println("Successfully sent!")
+	return nil
+}
+
 // Send parse values from *cli.context and return *cli.Command.
-// Values include discord bot token, userID, channelIDs, Message and Title.
-// If multiple channels are provided then the string is split with "," separator and
-// each channelID is added to receiver.
 func Send() *cli.Command {
 	var discordOpts discordPingMe
 	return &cli.Command{
@@ -64,33 +100,12 @@ All configuration options are also available via environment variables.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			notifier := notify.New()
-			discordSvc := discord.New()
-
-			if err := discordSvc.AuthenticateWithBotToken(discordOpts.Token); err != nil {
-				return fmt.Errorf("unable to authenticate %v", err)
-			}
-
-			chn := strings.Split(discordOpts.Channel, ",")
-			for _, v := range chn {
-				if len(v) <= 0 {
-					return helpers.ErrChannel
-				}
-
-				discordSvc.AddReceivers(v)
-			}
-
-			notifier.UseServices(discordSvc)
-
-			if err := notifier.Send(
-				context.Background(),
+			return SendMessage(
+				discordOpts.Token,
+				discordOpts.Channel,
 				discordOpts.Title,
 				discordOpts.Message,
-			); err != nil {
-				return err
-			}
-			log.Println("Successfully sent!")
-			return nil
+			)
 		},
 	}
 }

@@ -755,57 +755,6 @@ jobs:
 | WECHAT_MSG_TITLE           | ""                 |
 | WECHAT_MESSAGE             | ""                 |
 
-## TextMagic
-
-TextMagic allows you to send SMS to multiple receivers provided by comma separated string.
-
-```bash
- pingme textmagic \
-   --token 'tokenabc' \
-   --user 'sid123' \
-   --title 'message title' \
-   --receiver '+140001442' \
-   --msg 'some message'
-```
-
-- GitHub Action
-
-```yaml
-on: [push]
-
-jobs:
-  pingme-job:
-    runs-on: ubuntu-latest
-    name: PingMe
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Ping me On
-        uses: kha7iq/pingme-action@v1
-        env:
-          TEXTMAGIC_USER: ${{ secrets.TEXTMAGIC_USER }}
-          TEXTMAGIC_TOKEN: ${{ secrets.TEXTMAGIC_TOKEN }}
-          TEXTMAGIC_TITLE: 'Reference: ${{ github.ref }}'
-          TEXTMAGIC_MESSAGE: 'Event is triggered by ${{ github.event_name }}'
-          TEXTMAGIC_RECEIVER:  ${{ secrets.TEXTMAGIC_RECEIVER }}
-        
-        with:
-          # Chose the messaging platform. 
-          # slack / telegram / rocketchat / teams /
-          # pushover / discord / email / mattermost / textmagic
-          service: textmagic
-```
-
-- **Variables**
-
-|          Variables         | Default Value      |
-| -------------------------- | :----------------: |
-| TEXTMAGIC_USER             | ""                 |
-| TEXTMAGIC_TOKEN            | ""                 |
-| TEXTMAGIC_TITLE          | ""                 | 
-| TEXTMAGIC_MESSAGE          | ""                 | 
-| TEXTMAGIC_RECEIVER         | ""                 | 
 
 ## Matrix
 
@@ -857,7 +806,7 @@ jobs:
         with:
           # Chose the messaging platform. 
           # slack / telegram / rocketchat / teams /
-          # pushover / discord / email / mattermost / textmagic / matrix
+          # pushover / discord / email / mattermost / matrix
           service: matrix
 ```
 

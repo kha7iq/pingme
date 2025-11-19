@@ -1,6 +1,7 @@
 package twillio
 
 import (
+	"fmt"
 	"log"
 	"strings"
 
@@ -19,10 +20,50 @@ type Twillio struct {
 	Message    string
 }
 
+// SendMessage sends SMS via twillio to multiple receivers.
+// receivers can be comma-separated string of phone numbers.
+func SendMessage(accountSID, token, sender, receivers, title, message string) error {
+	if accountSID == "" {
+		return fmt.Errorf("twillio account SID is required")
+	}
+	if token == "" {
+		return fmt.Errorf("twillio token is required")
+	}
+	if sender == "" {
+		return fmt.Errorf("twillio sender phone number is required")
+	}
+	if receivers == "" {
+		return fmt.Errorf("twillio receiver phone number is required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	client := gotwilio.NewTwilioClient(accountSID, token)
+	fullMessage := title + "\n" + message
+
+	numbers := strings.Split(receivers, ",")
+	for _, phoneNumber := range numbers {
+		phoneNumber = strings.TrimSpace(phoneNumber)
+		if len(phoneNumber) == 0 {
+			return helpers.ErrChannel
+		}
+
+		_, exception, err := client.SendSMS(sender, phoneNumber, fullMessage, "", "")
+		if err != nil {
+			return fmt.Errorf("failed to send SMS to %s: %w", phoneNumber, err)
+		}
+		if exception != nil {
+			return fmt.Errorf("twillio exception for %s: %v", phoneNumber, exception)
+		}
+	}
+
+	log.Println("Successfully sent!")
+	return nil
+}
+
 // Send parse values from *cli.context and return *cli.Command
 // and send messages to target numbers.
-// If multiple receivers are provided then the string is split with "," separator and
-// message is sent to each number.
 func Send() *cli.Command {
 	var twillioOpts Twillio
 	return &cli.Command{
@@ -78,25 +119,14 @@ You can specify multiple receivers by separating the value with a comma.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			client := gotwilio.NewTwilioClient(twillioOpts.AccountSid, twillioOpts.Token)
-			fullMessage := twillioOpts.Title + "\n" + twillioOpts.Message
-
-			numbers := strings.Split(twillioOpts.Receiver, ",")
-			for _, v := range numbers {
-				if len(v) == 0 {
-					return helpers.ErrChannel
-				}
-
-				_, exception, err := client.SendSMS(twillioOpts.Sender, twillioOpts.Receiver, fullMessage, "", "")
-				if err != nil {
-					return err
-				}
-				if exception != nil {
-					return exception
-				}
-			}
-			log.Println("Successfully sent!")
-			return nil
+			return SendMessage(
+				twillioOpts.AccountSid,
+				twillioOpts.Token,
+				twillioOpts.Sender,
+				twillioOpts.Receiver,
+				twillioOpts.Title,
+				twillioOpts.Message,
+			)
 		},
 	}
 }

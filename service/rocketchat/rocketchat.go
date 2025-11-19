@@ -2,6 +2,8 @@ package rocketchat
 
 import (
 	"context"
+	"fmt"
+	"log"
 	"strings"
 
 	"github.com/kha7iq/pingme/service/helpers"
@@ -20,10 +22,52 @@ type rocketChat struct {
 	Scheme    string
 }
 
+// SendMessage sends a message to rocketchat channels.
+// channels can be comma-separated string of channel names.
+func SendMessage(serverURL, scheme, userID, token, channels, title, message string) error {
+	if serverURL == "" {
+		return fmt.Errorf("rocketchat server URL is required")
+	}
+	if userID == "" {
+		return fmt.Errorf("rocketchat user ID is required")
+	}
+	if token == "" {
+		return fmt.Errorf("rocketchat token is required")
+	}
+	if channels == "" {
+		return fmt.Errorf("rocketchat channel is required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	notifier := notify.New()
+
+	rocketChatSvc, err := rocketchat.New(serverURL, scheme, userID, token)
+	if err != nil {
+		return fmt.Errorf("failed to create rocketchat service: %w", err)
+	}
+
+	chn := strings.Split(channels, ",")
+	for _, v := range chn {
+		v = strings.TrimSpace(v)
+		if len(v) <= 0 {
+			return helpers.ErrChannel
+		}
+		rocketChatSvc.AddReceivers(v)
+	}
+
+	notifier.UseServices(rocketChatSvc)
+
+	if err = notifier.Send(context.Background(), title, message); err != nil {
+		return fmt.Errorf("failed to send rocketchat message: %w", err)
+	}
+
+	log.Println("Successfully sent!")
+	return nil
+}
+
 // Send parse values from *cli.context and return *cli.Command.
-// Values include rocketchat token, , UserId, channelIDs, ServerURL, Scheme, Message and Title.
-// If multiple channels are provided then the string is split with "," separator and
-// each channelID is added to receiver.
 func Send() *cli.Command {
 	var rocketChatOpts rocketChat
 	return &cli.Command{
@@ -89,32 +133,15 @@ All configuration options are also available via environment variables.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			notifier := notify.New()
-
-			rocketChatSvc, err := rocketchat.New(rocketChatOpts.ServerURL, rocketChatOpts.Scheme,
-				rocketChatOpts.UserID, rocketChatOpts.Token)
-			if err != nil {
-				return err
-			}
-			chn := strings.Split(rocketChatOpts.Channel, ",")
-			for _, v := range chn {
-				if len(v) <= 0 {
-					return helpers.ErrChannel
-				}
-
-				rocketChatSvc.AddReceivers(v)
-			}
-
-			notifier.UseServices(rocketChatSvc)
-
-			if err = notifier.Send(
-				context.Background(),
+			return SendMessage(
+				rocketChatOpts.ServerURL,
+				rocketChatOpts.Scheme,
+				rocketChatOpts.UserID,
+				rocketChatOpts.Token,
+				rocketChatOpts.Channel,
 				rocketChatOpts.Title,
 				rocketChatOpts.Message,
-			); err != nil {
-				return err
-			}
-			return nil
+			)
 		},
 	}
 }

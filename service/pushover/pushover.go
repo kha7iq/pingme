@@ -1,6 +1,7 @@
 package pushover
 
 import (
+	"fmt"
 	"log"
 	"strings"
 
@@ -19,8 +20,49 @@ type pushOver struct {
 	Priority  int
 }
 
+// SendMessage sends a message to pushover users.
+// This is the core logic extracted for reuse by both CLI and webhook.
+// recipients can be comma-separated string of user tokens.
+func SendMessage(token, recipients, title, message string, priority int) error {
+	if token == "" {
+		return fmt.Errorf("pushover token is required")
+	}
+	if recipients == "" {
+		return fmt.Errorf("pushover user token is required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	app := pushover.New(token)
+
+	msg := &pushover.Message{
+		Title:    title,
+		Message:  message,
+		Priority: priority,
+		Retry:    60,
+		Expire:   3600,
+	}
+
+	users := strings.Split(recipients, ",")
+
+	for _, userToken := range users {
+		userToken = strings.TrimSpace(userToken)
+		if len(userToken) == 0 {
+			return helpers.ErrChannel
+		}
+		recipient := pushover.NewRecipient(userToken)
+		responsePushOver, err := app.SendMessage(msg, recipient)
+		if err != nil {
+			return fmt.Errorf("failed to send to user %s: %w", userToken, err)
+		}
+		log.Printf("Successfully sent to %s!\n%v\n", userToken, responsePushOver)
+	}
+	return nil
+}
+
 // Send parse values from *cli.context and return *cli.Command.
-// Values include  token, users, Message and Title.
+// Values include token, users, Message and Title.
 // If multiple users are provided then the string is split with "," separator and
 // each user is added to receiver.
 func Send() *cli.Command {
@@ -29,7 +71,7 @@ func Send() *cli.Command {
 		Name:      "pushover",
 		Usage:     "Send message to pushover",
 		UsageText: "pingme pushover --token '123' --user '12345,567' --msg 'some message'",
-		Description: `Pushover uses token to authenticate application and user token to  send messages to the user.
+		Description: `Pushover uses token to authenticate application and user token to send messages to the user.
 All configuration options are also available via environment variables.`,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
@@ -45,7 +87,7 @@ All configuration options are also available via environment variables.`,
 				Name:        "user",
 				Required:    true,
 				Aliases:     []string{"u"},
-				Usage:       "User token used for sending message to user,if sending to multiple userss separate with ','.",
+				Usage:       "User token used for sending message to user,if sending to multiple users separate with ','.",
 				EnvVars:     []string{"PUSHOVER_USER"},
 			},
 			&cli.StringFlag{
@@ -72,31 +114,14 @@ All configuration options are also available via environment variables.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			app := pushover.New(pushOverOpts.Token)
-
-			// message := &pushover.Message{Title: pushOverOpts.Title, Message: pushOverOpts.Message, Priority: pushOverOpts.Priority}
-
-			message := &pushover.Message{Title: pushOverOpts.Title,
-				Message:  pushOverOpts.Message,
-				Priority: pushOverOpts.Priority,
-				Retry:    60,
-				Expire:   3600,
-			}
-
-			users := strings.Split(pushOverOpts.Recipient, ",")
-
-			for _, v := range users {
-				if len(v) == 0 {
-					return helpers.ErrChannel
-				}
-				recipient := pushover.NewRecipient(v)
-				responsePushOver, err := app.SendMessage(message, recipient)
-				if err != nil {
-					return err
-				}
-				log.Printf("Successfully sent!\n%v\n", responsePushOver)
-			}
-			return nil
+			// Now just call the extracted function
+			return SendMessage(
+				pushOverOpts.Token,
+				pushOverOpts.Recipient,
+				pushOverOpts.Title,
+				pushOverOpts.Message,
+				pushOverOpts.Priority,
+			)
 		},
 	}
 }

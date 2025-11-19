@@ -2,6 +2,7 @@ package line
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"strings"
 
@@ -20,9 +21,49 @@ type Line struct {
 	Title     string
 }
 
+// SendMessage sends a message to line messenger receivers.
+// receivers can be comma-separated string of user or group IDs.
+func SendMessage(secret, token, receivers, title, message string) error {
+	if secret == "" {
+		return fmt.Errorf("line channel secret is required")
+	}
+	if token == "" {
+		return fmt.Errorf("line channel access token is required")
+	}
+	if receivers == "" {
+		return fmt.Errorf("line receiver IDs are required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	notifier := notify.New()
+
+	lineSvc, err := line.New(secret, token)
+	if err != nil {
+		return fmt.Errorf("failed to create line service: %w", err)
+	}
+
+	// Add receiver IDs
+	recv := strings.Split(receivers, ",")
+	for _, r := range recv {
+		r = strings.TrimSpace(r)
+		if r != "" {
+			lineSvc.AddReceivers(r)
+		}
+	}
+
+	notifier.UseServices(lineSvc)
+
+	if err := notifier.Send(context.Background(), title, message); err != nil {
+		return fmt.Errorf("failed to send line message: %w", err)
+	}
+
+	log.Println("Successfully sent!")
+	return nil
+}
+
 // Send parses values from *cli.context and returns a *cli.Command.
-// Values include channel secret, channel access token, receiver IDs (group or user), Message and Title.
-// If multiple receiver IDs are provided, then the string is split with "," separator and each receiver ID is added to the receiver.
 func Send() *cli.Command {
 	var lineOpts Line
 	return &cli.Command{
@@ -70,31 +111,13 @@ through line to various receivers.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			notifier := notify.New()
-			lineSvc, err := line.New(lineOpts.Secret, lineOpts.Token)
-			if err != nil {
-				return err
-			}
-
-			// Add receiver IDs
-			recv := strings.Split(lineOpts.Receivers, ",")
-			for _, r := range recv {
-				lineSvc.AddReceivers(r)
-			}
-
-			notifier.UseServices(lineSvc)
-
-			if err := notifier.Send(
-				context.Background(),
+			return SendMessage(
+				lineOpts.Secret,
+				lineOpts.Token,
+				lineOpts.Receivers,
 				lineOpts.Title,
 				lineOpts.Message,
-			); err != nil {
-				return err
-			}
-
-			log.Println("Successfully sent!")
-
-			return nil
+			)
 		},
 	}
 }

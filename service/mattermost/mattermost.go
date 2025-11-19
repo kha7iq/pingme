@@ -62,10 +62,49 @@ func initialize() {
 	}
 }
 
+// SendMessage sends a message to mattermost channels.
+// channels can be comma-separated string of channel IDs.
+func SendMessage(token, serverURL, scheme, apiURL, channels, title, message string) error {
+	if token == "" {
+		return fmt.Errorf("mattermost token is required")
+	}
+	if serverURL == "" {
+		return fmt.Errorf("mattermost server URL is required")
+	}
+	if channels == "" {
+		return fmt.Errorf("mattermost channel is required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	initialize()
+
+	endPointURL := scheme + "://" + serverURL + apiURL
+	bearer := "Bearer " + token
+	fullMessage := title + "\n" + message
+
+	ids := strings.Split(channels, ",")
+	for _, channelID := range ids {
+		channelID = strings.TrimSpace(channelID)
+		if len(channelID) == 0 {
+			return helpers.ErrChannel
+		}
+
+		jsonData, err := toJSON(channelID, fullMessage)
+		if err != nil {
+			return fmt.Errorf("error parsing json: %w", err)
+		}
+
+		if err := sendMattermost(endPointURL, bearer, jsonData); err != nil {
+			return fmt.Errorf("failed to send message to channel %s: %w", channelID, err)
+		}
+	}
+	return nil
+}
+
 // Send parse values from *cli.context and return *cli.Command
 // and send messages to target channels.
-// If multiple channel ids are provided then the string is split with "," separator and
-// message is sent to each channel.
 func Send() *cli.Command {
 	var mattermostOpts matterMost
 	return &cli.Command{
@@ -131,35 +170,20 @@ You can specify multiple channels by separating the value with ','.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			initialize()
-			endPointURL := mattermostOpts.Scheme + "://" + mattermostOpts.ServerURL + mattermostOpts.APIURL
-
-			// Create a Bearer string by appending string access token
-			bearer := "Bearer " + mattermostOpts.Token
-
-			fullMessage := mattermostOpts.Title + "\n" + mattermostOpts.Message
-
-			ids := strings.Split(mattermostOpts.ChanIDs, ",")
-			for _, v := range ids {
-				if len(v) == 0 {
-					return helpers.ErrChannel
-				}
-
-				jsonData, err := toJSON(v, fullMessage)
-				if err != nil {
-					return fmt.Errorf("error parsing json\n[ERROR] - %v", err)
-				}
-
-				if err := sendMattermost(endPointURL, bearer, jsonData); err != nil {
-					return fmt.Errorf("failed to send message\n[ERROR] - %v", err)
-				}
-			}
-			return nil
+			return SendMessage(
+				mattermostOpts.Token,
+				mattermostOpts.ServerURL,
+				mattermostOpts.Scheme,
+				mattermostOpts.APIURL,
+				mattermostOpts.ChanIDs,
+				mattermostOpts.Title,
+				mattermostOpts.Message,
+			)
 		},
 	}
 }
 
-// toJson takes strings and convert them to json byte array
+// toJSON takes strings and convert them to json byte array
 func toJSON(channel string, msg string) ([]byte, error) {
 	m := make(map[string]string, 2)
 	m["channel_id"] = channel
@@ -171,19 +195,17 @@ func toJSON(channel string, msg string) ([]byte, error) {
 	return js, nil
 }
 
-// sendMattermost function take the server url , authentication token
+// sendMattermost function take the server url, authentication token
 // message and channel id in the form of json byte array and sends
 // message to mattermost.
 func sendMattermost(url string, token string, jsonPayload []byte) error {
 	var response matterMostResponse
 
-	// Create a new request using http
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonPayload))
 	if err != nil {
 		return err
 	}
 
-	// add authorization header to the request
 	req.Header.Set("Authorization", token)
 	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
 
@@ -193,7 +215,6 @@ func sendMattermost(url string, token string, jsonPayload []byte) error {
 	}
 	defer resp.Body.Close()
 
-	// decode response sent from server
 	err = json.NewDecoder(resp.Body).Decode(&response)
 	if err != nil {
 		return err

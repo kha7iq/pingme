@@ -2,6 +2,7 @@ package slack
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"strings"
 
@@ -20,10 +21,42 @@ type slackPingMe struct {
 	Title   string
 }
 
+// SendMessage sends a message to slack channels.
+// channels can be comma-separated string of channel IDs.
+func SendMessage(token, channels, title, message string) error {
+	if token == "" {
+		return fmt.Errorf("slack token is required")
+	}
+	if channels == "" {
+		return fmt.Errorf("slack channel is required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	notifier := notify.New()
+	slackSvc := slack.New(token)
+
+	chn := strings.Split(channels, ",")
+	for _, v := range chn {
+		v = strings.TrimSpace(v)
+		if len(v) <= 0 {
+			return helpers.ErrChannel
+		}
+		slackSvc.AddReceivers(v)
+	}
+
+	notifier.UseServices(slackSvc)
+
+	if err := notifier.Send(context.Background(), title, message); err != nil {
+		return fmt.Errorf("failed to send slack message: %w", err)
+	}
+
+	log.Println("Successfully sent!")
+	return nil
+}
+
 // Send parse values from *cli.context and return *cli.Command.
-// Values include slack token, channelIDs, Message and Title.
-// If multiple channels are provided then the string is split with "," separator and
-// each channelID is added to receiver.
 func Send() *cli.Command {
 	var slackOpts slackPingMe
 	return &cli.Command{
@@ -66,28 +99,12 @@ All configuration options are also available via environment variables.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			notifier := notify.New()
-			slackSvc := slack.New(slackOpts.Token)
-			chn := strings.Split(slackOpts.Channel, ",")
-			for _, v := range chn {
-				if len(v) <= 0 {
-					return helpers.ErrChannel
-				}
-
-				slackSvc.AddReceivers(v)
-			}
-
-			notifier.UseServices(slackSvc)
-
-			if err := notifier.Send(
-				context.Background(),
+			return SendMessage(
+				slackOpts.Token,
+				slackOpts.Channel,
 				slackOpts.Title,
 				slackOpts.Message,
-			); err != nil {
-				return err
-			}
-			log.Println("Successfully sent!")
-			return nil
+			)
 		},
 	}
 }

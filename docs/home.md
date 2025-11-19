@@ -10,8 +10,8 @@
 <p align="center">
    <a href="https://github.com/kha7iq/pingme/releases">
    <img alt="Release" src="https://img.shields.io/github/v/release/kha7iq/pingme">
-   <a href="#">
-   <img alt="Build" src="https://img.shields.io/github/workflow/status/kha7iq/pingme/goreleaser">
+   <a href="https://github.com/agarrharr/awesome-cli-apps#devops">
+   <img alt="Awesome" src="https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg">
    <a href="https://github.com/kha7iq/pingme/issues">
    <img alt="GitHub issues" src="https://img.shields.io/github/issues/kha7iq/pingme?style=flat-square&logo=github&logoColor=white">
    <a href="https://github.com/kha7iq/pingme/blob/master/LICENSE.md">
@@ -25,6 +25,7 @@
 <p align="center">
   <a href="#/?id=about">About</a> •
   <a href="#?id=supported-services">Supported Services</a> •
+  <a href="#?id=webhook-server">Webhook Server</a> •
   <a href="#?id=demo">Demo</a> •
   <a href="#?id=contributing">Contributing</a> •
   <a href="#?id=show-your-support">Show Your Support</a> •
@@ -46,6 +47,8 @@ the logs or messages to a variable which will be sent as message, and most of
 all this serves as a swiss army knife sort of tool which supports multiple
 platforms.
 
+**New:** PingMe can now run as a webhook server, accepting HTTP POST requests and dispatching notifications to any supported platform. Perfect for monitoring tools, alerting systems, and CI/CD integrations.
+
 ## Supported services
 
 - *Discord*
@@ -61,10 +64,46 @@ platforms.
 - *RocketChat*
 - *Slack*
 - *Telegram*
-- *Textmagic*
 - *Twillio*
 - *Zulip*
 - *Wechat*
+
+## Webhook Server
+
+PingMe can run as a standalone HTTP server that receives webhooks and dispatches them to any supported service.
+
+### Quick Start
+
+```
+# Set credentials for your service
+export TELEGRAM_TOKEN="your-bot-token"
+export TELEGRAM_CHANNELS="-123456789"
+
+# Start the server
+pingme serve
+```
+
+### Sending a Webhook
+
+```
+curl -X POST http://localhost:8080/webhook \
+  -H "Content-Type: application/json" \
+  -d '{
+    "service": "telegram",
+    "title": "Alert",
+    "message": "Something happened!"
+  }'
+```
+
+### Features
+
+- **Simple integration** - Send webhooks from any tool that supports HTTP POST
+- **Multiple services** - Route to different platforms based on the `service` field
+- **Environment-based config** - Uses the same env vars as the CLI
+- **Optional authentication** - Support for API keys, HMAC, and basic auth
+- **Docker-ready** - Run in containers with minimal setup
+
+See the [Webhook Server documentation](webhook.md) for detailed setup and examples.
 
 ## Demo
 
@@ -89,3 +128,4 @@ be attributed to the authors of this library.  See
 
 Spamming through the use of this library **may get you permanently banned** on
 most supported platforms.
+```
