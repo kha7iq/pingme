@@ -2,6 +2,7 @@ package wechat
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"strings"
 
@@ -23,11 +24,57 @@ type Wechat struct {
 	Receivers      string
 }
 
+// SendMessage sends a message to wechat official account receivers.
+// receivers can be comma-separated string of receiver IDs.
+func SendMessage(appID, appSecret, token, encodingAESKey, receivers, title, message string) error {
+	if appID == "" {
+		return fmt.Errorf("wechat app ID is required")
+	}
+	if appSecret == "" {
+		return fmt.Errorf("wechat app secret is required")
+	}
+	if token == "" {
+		return fmt.Errorf("wechat token is required")
+	}
+	if encodingAESKey == "" {
+		return fmt.Errorf("wechat encoding AES key is required")
+	}
+	if receivers == "" {
+		return fmt.Errorf("wechat receivers are required")
+	}
+	if message == "" {
+		return fmt.Errorf("message is required")
+	}
+
+	wechatSvc := wechat.New(&wechat.Config{
+		AppID:          appID,
+		AppSecret:      appSecret,
+		Token:          token,
+		EncodingAESKey: encodingAESKey,
+		Cache:          cache.NewMemory(),
+	})
+
+	recv := strings.Split(receivers, ",")
+	for _, r := range recv {
+		r = strings.TrimSpace(r)
+		if r != "" {
+			wechatSvc.AddReceivers(r)
+		}
+	}
+
+	notifier := notify.New()
+	notifier.UseServices(wechatSvc)
+
+	err := notifier.Send(context.Background(), title, message)
+	if err != nil {
+		return fmt.Errorf("failed to send wechat message: %w", err)
+	}
+
+	log.Println("Successfully sent!")
+	return nil
+}
+
 // Send parse values from *cli.context and return *cli.Command.
-// Values include wechat official account id, secret, server token, encoding AES key,
-// Message, Title, and Receivers.
-// If multiple receivers are provided then the string is split with "," separator and
-// each receiverID is added to receiver.
 func Send() *cli.Command {
 	var wechatOpts Wechat
 	return &cli.Command{
@@ -36,7 +83,7 @@ func Send() *cli.Command {
 		Description: `Wechat sends message to Wechat Official Account using appid, appsecrete 
 and server token to authenticate 
 AND then send messages to defined account. 
-Multiple receiverss can be used separated by comma.`,
+Multiple receivers can be used separated by comma.`,
 		UsageText: "pingme wechat --appid '123' --appsecret '123' --token '123' --aes '123' --msg 'some message'  --receivers 'aaa,bbb,ccc'",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
@@ -90,31 +137,15 @@ Multiple receiverss can be used separated by comma.`,
 			},
 		},
 		Action: func(ctx *cli.Context) error {
-			wechatSvc := wechat.New(&wechat.Config{
-				AppID:          wechatOpts.AppID,
-				AppSecret:      wechatOpts.AppSecret,
-				Token:          wechatOpts.Token,
-				EncodingAESKey: wechatOpts.EncodingAESKey,
-				Cache:          cache.NewMemory(),
-			})
-
-			// Add receiver IDs
-			recv := strings.Split(wechatOpts.Receivers, ",")
-			for _, r := range recv {
-				wechatSvc.AddReceivers(r)
-			}
-
-			notifier := notify.New()
-			notifier.UseServices(wechatSvc)
-
-			err := notifier.Send(context.Background(), wechatOpts.Title, wechatOpts.Message)
-			if err != nil {
-				log.Fatalf("notifier.Send() failed: %s", err.Error())
-			}
-
-			log.Println("Successfully sent!")
-
-			return nil
+			return SendMessage(
+				wechatOpts.AppID,
+				wechatOpts.AppSecret,
+				wechatOpts.Token,
+				wechatOpts.EncodingAESKey,
+				wechatOpts.Receivers,
+				wechatOpts.Title,
+				wechatOpts.Message,
+			)
 		},
 	}
 }
