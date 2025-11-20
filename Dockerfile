@@ -8,4 +8,4 @@ EXPOSE 8080
 
 # Set default command to start webhook server
 ENTRYPOINT ["/usr/bin/pingme"]
-CMD ["serve", "--port", "8080", "--host", "0.0.0.0"]
+CMD ["serve"]
